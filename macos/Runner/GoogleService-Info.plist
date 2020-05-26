@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>700200881708-jc3a71k5cknlkrdvmkng0136nmak0clt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.700200881708-jc3a71k5cknlkrdvmkng0136nmak0clt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>700200881708-9teomsc237nn1ll9l5it8lmgd5gv4ncl.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCSNrOsYMTKTsNRgNNvUy33imCTvoKrFQw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>700200881708</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.zemlyanikin.max.eisenhowerMatrix</string>
+	<key>PROJECT_ID</key>
+	<string>eisenhower-matrix-2adf3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>eisenhower-matrix-2adf3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:700200881708:ios:608e041097a8d78a440b89</string>
+	<key>DATABASE_URL</key>
+	<string>https://eisenhower-matrix-2adf3.firebaseio.com</string>
+</dict>
+</plist>
