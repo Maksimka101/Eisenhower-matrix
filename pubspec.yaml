@@ -29,11 +29,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: any
   flutter_platform_widgets: any
-  pedantic: any
   firebase_auth: any
   firebase_storage: any
+  freezed_annotation: any
+  connectivity: any
 
 dev_dependencies:
+  pedantic: any
+  build_runner: any
+  freezed: any
   flutter_test:
     sdk: flutter
 
