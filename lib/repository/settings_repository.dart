@@ -1,5 +1,5 @@
-import 'package:eisenhower_matrix/repository/abstract_local_settings_repository.dart';
-import 'package:eisenhower_matrix/repository/abstract_web_settings_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/abstract_local_settings_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/abstract_web_settings_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class SettingsRepository {

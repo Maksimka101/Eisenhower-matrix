@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:eisenhower_matrix/models/user.dart';
-import 'package:eisenhower_matrix/repository/abstract_local_user_repository.dart';
-import 'package:eisenhower_matrix/repository/abstract_user_signin_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/abstract_local_user_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/abstract_user_signin_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserRepository {
