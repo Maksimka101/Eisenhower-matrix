@@ -33,6 +33,8 @@ dependencies:
   firebase_storage: any
   freezed_annotation: any
   connectivity: any
+  flutter_bloc: any
+  equatable: any
 
 dev_dependencies:
   pedantic: any
