@@ -5,8 +5,10 @@ import 'package:connectivity/connectivity.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:eisenhower_matrix/models/matrix.dart';
+import 'package:eisenhower_matrix/models/user.dart';
 import 'package:eisenhower_matrix/repository/abstract_matrix_local_repository.dart';
 import 'package:eisenhower_matrix/repository/abstract_matrix_web_repository.dart';
+import 'package:eisenhower_matrix/repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,18 +16,28 @@ class MatrixRepository {
   final _matrixStream = StreamController<Matrix>.broadcast();
   final MatrixLocalRepository matrixLocalRepository;
   final MatrixWebRepository matrixWebRepository;
-  StreamSubscription<ConnectivityResult> _connectivityResultStream;
+  final UserRepository userRepository;
   var _internetAvailable = false;
+  User _user;
+  StreamSubscription<ConnectivityResult> _connectivityResultStream;
 
-  MatrixRepository({
-    @required this.matrixLocalRepository,
-    @required this.matrixWebRepository,
-  }) : assert(matrixWebRepository != null && matrixLocalRepository != null) {
-    matrixWebRepository.matrixStream
-        .listen((matrixFromBackend) => _matrixStream.sink.add(matrixFromBackend));
-    Connectivity().checkConnectivity().then(_onConnectionStateChanged);
-    _connectivityResultStream =
-        Connectivity().onConnectivityChanged.listen(_onConnectionStateChanged);
+  MatrixRepository(
+      {@required this.matrixLocalRepository,
+      @required this.matrixWebRepository,
+      @required this.userRepository})
+      : assert(matrixWebRepository != null &&
+            matrixLocalRepository != null &&
+            userRepository != null) {
+    userRepository.userStream.listen((user) {
+      _user = user;
+      if (_user.signInProvider != SignInProvider.Anonymous) {
+        matrixWebRepository.matrixStream
+            .listen((matrixFromBackend) => _matrixStream.sink.add(matrixFromBackend));
+        Connectivity().checkConnectivity().then(_onConnectionStateChanged);
+        _connectivityResultStream =
+            Connectivity().onConnectivityChanged.listen(_onConnectionStateChanged);
+      }
+    });
   }
 
   void _onConnectionStateChanged(ConnectivityResult connectivityResult) {
@@ -45,19 +57,24 @@ class MatrixRepository {
   /// Push new matrix state to the [matrixStream]
   Future<void> saveCeilItem(CeilItem item, CeilType ceilType) async {
     item = item.copyWith(id: _generateId(item.title));
-    if (_internetAvailable) {
-      try {
-        final backendMatrix = await matrixWebRepository.saveCeilItem(item);
-        final localMatrix = await matrixLocalRepository.saveCeilItem(item);
-        await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
-      } catch (e) {
-        debugPrint('Can not create or update ceil item $item. Exception: $e');
-        final localMatrix = await matrixLocalRepository.saveCeilItem(item);
+    if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
+      if (_internetAvailable) {
+        try {
+          final backendMatrix = await matrixWebRepository.saveCeilItem(item);
+          final localMatrix = await matrixLocalRepository.saveCeilItem(item);
+          await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
+        } catch (e) {
+          debugPrint('Can not create or update ceil item $item. Exception: $e');
+          final localMatrix = await matrixLocalRepository.saveCeilItem(item);
+          await matrixLocalRepository.addUnSyncCeilItem(item.id);
+          _matrixStream.sink.add(localMatrix);
+        }
+      } else {
         await matrixLocalRepository.addUnSyncCeilItem(item.id);
+        final localMatrix = await matrixLocalRepository.saveCeilItem(item);
         _matrixStream.sink.add(localMatrix);
       }
     } else {
-      await matrixLocalRepository.addUnSyncCeilItem(item.id);
       final localMatrix = await matrixLocalRepository.saveCeilItem(item);
       _matrixStream.sink.add(localMatrix);
     }
@@ -65,40 +82,50 @@ class MatrixRepository {
 
   /// Push new matrix state to the [matrixStream]
   Future<void> deleteCeilItem(String itemId, CeilType ceilType) async {
-    if (_internetAvailable) {
-      try {
-        final backendMatrix = await matrixWebRepository.deleteCeilItem(itemId);
-        final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
-        await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
-      } catch (e) {
-        debugPrint('Can not delete ceil item with id = $itemId. Exception: $e');
+    if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
+      if (_internetAvailable) {
+        try {
+          final backendMatrix = await matrixWebRepository.deleteCeilItem(itemId);
+          final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
+          await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
+        } catch (e) {
+          debugPrint('Can not delete ceil item with id = $itemId. Exception: $e');
+          await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
+          final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
+          _matrixStream.sink.add(localMatrix);
+        }
+      } else {
         await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
         final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
         _matrixStream.sink.add(localMatrix);
       }
+      final unSyncItems = await matrixLocalRepository.unSyncCeilItems;
+      if (unSyncItems.contains(itemId)) {
+        await matrixLocalRepository.deleteUnSyncCeilItem(itemId);
+      }
     } else {
-      await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
       final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
       _matrixStream.sink.add(localMatrix);
-    }
-    final unSyncItems = await matrixLocalRepository.unSyncCeilItems;
-    if (unSyncItems.contains(itemId)) {
-      await matrixLocalRepository.deleteUnSyncCeilItem(itemId);
     }
   }
 
   /// Load last matrix state from both local and web repository.
   /// Push new matrix state to the [matrixStream]
   Future<void> fetchMatrix() async {
-    final localMatrix = await matrixLocalRepository.fetchMatrix();
-    _matrixStream.sink.add(localMatrix);
-    if (_internetAvailable) {
-      try {
-        // if matrix on backend and device are different they will synchronize and
-        await _synchronizeData(localMatrix: localMatrix);
-      } catch (e) {
-        debugPrint('Can not fetch matrix from backend. Exception: $e');
+    if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
+      final localMatrix = await matrixLocalRepository.fetchMatrix();
+      _matrixStream.sink.add(localMatrix);
+      if (_internetAvailable) {
+        try {
+          // if matrix on backend and device are different they will synchronize and
+          await _synchronizeData(localMatrix: localMatrix);
+        } catch (e) {
+          debugPrint('Can not fetch matrix from backend. Exception: $e');
+        }
       }
+    } else {
+      final localMatrix = await matrixLocalRepository.fetchMatrix();
+      _matrixStream.sink.add(localMatrix);
     }
   }
 
@@ -108,7 +135,7 @@ class MatrixRepository {
   /// Every functions should call it at the end of their work.
   /// If matrix on backend and device are different tey will be synchronized and added to a [matrixStream]
   Future<void> _synchronizeData({Matrix localMatrix, Matrix backendMatrix}) async {
-    if (!_internetAvailable) {
+    if (!_internetAvailable || _user != null && _user.signInProvider == SignInProvider.Anonymous) {
       return;
     }
     localMatrix ??= await matrixLocalRepository.fetchMatrix();
