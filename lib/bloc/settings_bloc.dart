@@ -9,12 +9,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({@required this.settingsRepository}) : assert(settingsRepository != null);
 
   @override
-  // TODO: implement initialState
-  SettingsState get initialState => throw UnimplementedError();
+  SettingsState get initialState => SettingsInitial();
 
   @override
   Stream<SettingsState> mapEventToState(SettingsEvent event) {
-    // TODO: implement mapEventToState
     throw UnimplementedError();
   }
 }

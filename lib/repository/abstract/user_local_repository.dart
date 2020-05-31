@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/models/user.dart';
+import 'package:eisenhower_matrix/models/models.dart';
 
 abstract class UserLocalRepository {
 	Future<User> fetchUser();

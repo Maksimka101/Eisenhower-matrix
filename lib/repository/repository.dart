@@ -1,5 +1,9 @@
 export 'matrix_repository.dart';
 export 'user_repository.dart';
 export 'settings_repository.dart';
-
-// todo: export on done with implementation
+export 'hive_implementation/user_local_repository.dart';
+export 'hive_implementation/matrix_local_repository.dart';
+export 'firebase_implementation/user_sign_in_repository.dart';
+export 'firebase_implementation/matrix_web_repository.dart';
+export 'hive_implementation/settings_local_repository.dart';
+export 'firebase_implementation/settings_web_repository.dart';

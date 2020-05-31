@@ -15,6 +15,7 @@ abstract class User implements _$User {
 
 enum SignInProvider {
   Google,
+  Github,
   Apple,
   Twitter,
   Anonymous,

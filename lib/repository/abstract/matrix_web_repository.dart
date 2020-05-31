@@ -1,10 +1,9 @@
-import 'package:eisenhower_matrix/models/ceil_item.dart';
-import 'package:eisenhower_matrix/models/matrix.dart';
+import 'package:eisenhower_matrix/models/models.dart';
 
 /// Used to load data from web
 abstract class MatrixWebRepository {
   /// Stream with matrix state
-  Stream<Matrix> matrixStream;
+  Stream<Matrix> get matrixStream;
 
   /// Subscribe on matrix changing if necessary
   /// Load last matrix state and push it to stream

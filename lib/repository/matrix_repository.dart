@@ -2,12 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:eisenhower_matrix/models/ceil.dart';
-import 'package:eisenhower_matrix/models/ceil_item.dart';
-import 'package:eisenhower_matrix/models/matrix.dart';
-import 'package:eisenhower_matrix/models/user.dart';
-import 'package:eisenhower_matrix/repository/abstract/abstract_matrix_local_repository.dart';
-import 'package:eisenhower_matrix/repository/abstract/abstract_matrix_web_repository.dart';
+import 'package:eisenhower_matrix/models/models.dart';
+import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/matrix_web_repository.dart';
 import 'package:eisenhower_matrix/repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -55,7 +52,7 @@ class MatrixRepository {
 
   /// Create ceil item if it is doesn't exist else update existing item.
   /// Push new matrix state to the [matrixStream]
-  Future<void> saveCeilItem(CeilItem item, CeilType ceilType) async {
+  Future<void> saveCeilItem(CeilItem item) async {
     item = item.copyWith(id: _generateId(item.title));
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {
@@ -81,7 +78,7 @@ class MatrixRepository {
   }
 
   /// Push new matrix state to the [matrixStream]
-  Future<void> deleteCeilItem(String itemId, CeilType ceilType) async {
+  Future<void> deleteCeilItem(String itemId) async {
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {
         try {

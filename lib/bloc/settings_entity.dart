@@ -9,3 +9,5 @@ abstract class SettingsState extends Equatable {
 	@override
   List<Object> get props => [];
 }
+
+class SettingsInitial extends SettingsState {}

@@ -1,5 +1,4 @@
-import 'package:eisenhower_matrix/models/ceil_item.dart';
-import 'package:eisenhower_matrix/models/matrix.dart';
+import 'package:eisenhower_matrix/models/models.dart';
 
 /// Used to cache data in local storage
 abstract class MatrixLocalRepository {

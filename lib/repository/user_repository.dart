@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:eisenhower_matrix/models/user.dart';
-import 'package:eisenhower_matrix/repository/abstract/abstract_local_user_repository.dart';
-import 'package:eisenhower_matrix/repository/abstract/abstract_user_signin_repository.dart';
+import 'package:eisenhower_matrix/models/models.dart';
+import 'package:eisenhower_matrix/repository/abstract/user_local_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserRepository {
@@ -24,18 +24,18 @@ class UserRepository {
   Stream<User> get userStream => _userStream.stream;
 
   /// Load user and push to the [userStream]
-  Future<void> fetchUser() async {
-    await _syncSignIn();
+  Future<void> fetchUser(BuildContext context) async {
+    await _syncSignIn(context);
     final user = await userLocalRepository.fetchUser();
     _userStream.sink.add(user);
   }
 
   /// Throw [CantSignIn] with [SignInExceptionReason] if something went wrong.
   /// Push signed user to the [userStream].
-  Future<void> signInAnonymously() async {
+  Future<void> signInAnonymously(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        final user = await userSignInRepository.signInAnonymously();
+        final user = await userSignInRepository.signInAnonymously(context);
         await userLocalRepository.saveUser(user);
         userLocalRepository.signOutSynchronized = true;
         _userStream.sink.add(user);
@@ -54,10 +54,10 @@ class UserRepository {
 
   /// Throw [CantSignIn] with [SignInExceptionReason] if something went wrong.
   /// Push signed user to the [userStream].
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        final user = await userSignInRepository.signInWithGoogle();
+        final user = await userSignInRepository.signInWithGoogle(context);
         await userLocalRepository.saveUser(user);
         userLocalRepository.signOutSynchronized = true;
         _userStream.sink.add(user);
@@ -76,10 +76,32 @@ class UserRepository {
 
   /// Throw [CantSignIn] with [SignInExceptionReason] if something went wrong.
   /// Push signed user to the [userStream].
-  Future<void> signInWithTwitter() async {
+  Future<void> signInWithGithub(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        final user = await userSignInRepository.signInWithTwitter();
+        final user = await userSignInRepository.signInWithGithub(context);
+        await userLocalRepository.saveUser(user);
+        userLocalRepository.signOutSynchronized = true;
+        _userStream.sink.add(user);
+      } catch (e) {
+        debugPrint('Can not sign in with github. Exception: $e');
+        throw CantSignIn(
+          exceptionReason: SignInExceptionReason.signInRepositoryError,
+        );
+      }
+    } else {
+      throw CantSignIn(
+        exceptionReason: SignInExceptionReason.noInternetConnection,
+      );
+    }
+  }
+
+  /// Throw [CantSignIn] with [SignInExceptionReason] if something went wrong.
+  /// Push signed user to the [userStream].
+  Future<void> signInWithTwitter(BuildContext context) async {
+    if (_internetAvailable) {
+      try {
+        final user = await userSignInRepository.signInWithTwitter(context);
         await userLocalRepository.saveUser(user);
         userLocalRepository.signOutSynchronized = true;
         _userStream.sink.add(user);
@@ -98,10 +120,10 @@ class UserRepository {
 
   /// Throw [CantSignIn] with [SignInExceptionReason] if something went wrong.
   /// Push signed user to the [userStream].
-  Future<void> signInWithApple() async {
+  Future<void> signInWithApple(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        final user = await userSignInRepository.signInWithApple();
+        final user = await userSignInRepository.signInWithApple(context);
         await userLocalRepository.saveUser(user);
         userLocalRepository.signOutSynchronized = true;
         _userStream.sink.add(user);
@@ -118,10 +140,10 @@ class UserRepository {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        await userSignInRepository.signOut();
+        await userSignInRepository.signOut(context);
         await userLocalRepository.signOut();
         userLocalRepository.signOutSynchronized = true;
       } catch (e) {
@@ -136,14 +158,14 @@ class UserRepository {
     _userStream.sink.add(null);
   }
 
-  Future<void> _syncSignIn() async {
+  Future<void> _syncSignIn(BuildContext context) async {
     if (!_internetAvailable) {
       return;
     }
     final signOutSynced = await userLocalRepository.isSignOutSynchronized;
     if (!signOutSynced) {
       try {
-        await userSignInRepository.signOut();
+        await userSignInRepository.signOut(context);
         userLocalRepository.signOutSynchronized = true;
       } catch (e) {
         debugPrint('Can not sync user sign in. Exception: $e');
