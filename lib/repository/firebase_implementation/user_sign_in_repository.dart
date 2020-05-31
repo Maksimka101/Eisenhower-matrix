@@ -1,5 +1,6 @@
 import 'package:eisenhower_matrix/models/user.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
+import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_sign_in/github_sign_in.dart';
@@ -7,15 +8,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseUserSignInRepository extends UserSignInRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final String githubClientId;
-  final String githubClientSecret;
-  final String githubRedirectUrl;
+  final GitHubCredentials gitHubCredentials;
+  final AppleCredentials appleCredentials;
+  final TwitterCredentials twitterCredentials;
 
   FirebaseUserSignInRepository({
-    @required this.githubClientId,
-    @required this.githubClientSecret,
-    @required this.githubRedirectUrl,
-  }) : assert(githubClientId != null && githubClientSecret != null && githubRedirectUrl != null);
+    @required this.gitHubCredentials,
+    @required this.appleCredentials,
+    @required this.twitterCredentials,
+  }) : assert(gitHubCredentials != null && appleCredentials != null && twitterCredentials != null);
 
   @override
   Future<User> signInAnonymously(BuildContext context) async {
@@ -38,9 +39,9 @@ class FirebaseUserSignInRepository extends UserSignInRepository {
   @override
   Future<User> signInWithGithub(BuildContext context) async {
     final githubUser = await GitHubSignIn(
-      clientId: githubClientId,
-      clientSecret: githubClientSecret,
-      redirectUrl: githubRedirectUrl,
+      clientId: gitHubCredentials.clientId,
+      clientSecret: gitHubCredentials.clientSecret,
+      redirectUrl: gitHubCredentials.redirectUrl,
     ).signIn(context);
     final githubToken = await githubUser.token;
 
@@ -83,7 +84,7 @@ class FirebaseUserSignInRepository extends UserSignInRepository {
   }
 
   @override
-  Future<void> signOut(BuildContext context) async {
+  Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 }

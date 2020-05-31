@@ -7,5 +7,5 @@ abstract class UserSignInRepository {
   Future<User> signInWithGithub(BuildContext context);
   Future<User> signInWithTwitter(BuildContext context);
   Future<User> signInWithApple(BuildContext context);
-  Future<void> signOut(BuildContext context);
+  Future<void> signOut();
 }

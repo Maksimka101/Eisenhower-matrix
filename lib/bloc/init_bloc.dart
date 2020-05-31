@@ -37,6 +37,6 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   }
 
   Stream<InitState> _mapInitStartedToState(InitStarted event) async* {
-    await userRepository.fetchUser(event.context);
+    await userRepository.fetchUser();
   }
 }

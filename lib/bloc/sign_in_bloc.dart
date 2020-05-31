@@ -39,7 +39,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   Stream<SignInState> _mapSignInStartedToState(SignInStarted event) async* {
-    await userRepository.fetchUser(event.context);
+    await userRepository.fetchUser();
   }
 
   Stream<SignInState> _mapUserFetchedToState(SignInUserFetched event) async* {

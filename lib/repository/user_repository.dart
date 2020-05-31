@@ -24,8 +24,8 @@ class UserRepository {
   Stream<User> get userStream => _userStream.stream;
 
   /// Load user and push to the [userStream]
-  Future<void> fetchUser(BuildContext context) async {
-    await _syncSignIn(context);
+  Future<void> fetchUser() async {
+    await _syncSignIn();
     final user = await userLocalRepository.fetchUser();
     _userStream.sink.add(user);
   }
@@ -143,7 +143,7 @@ class UserRepository {
   Future<void> signOut(BuildContext context) async {
     if (_internetAvailable) {
       try {
-        await userSignInRepository.signOut(context);
+        await userSignInRepository.signOut();
         await userLocalRepository.signOut();
         userLocalRepository.signOutSynchronized = true;
       } catch (e) {
@@ -158,14 +158,14 @@ class UserRepository {
     _userStream.sink.add(null);
   }
 
-  Future<void> _syncSignIn(BuildContext context) async {
+  Future<void> _syncSignIn() async {
     if (!_internetAvailable) {
       return;
     }
     final signOutSynced = await userLocalRepository.isSignOutSynchronized;
     if (!signOutSynced) {
       try {
-        await userSignInRepository.signOut(context);
+        await userSignInRepository.signOut();
         userLocalRepository.signOutSynchronized = true;
       } catch (e) {
         debugPrint('Can not sync user sign in. Exception: $e');

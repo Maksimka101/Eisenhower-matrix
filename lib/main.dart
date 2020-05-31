@@ -1,29 +1,137 @@
+import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/repository/credential_models.dart';
+import 'package:eisenhower_matrix/repository/matrix_repository.dart';
+import 'package:eisenhower_matrix/repository/repository.dart';
+import 'package:eisenhower_matrix/ui/screen/main_app.dart';
+import 'package:eisenhower_matrix/ui/screen/sign_in.dart';
+import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-void main() => runApp(AppInit());
+import 'ui/widget/common/error.dart';
+
+void main() {
+  final userRepository = UserRepository(
+    userLocalRepository: HiveUserLocalRepository(),
+    userSignInRepository: FirebaseUserSignInRepository(
+      appleCredentials: AppleCredentials(),
+      gitHubCredentials: githubPrivateCredentials,
+      twitterCredentials: TwitterCredentials(),
+    ),
+  );
+  runApp(
+    AppInit(
+      matrixRepository: MatrixRepository(
+        matrixLocalRepository: HiveMatrixLocalRepository(),
+        matrixWebRepository: FirebaseMatrixWebRepository(
+          userRepository: userRepository,
+        ),
+        userRepository: userRepository,
+      ),
+      settingsRepository: SettingsRepository(
+        settingsLocalRepository: HiveSettingsLocalRepository(),
+        settingsWebRepository: FirebaseSettingsWebRepository(),
+      ),
+      userRepository: userRepository,
+    ),
+  );
+}
 
 class AppInit extends StatelessWidget {
+  final MatrixRepository matrixRepository;
+  final UserRepository userRepository;
+  final SettingsRepository settingsRepository;
+
+  const AppInit({
+    Key key,
+    @required this.matrixRepository,
+    @required this.userRepository,
+    @required this.settingsRepository,
+  })  : assert(matrixRepository != null && userRepository != null && settingsRepository != null),
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return PlatformProvider(
       builder: (_) => PlatformApp(
-        home: UserInit(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<MatrixBloc>(
+              create: (_) => MatrixBloc(
+                matrixRepository: matrixRepository,
+              ),
+            ),
+            BlocProvider<InitBloc>(
+              create: (_) => InitBloc(
+                userRepository: userRepository,
+              ),
+            ),
+            BlocProvider<SettingsBloc>(
+              create: (_) => SettingsBloc(
+                settingsRepository: settingsRepository,
+              ),
+            ),
+            BlocProvider<SignInBloc>(
+              create: (_) => SignInBloc(
+                userRepository: userRepository,
+              ),
+            ),
+          ],
+          child: UserInit(),
+        ),
       ),
     );
   }
 }
 
-class UserInit extends StatelessWidget {
+class UserInit extends StatefulWidget {
+  @override
+  _UserInitState createState() => _UserInitState();
+}
+
+class _UserInitState extends State<UserInit> {
+  Widget _loadingScreen() => PlatformScaffold(
+        appBar: PlatformAppBar(
+          title: Text('Loading'),
+        ),
+        body: Center(
+          child: PlatformCircularProgressIndicator(),
+        ),
+      );
+
+  Widget _errorScreen(String message) => PlatformScaffold(
+        appBar: PlatformAppBar(
+          title: Text('Error screen'),
+        ),
+        body: Center(
+          child: WidgetError(
+            message: message,
+          ),
+        ),
+      );
+
+  @override
+  void initState() {
+    BlocProvider.of<InitBloc>(context).add(InitStarted());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
-        title: Text('No'),
-      ),
-      body: Center(
-        child: PlatformCircularProgressIndicator(),
-      ),
+    return BlocBuilder<InitBloc, InitState>(
+      builder: (context, initState) {
+        switch (initState.runtimeType) {
+          case InitInitial:
+            return _loadingScreen();
+          case InitSignedIn:
+            return MainAppScreen();
+          case InitSignedOut:
+            return SignInScreen();
+          default:
+            return _errorScreen('Unknown initState: $initState');
+        }
+      },
     );
   }
 }

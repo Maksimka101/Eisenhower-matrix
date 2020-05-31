@@ -7,14 +7,7 @@ abstract class SignInEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SignInStarted extends SignInEvent {
-  final BuildContext context;
-
-  SignInStarted({@required this.context}) : assert(context != null);
-
-  @override
-  List<Object> get props => [context];
-}
+class SignInStarted extends SignInEvent {}
 
 class SignInUserFetched extends SignInEvent {
   final User user;

@@ -7,14 +7,7 @@ abstract class InitEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class InitStarted extends InitEvent {
-  final BuildContext context;
-
-  InitStarted({@required this.context}) : assert(context != null);
-
-  @override
-  List<Object> get props => [context];
-}
+class InitStarted extends InitEvent {}
 
 class InitFetchedUser extends InitEvent {
   final User user;
