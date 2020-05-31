@@ -1,10 +1,10 @@
+import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:eisenhower_matrix/repository/matrix_repository.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
 import 'package:eisenhower_matrix/ui/screen/main_app.dart';
 import 'package:eisenhower_matrix/ui/screen/sign_in.dart';
-import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -12,9 +12,20 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'ui/widget/common/error.dart';
 
 void main() {
+  // Comment this import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
+
+  // Fill here your credentials
   final userRepository = UserRepository(
     userLocalRepository: HiveUserLocalRepository(),
     userSignInRepository: FirebaseUserSignInRepository(
+//      Example
+//      appleCredentials: AppleCredentials(),
+//      gitHubCredentials: GitHubCredentials(
+//        redirectUrl: 'your redirect url from firebase auth',
+//        clientSecret: 'your github client secret',
+//        clientId: 'your github client id'
+//      ),
+//      twitterCredentials: TwitterCredentials(),
       appleCredentials: AppleCredentials(),
       gitHubCredentials: githubPrivateCredentials,
       twitterCredentials: TwitterCredentials(),
