@@ -19,12 +19,7 @@ To build app you need to:
  Don't forget to enable flutter desktop support using [this guide](https://flutter.dev/desktop) to be able to build desktop apps.
  
 # Road map
-- MVP
-  - [ ] Sign in
-  - [ ] Main matrix screen
-  - [ ] Ability to create and delete task
-  - [ ] No design
-  - [ ] No settings
+- [x] MVP
 
 - Design
   - [ ] UI
