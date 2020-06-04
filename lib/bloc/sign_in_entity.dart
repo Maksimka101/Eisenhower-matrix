@@ -29,14 +29,7 @@ class SignInWith extends SignInEvent {
   List<Object> get props => [signInProvider, context];
 }
 
-class SignOut extends SignInEvent {
-  final BuildContext context;
-
-  SignOut({@required this.context}) : assert(context != null);
-
-  @override
-  List<Object> get props => [context];
-}
+class SignOut extends SignInEvent {}
 
 abstract class SignInState extends Equatable {
   @override

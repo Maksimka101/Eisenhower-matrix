@@ -11,7 +11,9 @@ class MatrixBloc extends Bloc<MatrixEvent, MatrixState> {
     matrixRepository.matrixStream.listen(_matrixStateListener);
   }
 
-  void _matrixStateListener(Matrix matrix) => add(MatrixFetchedTransition(matrix: matrix));
+  void _matrixStateListener(Matrix matrix) {
+    add(MatrixFetchedTransition(matrix: matrix));
+  }
 
   @override
   MatrixState get initialState => MatrixInitial();

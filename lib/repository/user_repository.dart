@@ -140,7 +140,7 @@ class UserRepository {
     }
   }
 
-  Future<void> signOut(BuildContext context) async {
+  Future<void> signOut() async {
     if (_internetAvailable) {
       try {
         await userSignInRepository.signOut();

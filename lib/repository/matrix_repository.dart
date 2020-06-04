@@ -27,7 +27,7 @@ class MatrixRepository {
             userRepository != null) {
     userRepository.userStream.listen((user) {
       _user = user;
-      if (_user.signInProvider != SignInProvider.Anonymous) {
+      if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
         matrixWebRepository.matrixStream
             .listen((matrixFromBackend) => _matrixStream.sink.add(matrixFromBackend));
         Connectivity().checkConnectivity().then(_onConnectionStateChanged);
@@ -176,8 +176,9 @@ class MatrixRepository {
       }
     }
 
+    var localIds = localMatrix.allCeilItems.map((e) => e.id).toList();
     for (final backendCeilItem in backendCeilItems) {
-      if (!localMatrix.allCeilItems.contains(backendCeilItem)) {
+      if (!localIds.contains(backendCeilItem.id)) {
         localMatrix = await matrixLocalRepository.saveCeilItem(backendCeilItem);
       }
     }
@@ -191,4 +192,5 @@ class MatrixRepository {
   }
 }
 
-String _generateId(String name) => '$name${Random().nextInt(pow(2, 31))}';
+String _generateId(String name) =>
+    '${name.length > 9 ? name.substring(0, 10) : name}${Random().nextInt(pow(2, 31))}';

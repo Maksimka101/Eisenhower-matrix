@@ -12,7 +12,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'ui/widget/common/error.dart';
 
 void main() {
-  // Comment this import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
+  // Comment import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
+
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Fill here your credentials
   final userRepository = UserRepository(

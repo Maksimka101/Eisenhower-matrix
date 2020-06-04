@@ -27,9 +27,10 @@ To build app you need to:
   - [ ] No settings
 
 - Design
-  - [ ] Ui
-  - [ ] Ux
+  - [ ] UI
+  - [ ] UX
   - [ ] Animations
   - [ ] Dark and light mode
+  - [ ] Desktop UI
 
 - The alternative backend to launch app on linux and windows

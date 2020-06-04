@@ -85,6 +85,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   Stream<SignInState> _mapSignOutToState(SignOut event) async* {
-    await userRepository.signOut(event.context);
+    await userRepository.signOut();
   }
 }

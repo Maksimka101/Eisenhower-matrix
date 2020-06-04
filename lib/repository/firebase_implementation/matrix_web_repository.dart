@@ -42,19 +42,6 @@ class FirebaseMatrixWebRepository extends MatrixWebRepository {
 
   /// Throw [UserUnSigned] exception if the latest user in user repository is null
   @override
-  Future<Matrix> deleteCeilItem(String itemId) async {
-    try {
-      await _ensureEveryThingInitialized();
-    } on UserUnSigned catch (_) {
-      rethrow;
-    }
-    await _userMatrixCollectionRef.document(itemId).delete();
-    var userDocumentsSnapshot = await _userMatrixCollectionRef.getDocuments();
-    return MatrixMap.fromDocumentsSnapshot(userDocumentsSnapshot.documents);
-  }
-
-  /// Throw [UserUnSigned] exception if the latest user in user repository is null
-  @override
   Future<Matrix> fetchMatrix() async {
     try {
       await _ensureEveryThingInitialized();
@@ -69,6 +56,19 @@ class FirebaseMatrixWebRepository extends MatrixWebRepository {
 
   /// Throw [UserUnSigned] exception if the latest user in user repository is null
   @override
+  Future<Matrix> deleteCeilItem(String itemId) async {
+    try {
+      await _ensureEveryThingInitialized();
+    } on UserUnSigned catch (_) {
+      rethrow;
+    }
+    await _userMatrixCollectionRef.document(itemId).delete();
+    var userDocumentsSnapshot = await _userMatrixCollectionRef.getDocuments();
+    return MatrixMap.fromDocumentsSnapshot(userDocumentsSnapshot.documents);
+  }
+
+  /// Throw [UserUnSigned] exception if the latest user in user repository is null
+  @override
   Future<Matrix> saveCeilItem(CeilItem item) async {
     try {
       await _ensureEveryThingInitialized();
@@ -76,7 +76,7 @@ class FirebaseMatrixWebRepository extends MatrixWebRepository {
       rethrow;
     }
     var itemMapEntry = item.toMapEntry();
-    await _userMatrixCollectionRef.add({itemMapEntry.key: itemMapEntry.value});
+    await _userMatrixCollectionRef.document(item.id).setData(itemMapEntry.value);
     var userDocumentsSnapshot = await _userMatrixCollectionRef.getDocuments();
     return MatrixMap.fromDocumentsSnapshot(userDocumentsSnapshot.documents);
   }
@@ -199,7 +199,7 @@ extension CeilItemMap on CeilItem {
             case _notUrgentAndNotImportant:
               return CeilType.NotUrgentNotImportant;
             default:
-              return _urgentAndImportant;
+              return CeilType.UrgentImportant;
           }
         }(),
       );

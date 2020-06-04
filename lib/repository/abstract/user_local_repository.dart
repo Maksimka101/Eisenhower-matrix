@@ -1,13 +1,16 @@
 import 'package:eisenhower_matrix/models/models.dart';
 
 abstract class UserLocalRepository {
-	Future<User> fetchUser();
+  Future<User> fetchUser();
 
-	Future<User> saveUser(User user);
+  Future<User> saveUser(User user);
 
-	Future<void> signOut();
+  Future<void> signOut();
 
-	set signOutSynchronized(bool synchronized);
+  /// For internal usage. Call after sign out.
+  Future<void> eraseStorage();
 
-	Future<bool> get isSignOutSynchronized;
+  set signOutSynchronized(bool synchronized);
+
+  Future<bool> get isSignOutSynchronized;
 }
