@@ -21,6 +21,10 @@ To build app you need to:
 # Road map
 - [x] MVP
 
+- [ ] Run on:
+  - [ ] Web
+  - [ ] Mac os
+
 - Design
   - [ ] UI
   - [ ] UX
