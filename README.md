@@ -3,7 +3,7 @@
 The Eisenhower matrix app for all platforms: android, ios, mac os and web with cloud synchronization! Can't work with synchronization on windows and linux.
 
 # Installation
-~~You can just install apps from this links: [Android](android url), [Mac Os](mac url). Build it manually. Or try [web version](web url)!~~
+You can just install apps from these links: [Android](https://yadi.sk/d/BNUTlk8NUwv_Nw), ~~[Mac Os](mac url), [iOS](ios url)~~. Build it manually. Or try [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/)!
 
 # Screenshots
 Soon
