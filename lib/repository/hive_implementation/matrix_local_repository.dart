@@ -5,6 +5,11 @@ import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart'
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
 
 class HiveMatrixLocalRepository extends MatrixLocalRepository {
+
+  HiveMatrixLocalRepository() {
+    HiveUtils.init();
+  }
+
   @override
   Future<void> addUnSyncCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncCeilItemsBoxName);

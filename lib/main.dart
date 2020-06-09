@@ -1,3 +1,4 @@
+import 'package:eisenhower_matrix/bloc/bloc_base.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
@@ -15,6 +16,8 @@ void main() {
   // Comment import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  BlocSupervisor.delegate = SimpleBlocDelegate();
 
   // Fill here your credentials
   final userRepository = UserRepository(
@@ -67,6 +70,12 @@ class AppInit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformProvider(
+      settings: PlatformSettingsData(
+        iosUsesMaterialWidgets: true,
+        platformStyle: PlatformStyleData(
+          web: PlatformStyle.Cupertino,
+        ),
+      ),
       builder: (_) => PlatformApp(
         home: MultiBlocProvider(
           providers: [

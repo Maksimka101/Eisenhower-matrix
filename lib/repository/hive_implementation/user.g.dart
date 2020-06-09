@@ -66,13 +66,14 @@ class HiveUserAdapter extends TypeAdapter<HiveUser> {
       photoUrl: fields[2] as String,
       signInProvider: fields[3] as HiveSignInProvider,
       signOutSynced: fields[4] as bool,
+      userExist: fields[5] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveUser obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -82,6 +83,8 @@ class HiveUserAdapter extends TypeAdapter<HiveUser> {
       ..writeByte(3)
       ..write(obj.signInProvider)
       ..writeByte(4)
-      ..write(obj.signOutSynced);
+      ..write(obj.signOutSynced)
+      ..writeByte(5)
+      ..write(obj.userExist);
   }
 }

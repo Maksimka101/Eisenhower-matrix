@@ -70,6 +70,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           break;
       }
     } on CantSignIn catch (cantSignInException) {
+      await userRepository.fetchUser();
       switch (cantSignInException.exceptionReason) {
         case SignInExceptionReason.signInRepositoryError:
           yield SignInError(message: "Can't sign in due to server exception");

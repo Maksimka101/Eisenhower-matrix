@@ -25,6 +25,9 @@ class MatrixRepository {
       : assert(matrixWebRepository != null &&
             matrixLocalRepository != null &&
             userRepository != null) {
+    if (kIsWeb) {
+      _internetAvailable = true;
+    }
     userRepository.userStream.listen((user) {
       _user = user;
       if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
@@ -109,9 +112,9 @@ class MatrixRepository {
   /// Load last matrix state from both local and web repository.
   /// Push new matrix state to the [matrixStream]
   Future<void> fetchMatrix() async {
+    final localMatrix = await matrixLocalRepository.fetchMatrix();
+    _matrixStream.sink.add(localMatrix);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
-      final localMatrix = await matrixLocalRepository.fetchMatrix();
-      _matrixStream.sink.add(localMatrix);
       if (_internetAvailable) {
         try {
           // if matrix on backend and device are different they will synchronize and
@@ -120,9 +123,6 @@ class MatrixRepository {
           debugPrint('Can not fetch matrix from backend. Exception: $e');
         }
       }
-    } else {
-      final localMatrix = await matrixLocalRepository.fetchMatrix();
-      _matrixStream.sink.add(localMatrix);
     }
   }
 

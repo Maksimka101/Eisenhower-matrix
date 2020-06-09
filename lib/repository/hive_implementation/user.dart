@@ -17,6 +17,8 @@ class HiveUser {
   final HiveSignInProvider signInProvider;
   @HiveField(4)
   final bool signOutSynced;
+  @HiveField(5)
+  final bool userExist;
 
   HiveUser({
     @required this.id,
@@ -24,6 +26,7 @@ class HiveUser {
     this.photoUrl,
     @required this.signInProvider,
     @required this.signOutSynced,
+    @required this.userExist,
   });
 
   factory HiveUser.fromUser(User user, bool signOutSynced) => HiveUser(
@@ -32,6 +35,7 @@ class HiveUser {
         name: user?.name,
         photoUrl: user?.photoUrl,
         signOutSynced: signOutSynced,
+        userExist: user != null,
       );
 
   User toUser() => User(
@@ -42,6 +46,11 @@ class HiveUser {
             : SignInProvider.Anonymous,
         photoUrl: photoUrl,
       );
+
+  @override
+  String toString() {
+    return 'HiveUser{id: $id, name: $name, photoUrl: $photoUrl, signInProvider: $signInProvider, signOutSynced: $signOutSynced, userExist: $userExist}';
+  }
 }
 
 /// Sign in provider for hive user. Must be equal with [SignInProvider].

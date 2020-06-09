@@ -39,12 +39,12 @@ class SignInWithAppleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Apple'),
-//      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-//        SignInWith(
-//          context: context,
-//          signInProvider: SignInProvider.Apple,
-//        ),
-//      ),
+      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
+        SignInWith(
+          context: context,
+          signInProvider: SignInProvider.Apple,
+        ),
+      ),
     );
   }
 }
@@ -54,12 +54,12 @@ class SignInWithTwitterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Twitter'),
-//      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-//        SignInWith(
-//          context: context,
-//          signInProvider: SignInProvider.Twitter,
-//        ),
-//      ),
+      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
+        SignInWith(
+          context: context,
+          signInProvider: SignInProvider.Twitter,
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart';
 import 'package:eisenhower_matrix/repository/hive_implementation/user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,7 +31,12 @@ class HiveUtils {
       Hive.registerAdapter<HiveSignInProvider>(HiveSignInProviderAdapter());
       Hive.registerAdapter<HiveCeilItem>(HiveCeilItemAdapter());
       Hive.registerAdapter<HiveCeilType>(HiveCeilTypeAdapter());
-      Hive.init((await getApplicationDocumentsDirectory()).path);
+      if (kIsWeb) {
+        Hive.init('');
+      } else {
+        final appDocDir = await getApplicationDocumentsDirectory();
+        Hive.init(appDocDir.path);
+      }
       _initialized = true;
     }
   }

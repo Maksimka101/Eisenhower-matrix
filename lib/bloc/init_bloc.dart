@@ -29,6 +29,8 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   }
 
   Stream<InitState> _mapInitFetchedUserToState(InitFetchedUser fetchedUser) async* {
+    yield InitInitial();
+    await Future.delayed(Duration.zero);
     if (fetchedUser.user != null) {
       yield InitSignedIn();
     } else {
@@ -37,6 +39,11 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   }
 
   Stream<InitState> _mapInitStartedToState(InitStarted event) async* {
-    await userRepository.fetchUser();
+    try {
+      await userRepository.fetchUser();
+    } catch (e) {
+      yield InitSignedOut();
+      debugPrint('User fetched with error: $e');
+    }
   }
 }

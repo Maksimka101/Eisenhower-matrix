@@ -29,7 +29,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_platform_widgets: any
   freezed_annotation: any
-  built_collection: any
   firebase_storage: any
   cupertino_icons: any
   cloud_firestore: any
@@ -44,7 +43,7 @@ dependencies:
   hive: any
 
 dependency_overrides:
-  dartx: ^0.3.0
+  dartx: ^0.4.1
 
 dev_dependencies:
   hive_generator: ^0.7.0+2

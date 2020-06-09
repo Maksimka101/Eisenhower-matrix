@@ -5,6 +5,7 @@ import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_local_repository.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class UserRepository {
   final _userStream = StreamController<User>.broadcast();
@@ -14,6 +15,9 @@ class UserRepository {
 
   UserRepository({@required this.userSignInRepository, @required this.userLocalRepository})
       : assert(userSignInRepository != null && userLocalRepository != null) {
+    if (kIsWeb) {
+      _internetAvailable = true;
+    }
     Connectivity()
       ..checkConnectivity().then((connectivityResult) =>
           _internetAvailable = connectivityResult != ConnectivityResult.none)
@@ -37,7 +41,7 @@ class UserRepository {
       try {
         final user = await userSignInRepository.signInAnonymously(context);
         await userLocalRepository.saveUser(user);
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
         _userStream.sink.add(user);
       } catch (e) {
         debugPrint('Can not sign in anonymously. Exception: $e');
@@ -59,7 +63,7 @@ class UserRepository {
       try {
         final user = await userSignInRepository.signInWithGoogle(context);
         await userLocalRepository.saveUser(user);
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
         _userStream.sink.add(user);
       } catch (e) {
         debugPrint('Can not sign in with google. Exception: $e');
@@ -81,7 +85,7 @@ class UserRepository {
       try {
         final user = await userSignInRepository.signInWithGithub(context);
         await userLocalRepository.saveUser(user);
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
         _userStream.sink.add(user);
       } catch (e) {
         debugPrint('Can not sign in with github. Exception: $e');
@@ -103,7 +107,7 @@ class UserRepository {
       try {
         final user = await userSignInRepository.signInWithTwitter(context);
         await userLocalRepository.saveUser(user);
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
         _userStream.sink.add(user);
       } catch (e) {
         debugPrint('Can not sign in with twitter. Exception: $e');
@@ -125,7 +129,7 @@ class UserRepository {
       try {
         final user = await userSignInRepository.signInWithApple(context);
         await userLocalRepository.saveUser(user);
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
         _userStream.sink.add(user);
       } catch (e) {
         debugPrint('Can not sign in with apple. Exception: $e');
@@ -145,14 +149,14 @@ class UserRepository {
       try {
         await userSignInRepository.signOut();
         await userLocalRepository.signOut();
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
       } catch (e) {
         debugPrint('Can not sign out. Exception: $e');
-        userLocalRepository.signOutSynchronized = false;
+        await userLocalRepository.signOutSynchronized(false);
         await userLocalRepository.signOut();
       }
     } else {
-      userLocalRepository.signOutSynchronized = false;
+      await userLocalRepository.signOutSynchronized(false);
       await userLocalRepository.signOut();
     }
     _userStream.sink.add(null);
@@ -166,7 +170,7 @@ class UserRepository {
     if (!signOutSynced) {
       try {
         await userSignInRepository.signOut();
-        userLocalRepository.signOutSynchronized = true;
+        await userLocalRepository.signOutSynchronized(true);
       } catch (e) {
         debugPrint('Can not sync user sign in. Exception: $e');
       }

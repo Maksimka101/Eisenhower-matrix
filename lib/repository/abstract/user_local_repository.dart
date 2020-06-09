@@ -10,7 +10,7 @@ abstract class UserLocalRepository {
   /// For internal usage. Call after sign out.
   Future<void> eraseStorage();
 
-  set signOutSynchronized(bool synchronized);
+  Future<void> signOutSynchronized(bool synchronized);
 
   Future<bool> get isSignOutSynchronized;
 }
