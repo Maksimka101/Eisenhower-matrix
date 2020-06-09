@@ -2,7 +2,6 @@ import 'package:eisenhower_matrix/models/user.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_local_repository.dart';
 import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart';
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'user.dart';
 

@@ -77,6 +77,7 @@ class AppInit extends StatelessWidget {
         ),
       ),
       builder: (_) => PlatformApp(
+        debugShowCheckedModeBanner: false,
         home: MultiBlocProvider(
           providers: [
             BlocProvider<MatrixBloc>(

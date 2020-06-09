@@ -1,12 +1,19 @@
 # The Eisenhower matrix
 
-The Eisenhower matrix app for all platforms: android, ios, mac os and web with cloud synchronization! Can't work with synchronization on windows and linux.
+The Eisenhower matrix app for all platforms: android, ios, mac os and web with cloud synchronization! 
 
-# Installation
-You can just install apps from these links: [Android](https://yadi.sk/d/BNUTlk8NUwv_Nw), ~~[Mac Os](mac url), [iOS](ios url)~~. Build it manually. Or try [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/)!
+Try it right now with the [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/).
 
 # Screenshots
-Soon
+|             iOS                       |                  Android              |
+| :-----------------------------------: | :-----------------------------------: |
+| ![](https://yadi.sk/i/KLEfXVDf3ZGe4w) | ![](https://yadi.sk/i/HZrapDLh-fjGQQ) |
+| ![](https://yadi.sk/i/-UbJEpKSvN-ksA) | ![](https://yadi.sk/i/ulhueW9nOKQkqg) |
+| ![](https://yadi.sk/i/6UmgnlaCOrTUFw) | ![](https://yadi.sk/i/cc-9EwXik4QY9w) |
+
+# Installation
+You can just install apps from these links: [Android](https://yadi.sk/d/BNUTlk8NUwv_Nw), ~~[Mac Os](mac url), [iOS](ios url)~~.
+
 
 # How to build
 To build app you need to:
@@ -21,8 +28,8 @@ To build app you need to:
 # Road map
 - [x] MVP
 
-- [ ] Run on:
-  - [ ] Web
+- Run on:
+  - [x] Web
   - [ ] Mac os
 
 - Design
