@@ -25,6 +25,7 @@ class HiveUtils {
 
   static Future<void> init() async {
     if (!_initialized) {
+      _initialized = true;
       Hive.registerAdapter<HiveUser>(HiveUserAdapter());
       Hive.registerAdapter<HiveSignInProvider>(HiveSignInProviderAdapter());
       Hive.registerAdapter<HiveCeilItem>(HiveCeilItemAdapter());
@@ -35,7 +36,6 @@ class HiveUtils {
         final appDocDir = await getApplicationDocumentsDirectory();
         Hive.init(appDocDir.path);
       }
-      _initialized = true;
     }
   }
 }

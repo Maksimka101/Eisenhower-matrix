@@ -1,7 +1,9 @@
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
+import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -29,7 +31,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
     final textStyle = DefaultTextStyle.of(context).style;
     return DefaultTextStyle(
       style: TextStyle(
-        fontSize: 13,
+        fontSize: textStyle.fontSize - 2,
+        height: 1,
       ),
       child: PlatformScaffold(
         body: SafeArea(
@@ -41,7 +44,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
                     Column(
                       children: <Widget>[
                         SizedBox(
-                          height: textStyle.fontSize + 4,
+                          height: textStyle.fontSize,
+                          width: textStyle.fontSize,
                         ),
                         Flexible(
                           flex: 1,
@@ -50,9 +54,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 1),
                               alignment: Alignment.center,
-                              color: CupertinoColors.systemRed,
+                              color: getCeilTitleColor(CeilType.UrgentImportant),
                               child: Text(
-                                'Important',
+                                'Urgent',
                                 style: TextStyle(color: Colors.white),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -66,9 +70,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 1),
                               alignment: Alignment.center,
-                              color: CupertinoColors.activeGreen,
+                              color: getCeilTitleColor(CeilType.UrgentNotImportant),
                               child: Text(
-                                'Not Important',
+                                'Not Urgent',
                                 style: TextStyle(color: Colors.white),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -83,14 +87,13 @@ class _MatrixScreenState extends State<MatrixScreen> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Flexible(
-                                flex: 1,
+                              Expanded(
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 1),
                                   alignment: Alignment.center,
-                                  color: CupertinoColors.systemRed,
+                                  color: getCeilTitleColor(CeilType.UrgentImportant),
                                   child: Text(
-                                    'Urgent',
+                                    'Important',
                                     style: TextStyle(color: Colors.white),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -101,9 +104,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 1),
                                   alignment: Alignment.center,
-                                  color: Colors.blue[400],
+                                  color: getCeilTitleColor(CeilType.NotUrgentImportant),
                                   child: Text(
-                                    'Not Urgent',
+                                    'Not Important',
                                     style: TextStyle(color: Colors.white),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -115,10 +118,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                           Expanded(
                             child: Row(
                               children: <Widget>[
-                                Expanded(
+                                Flexible(
                                   child: Column(
                                     children: <Widget>[
-                                      Expanded(
+                                      Flexible(
                                         // UrgentImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -152,47 +155,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                           },
                                         ),
                                       ),
-                                      Expanded(
-                                        // UrgentImportant
-                                        child: BlocBuilder<MatrixBloc, MatrixState>(
-                                          condition: (previous, state) {
-                                            if (state is MatrixInitial) {
-                                              return true;
-                                            }
-                                            if (state is MatrixFetched &&
-                                                previous is MatrixFetched) {
-                                              return state.matrix.notUrgentAndImportant !=
-                                                  previous.matrix.notUrgentAndImportant;
-                                            } else {
-                                              return true;
-                                            }
-                                          },
-                                          builder: (context, urgentImportant) {
-                                            final ceilType = CeilType.NotUrgentImportant;
-                                            switch (urgentImportant.runtimeType) {
-                                              case MatrixInitial:
-                                                return MatrixCeilWidget(
-                                                  ceil: Ceil(type: ceilType, items: []),
-                                                );
-                                              case MatrixFetched:
-                                                return MatrixCeilWidget(
-                                                  ceil: (urgentImportant as MatrixFetched)
-                                                      .matrix
-                                                      .notUrgentAndImportant,
-                                                );
-                                              default:
-                                                return _unknownState(urgentImportant, context);
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Expanded(
+                                      Flexible(
                                         // UrgentNotImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -226,7 +189,47 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                           },
                                         ),
                                       ),
-                                      Expanded(
+                                    ],
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Flexible(
+                                        // UrgentImportant
+                                        child: BlocBuilder<MatrixBloc, MatrixState>(
+                                          condition: (previous, state) {
+                                            if (state is MatrixInitial) {
+                                              return true;
+                                            }
+                                            if (state is MatrixFetched &&
+                                                previous is MatrixFetched) {
+                                              return state.matrix.notUrgentAndImportant !=
+                                                  previous.matrix.notUrgentAndImportant;
+                                            } else {
+                                              return true;
+                                            }
+                                          },
+                                          builder: (context, urgentImportant) {
+                                            final ceilType = CeilType.NotUrgentImportant;
+                                            switch (urgentImportant.runtimeType) {
+                                              case MatrixInitial:
+                                                return MatrixCeilWidget(
+                                                  ceil: Ceil(type: ceilType, items: []),
+                                                );
+                                              case MatrixFetched:
+                                                return MatrixCeilWidget(
+                                                  ceil: (urgentImportant as MatrixFetched)
+                                                      .matrix
+                                                      .notUrgentAndImportant,
+                                                );
+                                              default:
+                                                return _unknownState(urgentImportant, context);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Flexible(
                                         // NotUrgentNotImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {

@@ -37,12 +37,14 @@ class MatrixCeilWidget extends StatelessWidget {
       child: Container(
         color: getCeilColor(ceil.type),
         child: ListView(
-          padding: EdgeInsets.all(4),
           children: ceil.items
               .map<Widget>(
-                (ceilItem) => MatrixCeilItem(
-                  item: ceilItem,
-                  inOneLine: true,
+                (ceilItem) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 7),
+                  child: MatrixCeilItem(
+                    item: ceilItem,
+                    inOneLine: true,
+                  ),
                 ),
               )
               .toList(),

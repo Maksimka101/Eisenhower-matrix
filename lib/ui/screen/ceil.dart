@@ -1,5 +1,6 @@
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/models/models.dart';
+import 'package:eisenhower_matrix/ui/widget/common/custom_platform_icon_button.dart';
 import 'package:eisenhower_matrix/ui/widget/common/matrix_ceil_item.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,73 +52,124 @@ class _CeilScreenState extends State<CeilScreen> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBar: PlatformAppBar(
-        title: Text(widget.ceilType.toString().split('.')[1]),
-        trailingActions: <Widget>[
-          GestureDetector(
-            child: Icon(PlatformIcons(context).add),
-            onTap: _addItemTapped,
+      backgroundColor: getCeilColor(widget.ceilType),
+      body: Column(
+        children: <Widget>[
+          Container(
+            color: getCeilTitleColor(widget.ceilType),
+            child: SafeArea(
+              bottom: false,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  PlatformBackButton(
+                    color: Colors.white,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        () {
+                          switch (widget.ceilType) {
+                            case CeilType.UrgentImportant:
+                              return 'Urgent And Important';
+                            case CeilType.NotUrgentImportant:
+                              return 'Not Urgent And Important';
+                            case CeilType.UrgentNotImportant:
+                              return 'Urgent And Not Important';
+                            case CeilType.NotUrgentNotImportant:
+                              return 'Not Urgent And Not Important';
+                          }
+                          return 'Lol what?!';
+                        }(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  CustomPlatformIconButton(
+                    icon: Icon(
+                      PlatformIcons(context).add,
+                      color: Colors.white,
+                    ),
+                    onPressed: _addItemTapped,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Flexible(
+            child: BlocBuilder<MatrixBloc, MatrixState>(
+              builder: (context, state) {
+                switch (state.runtimeType) {
+                  case MatrixFetched:
+                    List<CeilItem> items;
+                    switch (widget.ceilType) {
+                      case CeilType.UrgentImportant:
+                        items = (state as MatrixFetched).matrix.urgentAndImportant.items;
+                        break;
+                      case CeilType.UrgentNotImportant:
+                        items = (state as MatrixFetched).matrix.urgentAndNotImportant.items;
+                        break;
+                      case CeilType.NotUrgentImportant:
+                        items = (state as MatrixFetched).matrix.notUrgentAndImportant.items;
+                        break;
+                      case CeilType.NotUrgentNotImportant:
+                        items = (state as MatrixFetched).matrix.notUrgentAndNotImportant.items;
+                        break;
+                    }
+                    _itemsCount = items.length;
+                    return ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
+                      children: [
+                        SizedBox(height: 5),
+                        ...items
+                            .map<Widget>(
+                              (item) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 3,
+                                ),
+                                child: MatrixCeilItem(
+                                  item: item,
+                                  inOneLine: false,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        if (_editingEnabled)
+                          PlatformTextField(
+                            material: (_, __) => MaterialTextFieldData(
+                              decoration: InputDecoration(
+                                fillColor: Colors.transparent,
+                                border: InputBorder.none,
+                              ),
+                            ),
+                            cupertino: (_, __) => CupertinoTextFieldData(
+                              padding: EdgeInsets.all(0),
+                              decoration: BoxDecoration(color: Colors.transparent),
+                            ),
+                            style: TextStyle(color: Colors.black),
+                            textCapitalization: TextCapitalization.sentences,
+                            focusNode: _focusNode,
+                            maxLines: 1,
+                            onSubmitted: _itemAdded,
+                          ),
+                        GestureDetector(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height,
+                            color: Colors.transparent,
+                          ),
+                          onDoubleTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
           ),
         ],
-      ),
-      backgroundColor: getCeilColor(widget.ceilType),
-      body: BlocBuilder<MatrixBloc, MatrixState>(
-        builder: (context, state) {
-          switch (state.runtimeType) {
-            case MatrixFetched:
-              List<CeilItem> items;
-              switch (widget.ceilType) {
-                case CeilType.UrgentImportant:
-                  items = (state as MatrixFetched).matrix.urgentAndImportant.items;
-                  break;
-                case CeilType.UrgentNotImportant:
-                  items = (state as MatrixFetched).matrix.urgentAndNotImportant.items;
-                  break;
-                case CeilType.NotUrgentImportant:
-                  items = (state as MatrixFetched).matrix.notUrgentAndImportant.items;
-                  break;
-                case CeilType.NotUrgentNotImportant:
-                  items = (state as MatrixFetched).matrix.notUrgentAndNotImportant.items;
-                  break;
-              }
-              _itemsCount = items.length;
-              return ListView(
-                children: [
-                  SizedBox(height: 5),
-                  ...items
-                      .map<Widget>(
-                        (item) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 7,
-                            vertical: 3,
-                          ),
-                          child: MatrixCeilItem(
-                            item: item,
-                            inOneLine: false,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  if (_editingEnabled)
-                    PlatformTextField(
-                      material: (_, __) => MaterialTextFieldData(
-                        decoration: InputDecoration(fillColor: Colors.transparent),
-                      ),
-                      cupertino: (_, __) => CupertinoTextFieldData(
-                        decoration: BoxDecoration(color: Colors.transparent),
-                      ),
-                      style: TextStyle(color: Colors.black),
-                      textCapitalization: TextCapitalization.sentences,
-                      focusNode: _focusNode,
-                      maxLines: 1,
-                      onSubmitted: _itemAdded,
-                    ),
-                ],
-              );
-            default:
-              return Container();
-          }
-        },
       ),
     );
   }

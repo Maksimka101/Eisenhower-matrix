@@ -13,32 +13,28 @@ class MatrixCeilItem extends StatelessWidget {
         ),
       );
 
-  const MatrixCeilItem({Key key, @required this.item, @required this.inOneLine})
-      : assert(item != null && inOneLine != null),
+  const MatrixCeilItem({
+    Key key,
+    @required this.item,
+    @required this.inOneLine,
+  })  : assert(item != null && inOneLine != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Dismissible(
-        key: Key(item.id),
-        direction: DismissDirection.startToEnd,
-        background: Container(
-          alignment: Alignment.centerLeft,
-          color: Colors.red,
-//          child: Icon(
-//            PlatformIcons(context).delete,
-//            color: DefaultTextStyle.of(context).style.color,
-//          ),
-        ),
-        onDismissed: (_) => _itemDeleted(context),
-        child: Text(
-          item.title,
-          style: TextStyle(color: Colors.black),
-          maxLines: inOneLine ? 1 : null,
-          overflow: inOneLine ? TextOverflow.ellipsis : null,
-        ),
+    return Dismissible(
+      key: Key(item.id),
+      direction: DismissDirection.startToEnd,
+      background: Container(
+        alignment: Alignment.centerLeft,
+        color: Colors.red,
+      ),
+      onDismissed: (_) => _itemDeleted(context),
+      child: Text(
+        item.title,
+        style: TextStyle(color: Colors.black),
+        maxLines: inOneLine ? 1 : null,
+        overflow: inOneLine ? TextOverflow.ellipsis : null,
       ),
     );
   }
