@@ -42,16 +42,16 @@ class _MatrixScreenState extends State<MatrixScreen> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        SizedBox(
-                          height: textStyle.fontSize,
-                          width: textStyle.fontSize,
+                        Text(
+                          '',
+                          style: TextStyle(color: Colors.transparent),
                         ),
                         Flexible(
                           flex: 1,
                           child: RotatedBox(
                             quarterTurns: -1,
                             child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 1),
+//                              padding: EdgeInsets.symmetric(vertical: 1),
                               alignment: Alignment.center,
                               color: getCeilTitleColor(CeilType.UrgentImportant),
                               child: Text(
@@ -67,7 +67,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                           child: RotatedBox(
                             quarterTurns: -1,
                             child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 1),
+//                              padding: EdgeInsets.symmetric(vertical: 1),
                               alignment: Alignment.center,
                               color: getCeilTitleColor(CeilType.UrgentNotImportant),
                               child: Text(
@@ -88,7 +88,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             children: <Widget>[
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 1),
+//                                  padding: EdgeInsets.symmetric(vertical: 1),
                                   alignment: Alignment.center,
                                   color: getCeilTitleColor(CeilType.UrgentImportant),
                                   child: Text(
@@ -101,7 +101,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                               ),
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 1),
+//                                  padding: EdgeInsets.symmetric(vertical: 1),
                                   alignment: Alignment.center,
                                   color: getCeilTitleColor(CeilType.NotUrgentImportant),
                                   child: Text(
@@ -139,7 +139,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.UrgentImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
+                                                return MatrixCeilLoadingWidget(
+                                                  ceilType: ceilType,
+                                                );
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -171,7 +173,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.UrgentNotImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
+                                                return MatrixCeilLoadingWidget(
+                                                  ceilType: ceilType,
+                                                );
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -209,7 +213,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.NotUrgentImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
+                                                return MatrixCeilLoadingWidget(
+                                                  ceilType: ceilType,
+                                                );
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -241,7 +247,9 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.NotUrgentNotImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
+                                                return MatrixCeilLoadingWidget(
+                                                  ceilType: ceilType,
+                                                );
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)

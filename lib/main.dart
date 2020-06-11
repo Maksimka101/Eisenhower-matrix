@@ -1,4 +1,5 @@
 import 'package:eisenhower_matrix/bloc/bloc_base.dart';
+import 'package:eisenhower_matrix/ui/screen/platform_size_adapter.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
@@ -76,7 +77,10 @@ class AppInit extends StatelessWidget {
           web: PlatformStyle.Cupertino,
         ),
       ),
-      builder: (_) => PlatformApp(
+      builder: (_) => MaterialApp(
+        themeMode: ThemeMode.system,
+        theme: ThemeData(),
+        darkTheme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: MultiBlocProvider(
           providers: [
@@ -142,19 +146,21 @@ class _UserInitState extends State<UserInit> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InitBloc, InitState>(
-      builder: (context, initState) {
-        switch (initState.runtimeType) {
-          case InitInitial:
-            return _loadingScreen();
-          case InitSignedIn:
-            return MainAppScreen();
-          case InitSignedOut:
-            return SignInScreen();
-          default:
-            return _errorScreen('Unknown initState: $initState');
-        }
-      },
+    return PlatformSizeAdapter(
+      child: BlocBuilder<InitBloc, InitState>(
+        builder: (context, initState) {
+          switch (initState.runtimeType) {
+            case InitInitial:
+              return _loadingScreen();
+            case InitSignedIn:
+              return MainAppScreen();
+            case InitSignedOut:
+              return SignInScreen();
+            default:
+              return _errorScreen('Unknown initState: $initState');
+          }
+        },
+      ),
     );
   }
 }
