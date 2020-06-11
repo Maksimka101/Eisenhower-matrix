@@ -6,10 +6,6 @@ import 'package:eisenhower_matrix/utils/hive_utils.dart';
 import 'user.dart';
 
 class HiveUserLocalRepository extends UserLocalRepository {
-  HiveUserLocalRepository() {
-    HiveUtils.init();
-  }
-
   @override
   Future<User> fetchUser() async {
     var userBox = await HiveUtils.getBox<HiveUser>(HiveUtils.userBoxName);

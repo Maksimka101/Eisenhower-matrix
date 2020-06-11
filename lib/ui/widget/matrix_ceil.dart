@@ -6,6 +6,7 @@ import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class MatrixCeilWidget extends StatelessWidget {
   final Ceil ceil;
@@ -49,6 +50,26 @@ class MatrixCeilWidget extends StatelessWidget {
               )
               .toList(),
         ),
+      ),
+    );
+  }
+}
+
+class MatrixCeilLoadingWidget extends StatelessWidget {
+  final CeilType ceilType;
+
+  const MatrixCeilLoadingWidget({Key key, @required this.ceilType})
+      : assert(ceilType != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.expand(
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(2),
+        color: getCeilColor(ceilType),
+        child: PlatformCircularProgressIndicator(),
       ),
     );
   }

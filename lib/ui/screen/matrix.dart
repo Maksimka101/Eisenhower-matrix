@@ -3,7 +3,6 @@ import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -118,10 +117,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                           Expanded(
                             child: Row(
                               children: <Widget>[
-                                Flexible(
+                                Expanded(
                                   child: Column(
                                     children: <Widget>[
-                                      Flexible(
+                                      Expanded(
                                         // UrgentImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -140,9 +139,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.UrgentImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilWidget(
-                                                  ceil: Ceil(type: ceilType, items: []),
-                                                );
+                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -155,7 +152,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                           },
                                         ),
                                       ),
-                                      Flexible(
+                                      Expanded(
                                         // UrgentNotImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -174,9 +171,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.UrgentNotImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilWidget(
-                                                  ceil: Ceil(type: ceilType, items: []),
-                                                );
+                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -192,10 +187,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                     ],
                                   ),
                                 ),
-                                Flexible(
+                                Expanded(
                                   child: Column(
                                     children: <Widget>[
-                                      Flexible(
+                                      Expanded(
                                         // UrgentImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -214,9 +209,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.NotUrgentImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilWidget(
-                                                  ceil: Ceil(type: ceilType, items: []),
-                                                );
+                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)
@@ -229,7 +222,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                           },
                                         ),
                                       ),
-                                      Flexible(
+                                      Expanded(
                                         // NotUrgentNotImportant
                                         child: BlocBuilder<MatrixBloc, MatrixState>(
                                           condition: (previous, state) {
@@ -248,9 +241,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                             final ceilType = CeilType.NotUrgentNotImportant;
                                             switch (urgentImportant.runtimeType) {
                                               case MatrixInitial:
-                                                return MatrixCeilWidget(
-                                                  ceil: Ceil(type: ceilType, items: []),
-                                                );
+                                                return MatrixCeilLoadingWidget(ceilType: ceilType,);
                                               case MatrixFetched:
                                                 return MatrixCeilWidget(
                                                   ceil: (urgentImportant as MatrixFetched)

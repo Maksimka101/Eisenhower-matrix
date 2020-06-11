@@ -109,7 +109,10 @@ class __LoadingButtonState extends State<_LoadingButton> {
           widget.onPressed();
         },
       ),
-      secondChild: PlatformCircularProgressIndicator(),
+      secondChild: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: PlatformCircularProgressIndicator(),
+      ),
       crossFadeState: _isLoading ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       duration: Duration(milliseconds: 400),
     );
