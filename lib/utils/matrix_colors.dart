@@ -1,7 +1,9 @@
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:flutter/material.dart';
 
-Color getCeilColor(CeilType type) {
+Color getCeilColor(CeilType type, BuildContext context) {
+  return Theme.of(context).scaffoldBackgroundColor;
+  return Colors.white;
   switch (type) {
     case CeilType.UrgentImportant:
       return Colors.red[100];
@@ -15,7 +17,9 @@ Color getCeilColor(CeilType type) {
   throw Exception('Unknown ceil type');
 }
 
-Color getCeilTitleColor(CeilType type) {
+Color getCeilTitleColor(CeilType type, BuildContext context) {
+  return Theme.of(context).dividerColor;
+  return Colors.white70;
   switch (type) {
     case CeilType.UrgentImportant:
       return Colors.redAccent[200];

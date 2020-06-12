@@ -28,11 +28,12 @@ class MatrixCeilItem extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerLeft,
         color: Colors.red,
+        padding: EdgeInsets.symmetric(vertical: 3),
       ),
       onDismissed: (_) => _itemDeleted(context),
       child: Text(
         item.title,
-        style: TextStyle(color: Colors.black),
+        style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.w400),
         maxLines: inOneLine ? 1 : null,
         overflow: inOneLine ? TextOverflow.ellipsis : null,
       ),

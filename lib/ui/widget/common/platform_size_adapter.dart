@@ -20,25 +20,25 @@ class PlatformSizeAdapter extends StatelessWidget {
       if (queryData.orientation == Orientation.landscape &&
           queryData.size.height * 1.6 < queryData.size.width) {
         final theme = Theme.of(context);
-        return Row(
-          children: <Widget>[
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: theme.canvasColor,
+        return Container(
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: Container(),
               ),
-            ),
-            Flexible(
-              flex: 4,
-              child: child,
-            ),
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: theme.canvasColor,
+              Flexible(
+                flex: 3,
+                child: child,
               ),
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: Text(''),
+                ),
+              ),
+            ],
+          ),
         );
       } else {
         return child;

@@ -24,9 +24,7 @@ class CustomPlatformIconButton extends StatelessWidget {
 class PlatformBackButton extends StatelessWidget {
   final Color color;
 
-  const PlatformBackButton({Key key, @required this.color})
-      : assert(color != null),
-        super(key: key);
+  const PlatformBackButton({Key key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

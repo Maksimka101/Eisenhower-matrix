@@ -52,7 +52,7 @@ class _CeilScreenState extends State<CeilScreen> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      backgroundColor: getCeilColor(widget.ceilType),
+      backgroundColor: getCeilColor(widget.ceilType, context),
       body: GestureDetector(
         onDoubleTap: () {
           Navigator.pop(context);
@@ -60,15 +60,13 @@ class _CeilScreenState extends State<CeilScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              color: getCeilTitleColor(widget.ceilType),
+              color: getCeilTitleColor(widget.ceilType, context),
               child: SafeArea(
                 bottom: false,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    PlatformBackButton(
-                      color: Colors.white,
-                    ),
+                    PlatformBackButton(),
                     Expanded(
                       child: Center(
                         child: Text(
@@ -85,14 +83,12 @@ class _CeilScreenState extends State<CeilScreen> {
                             }
                             return 'Lol what?!';
                           }(),
-                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
                     CustomPlatformIconButton(
                       icon: Icon(
                         PlatformIcons(context).add,
-                        color: Colors.white,
                       ),
                       onPressed: _addItemTapped,
                     ),

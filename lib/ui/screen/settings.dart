@@ -1,5 +1,6 @@
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -8,7 +9,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBar: PlatformAppBar(
-        title: Text('Settings'),
+        backgroundColor: Theme.of(context).appBarTheme.color,
+        title: Text('Settings', style: DefaultTextStyle.of(context).style,),
       ),
       body: Center(
         child: PlatformButton(

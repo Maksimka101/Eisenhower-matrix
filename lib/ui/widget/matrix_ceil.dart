@@ -36,7 +36,7 @@ class MatrixCeilWidget extends StatelessWidget {
     return GestureDetector(
       onDoubleTap: () => _ceilOpened(context),
       child: Container(
-        color: getCeilColor(ceil.type),
+        color: getCeilColor(ceil.type, context),
         child: ListView(
           children: ceil.items
               .map<Widget>(
@@ -68,7 +68,7 @@ class MatrixCeilLoadingWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(2),
-        color: getCeilColor(ceilType),
+        color: getCeilColor(ceilType, context),
         child: PlatformCircularProgressIndicator(),
       ),
     );
