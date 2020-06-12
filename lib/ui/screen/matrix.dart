@@ -37,7 +37,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
   ) {
     final dividerColor = Colors.transparent;
     return PlatformScaffold(
-      backgroundColor: getCeilTitleColor(CeilType.UrgentImportant, context),
+      backgroundColor: getCeilTitleColor(context),
       body: SafeArea(
         child: Row(
           children: <Widget>[
@@ -57,7 +57,6 @@ class _MatrixScreenState extends State<MatrixScreen> {
                     child: Container(
                       padding: titlePadding,
                       alignment: Alignment.center,
-//                              color: getCeilTitleColor(CeilType.UrgentImportant, context),
                       child: Text(
                         'Urgent',
                         style: titleTextStyle,
@@ -73,7 +72,6 @@ class _MatrixScreenState extends State<MatrixScreen> {
                     child: Container(
                       padding: titlePadding,
                       alignment: Alignment.center,
-//                              color: getCeilTitleColor(CeilType.UrgentNotImportant, context),
                       child: Text(
                         'Not Urgent',
                         style: titleTextStyle,

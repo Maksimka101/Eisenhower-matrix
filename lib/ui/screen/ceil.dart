@@ -52,7 +52,7 @@ class _CeilScreenState extends State<CeilScreen> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      backgroundColor: getCeilColor(widget.ceilType, context),
+      backgroundColor: getCeilColor(context),
       body: GestureDetector(
         onDoubleTap: () {
           Navigator.pop(context);
@@ -60,7 +60,7 @@ class _CeilScreenState extends State<CeilScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              color: getCeilTitleColor(widget.ceilType, context),
+              color: getCeilTitleColor(context),
               child: SafeArea(
                 bottom: false,
                 child: Row(
