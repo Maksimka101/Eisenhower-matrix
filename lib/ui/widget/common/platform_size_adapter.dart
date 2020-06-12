@@ -19,12 +19,11 @@ class PlatformSizeAdapter extends StatelessWidget {
       final queryData = MediaQuery.of(context);
       if (queryData.orientation == Orientation.landscape &&
           queryData.size.height * 1.6 < queryData.size.width) {
-        final theme = Theme.of(context);
         return Container(
           child: Row(
             children: <Widget>[
               Flexible(
-                flex: 1,
+                flex: 2,
                 child: Container(),
               ),
               Flexible(
@@ -32,9 +31,8 @@ class PlatformSizeAdapter extends StatelessWidget {
                 child: child,
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Container(
-                  child: Text(''),
                 ),
               ),
             ],
