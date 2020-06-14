@@ -52,6 +52,7 @@ class _CeilScreenState extends State<CeilScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cursorColor = Theme.of(context).dividerColor;
     return PlatformScaffold(
       backgroundColor: getCeilColor(context),
       body: GestureDetector(
@@ -88,8 +89,12 @@ class _CeilScreenState extends State<CeilScreen> {
                       ),
                     ),
                     CustomPlatformIconButton(
-                      icon: Icon(
-                        PlatformIcons(context).add,
+                      icon: Container(
+                        width: 50,
+                        alignment: Alignment.center,
+                        child: Icon(
+                          PlatformIcons(context).add,
+                        ),
                       ),
                       onPressed: _addItemTapped,
                     ),
@@ -137,25 +142,25 @@ class _CeilScreenState extends State<CeilScreen> {
                                 )
                                 .toList(),
                             if (_editingEnabled)
-                              PlatformTextField(
-                                material: (_, __) => MaterialTextFieldData(
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.transparent,
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                                cupertino: (_, __) => CupertinoTextFieldData(
-                                  padding: EdgeInsets.all(0),
-                                  decoration: BoxDecoration(color: Colors.transparent),
-                                ),
+                              TextField(
+                                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                                      fontSize: DefaultTextStyle.of(context).style.fontSize,
+                                    ),
                                 textCapitalization: TextCapitalization.sentences,
                                 focusNode: _focusNode,
                                 maxLines: 1,
                                 onSubmitted: _itemAdded,
+                                decoration: InputDecoration(
+                                  hintText: 'Write your task here...',
+                                  fillColor: Colors.transparent,
+                                  border: InputBorder.none,
+                                ),
+                                cursorColor: cursorColor,
                               ),
                           ],
                         );
                       default:
+                        debugPrint('Unknown state in CeilScreen: $state');
                         return Container();
                     }
                   },

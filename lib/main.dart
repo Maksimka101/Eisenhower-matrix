@@ -1,4 +1,5 @@
 import 'package:eisenhower_matrix/bloc/bloc_base.dart';
+import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
@@ -77,7 +78,8 @@ class AppInit extends StatelessWidget {
         ),
       ),
       builder: (_) => MaterialApp(
-        themeMode: ThemeMode.system,
+        // ThemeMode.system doesn't work in web
+        themeMode: isWeb ? ThemeMode.light : ThemeMode.system,
         theme: ThemeData(),
         darkTheme: ThemeData(
           brightness: Brightness.dark,

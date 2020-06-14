@@ -57,46 +57,41 @@ class MatrixRepository {
   /// Push new matrix state to the [matrixStream]
   Future<void> saveCeilItem(CeilItem item) async {
     item = item.copyWith(id: _generateId(item.title));
+    final localMatrix = await matrixLocalRepository.saveCeilItem(item);
+    await matrixLocalRepository.addUnSyncCeilItem(item.id);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {
         try {
           final backendMatrix = await matrixWebRepository.saveCeilItem(item);
-          final localMatrix = await matrixLocalRepository.saveCeilItem(item);
+          await matrixLocalRepository.deleteUnSyncCeilItem(item.id);
           await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
         } catch (e) {
           debugPrint('Can not create or update ceil item $item. Exception: $e');
-          final localMatrix = await matrixLocalRepository.saveCeilItem(item);
-          await matrixLocalRepository.addUnSyncCeilItem(item.id);
           _matrixStream.sink.add(localMatrix);
         }
       } else {
-        await matrixLocalRepository.addUnSyncCeilItem(item.id);
-        final localMatrix = await matrixLocalRepository.saveCeilItem(item);
         _matrixStream.sink.add(localMatrix);
       }
     } else {
-      final localMatrix = await matrixLocalRepository.saveCeilItem(item);
       _matrixStream.sink.add(localMatrix);
     }
   }
 
   /// Push new matrix state to the [matrixStream]
   Future<void> deleteCeilItem(String itemId) async {
+    await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
+    final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {
         try {
           final backendMatrix = await matrixWebRepository.deleteCeilItem(itemId);
-          final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
+          await matrixLocalRepository.deleteUnSyncDeletedCeilItem(itemId);
           await _synchronizeData(localMatrix: localMatrix, backendMatrix: backendMatrix);
         } catch (e) {
           debugPrint('Can not delete ceil item with id = $itemId. Exception: $e');
-          await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
-          final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
           _matrixStream.sink.add(localMatrix);
         }
       } else {
-        await matrixLocalRepository.addUnSyncDeletedCeilItem(itemId);
-        final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
         _matrixStream.sink.add(localMatrix);
       }
       final unSyncItems = await matrixLocalRepository.unSyncCeilItems;
@@ -104,7 +99,6 @@ class MatrixRepository {
         await matrixLocalRepository.deleteUnSyncCeilItem(itemId);
       }
     } else {
-      final localMatrix = await matrixLocalRepository.deleteCeilItem(itemId);
       _matrixStream.sink.add(localMatrix);
     }
   }
@@ -112,7 +106,9 @@ class MatrixRepository {
   /// Load last matrix state from both local and web repository.
   /// Push new matrix state to the [matrixStream]
   Future<void> fetchMatrix() async {
+    var start = DateTime.now();
     final localMatrix = await matrixLocalRepository.fetchMatrix();
+    print(DateTime.now().difference(start));
     _matrixStream.sink.add(localMatrix);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {

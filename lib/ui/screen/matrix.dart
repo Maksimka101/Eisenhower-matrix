@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
+import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -310,7 +311,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+    if (isAndroid || isIOS) {
       final dividerSize = 3.0;
       const paddingSize = 1.5;
       const titlePadding = EdgeInsets.only(top: 0, bottom: paddingSize);
@@ -325,8 +326,20 @@ class _MatrixScreenState extends State<MatrixScreen> {
     } else {
       final queryData = MediaQuery.of(context);
       final textStyle = DefaultTextStyle.of(context).style;
-      if (queryData.orientation == Orientation.landscape &&
-          queryData.size.height * 1.6 < queryData.size.width) {
+      if (queryData.orientation == Orientation.portrait) {
+        final dividerSize = 3.0;
+        const paddingSize = 1.5;
+        const titlePadding = EdgeInsets.only(top: 0, bottom: paddingSize);
+        final titleTextStyle = Theme.of(context).textTheme.subtitle2;
+        return _buildMatrix(
+          dividerSize,
+          paddingSize,
+          titlePadding,
+          titleTextStyle,
+          false,
+        );
+      }
+      if (queryData.size.height * 1.6 < queryData.size.width) {
         final dividerSize = 15.0;
         const paddingSize = 40.0;
         const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.25);
