@@ -2,7 +2,8 @@
 
 The Eisenhower matrix app for all platforms: android, ios, mac os and web with cloud synchronization! 
 
-Try it right now with the [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/).
+Try it right now with the [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/). 
+You need to disable tracking protection to be able to sign in with google. 
 
 # Screenshots
 ### IOS
@@ -17,7 +18,7 @@ Try it right now with the [web version](https://maksimka101.github.io/Eisenhower
 
 
 # Installation
-You can just install apps from these links: [Android](https://yadi.sk/d/c4RXyhb36WlLzQ), [iOS](ios url).
+You can just install apps from these links: [Android](https://yadi.sk/d/c4RXyhb36WlLzQ).
 
 
 # How to build
@@ -25,7 +26,7 @@ To build app you need to:
  - Install flutter.
  - Create firebase project.
  - Enable Google and Anonymous authentication.
- - Enable firestore and setup rules. For now, I allow read and write to every one.
+ - Enable firestore and setup rules. For now, I allow read and write to every authorized users.
  - Follow integration guid for [google_sign_in](https://pub.dev/packages/google_sign_in) 
     and [google_sign_in_web](https://pub.dev/packages/google_sign_in_web) plugins
  - For google sign in a web add your host to the OAuth 2.0 web client identifier 
