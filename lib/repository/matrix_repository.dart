@@ -106,9 +106,7 @@ class MatrixRepository {
   /// Load last matrix state from both local and web repository.
   /// Push new matrix state to the [matrixStream]
   Future<void> fetchMatrix() async {
-    var start = DateTime.now();
     final localMatrix = await matrixLocalRepository.fetchMatrix();
-    print(DateTime.now().difference(start));
     _matrixStream.sink.add(localMatrix);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
       if (_internetAvailable) {
