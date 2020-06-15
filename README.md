@@ -2,7 +2,7 @@
 
 The Eisenhower matrix app for all platforms: android, ios, mac os and web with cloud synchronization! 
 
-Try it right now with the [web version](https://maksimka101.github.io/Eisenhower-matrix/web/app/). 
+Try it right now with the [web version](https://maksimka101.github.io/Eisenhower-matrix-web/). 
 You need to disable tracking protection to be able to sign in with google. 
 
 # Screenshots
