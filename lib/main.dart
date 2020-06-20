@@ -50,6 +50,7 @@ void main() {
         userRepository: userRepository,
       ),
       settingsRepository: SettingsRepository(
+        connection: ConnectivityConnection(),
         settingsLocalRepository: HiveSettingsLocalRepository(),
         settingsWebRepository: FirebaseSettingsWebRepository(),
       ),

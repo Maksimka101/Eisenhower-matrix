@@ -1,3 +1,4 @@
+import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:eisenhower_matrix/models/matrix.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
@@ -5,7 +6,6 @@ import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart'
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
 
 class HiveMatrixLocalRepository extends MatrixLocalRepository {
-
   @override
   Future<void> addUnSyncCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncCeilItemsBoxName);
@@ -44,8 +44,17 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
   @override
   Future<Matrix> fetchMatrix() async {
     var box = await HiveUtils.getBox<HiveCeilItem>(HiveUtils.ceilItemsBoxName);
-    return Matrix.fromCeilItems(
-        box.values.map<CeilItem>((hiveItem) => hiveItem.toCeilItem()).toList());
+    if (box.isNotEmpty) {
+      return Matrix.fromCeilItems(
+          box.values.map<CeilItem>((hiveItem) => hiveItem.toCeilItem()).toList());
+    } else {
+      return Matrix(
+        urgentAndNotImportant: Ceil(items: [], type: CeilType.UrgentNotImportant),
+        urgentAndImportant: Ceil(items: [], type: CeilType.UrgentImportant),
+        notUrgentAndImportant: Ceil(items: [], type: CeilType.NotUrgentImportant),
+        notUrgentAndNotImportant: Ceil(items: [], type: CeilType.NotUrgentNotImportant),
+      );
+    }
   }
 
   @override

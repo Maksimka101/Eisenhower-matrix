@@ -1,5 +1,5 @@
 import 'package:eisenhower_matrix/models/user.dart';
-import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/user_sign_in_repository.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_local_repository.dart';
-import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
+import 'package:eisenhower_matrix/repository/abstract/user_sign_in_repository.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
