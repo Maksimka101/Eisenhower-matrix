@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_local_repository.dart';
 import 'package:eisenhower_matrix/repository/abstract/user_signin_repository.dart';
+import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,18 +11,23 @@ class UserRepository {
   final _userStream = StreamController<User>.broadcast();
   final UserSignInRepository userSignInRepository;
   final UserLocalRepository userLocalRepository;
+  final Connection connection;
   var _internetAvailable = false;
 
-  UserRepository({@required this.userSignInRepository, @required this.userLocalRepository})
-      : assert(userSignInRepository != null && userLocalRepository != null) {
+  UserRepository({
+    @required this.userSignInRepository,
+    @required this.userLocalRepository,
+    @required this.connection,
+  }) : assert(userSignInRepository != null && userLocalRepository != null && connection != null) {
     if (kIsWeb) {
       _internetAvailable = true;
     }
-    Connectivity()
-      ..checkConnectivity().then((connectivityResult) =>
-          _internetAvailable = connectivityResult != ConnectivityResult.none)
-      ..onConnectivityChanged.listen((connectivityResult) =>
-          _internetAvailable = connectivityResult != ConnectivityResult.none);
+    connection.connectedToTheInternet.then(_onConnectionStateChanged);
+    connection.connectionChanges.listen(_onConnectionStateChanged);
+  }
+
+  void _onConnectionStateChanged(bool connected) {
+    _internetAvailable = connected;
   }
 
   Stream<User> get userStream => _userStream.stream;

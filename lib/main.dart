@@ -1,4 +1,5 @@
 import 'package:eisenhower_matrix/bloc/bloc_base.dart';
+import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/bloc/bloc.dart';
@@ -22,6 +23,7 @@ void main() {
 
   // Fill here your credentials
   final userRepository = UserRepository(
+    connection: ConnectivityConnection(),
     userLocalRepository: HiveUserLocalRepository(),
     userSignInRepository: FirebaseUserSignInRepository(
 //      Example
@@ -40,6 +42,7 @@ void main() {
   runApp(
     AppInit(
       matrixRepository: MatrixRepository(
+        connection: ConnectivityConnection(),
         matrixLocalRepository: HiveMatrixLocalRepository(),
         matrixWebRepository: FirebaseMatrixWebRepository(
           userRepository: userRepository,

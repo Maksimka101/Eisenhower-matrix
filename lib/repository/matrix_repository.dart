@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_web_repository.dart';
 import 'package:eisenhower_matrix/repository/user_repository.dart';
+import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,17 +14,19 @@ class MatrixRepository {
   final MatrixLocalRepository matrixLocalRepository;
   final MatrixWebRepository matrixWebRepository;
   final UserRepository userRepository;
+  final Connection connection;
   var _internetAvailable = false;
   User _user;
-  StreamSubscription<ConnectivityResult> _connectivityResultStream;
 
   MatrixRepository(
       {@required this.matrixLocalRepository,
       @required this.matrixWebRepository,
-      @required this.userRepository})
+      @required this.userRepository,
+      @required this.connection})
       : assert(matrixWebRepository != null &&
             matrixLocalRepository != null &&
-            userRepository != null) {
+            userRepository != null &&
+            connection != null) {
     if (kIsWeb) {
       _internetAvailable = true;
     }
@@ -33,20 +35,17 @@ class MatrixRepository {
       if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
         matrixWebRepository.matrixStream
             .listen((matrixFromBackend) => _matrixStream.sink.add(matrixFromBackend));
-        Connectivity().checkConnectivity().then(_onConnectionStateChanged);
-        _connectivityResultStream =
-            Connectivity().onConnectivityChanged.listen(_onConnectionStateChanged);
+        connection.connectedToTheInternet.then(_onConnectionStateChanged);
+        connection.connectionChanges.listen(_onConnectionStateChanged);
       }
     });
   }
 
-  void _onConnectionStateChanged(ConnectivityResult connectivityResult) {
-    if (_internetAvailable == false && connectivityResult != ConnectivityResult.none) {
-      _internetAvailable = true;
+  void _onConnectionStateChanged(bool connected) {
+    if (connected) {
       fetchMatrix();
-    } else {
-      _internetAvailable = connectivityResult != ConnectivityResult.none;
     }
+    _internetAvailable = connected;
   }
 
   /// Stream with the latest matrix state.
@@ -179,7 +178,6 @@ class MatrixRepository {
   }
 
   void dispose() {
-    _connectivityResultStream.cancel();
     _matrixStream.close();
     matrixWebRepository.dispose();
     matrixLocalRepository.dispose();
