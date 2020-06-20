@@ -49,12 +49,15 @@ abstract class Matrix implements _$Matrix {
       ),
     );
   }
+
   factory Matrix({
     @required Ceil urgentAndImportant,
     @required Ceil urgentAndNotImportant,
     @required Ceil notUrgentAndImportant,
     @required Ceil notUrgentAndNotImportant,
   }) = _Matrix;
+
+  factory Matrix.empty() => Matrix.fromCeilItems([]);
 
   @late
   List<CeilItem> get allCeilItems => [

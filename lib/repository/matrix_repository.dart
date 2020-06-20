@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
@@ -15,6 +14,9 @@ class MatrixRepository {
   final MatrixWebRepository matrixWebRepository;
   final UserRepository userRepository;
   final Connection connection;
+
+  /// Function to generate unique id from ceil
+  final String Function(CeilItem item) idGenerator;
   var _internetAvailable = false;
   User _user;
 
@@ -22,20 +24,19 @@ class MatrixRepository {
       {@required this.matrixLocalRepository,
       @required this.matrixWebRepository,
       @required this.userRepository,
-      @required this.connection})
+      @required this.connection,
+      this.idGenerator = defaultIdGenerator})
       : assert(matrixWebRepository != null &&
             matrixLocalRepository != null &&
             userRepository != null &&
             connection != null) {
-    if (kIsWeb) {
-      _internetAvailable = true;
-    }
+    connection.connectedToTheInternet.then(_onConnectionStateChanged);
+
     userRepository.userStream.listen((user) {
       _user = user;
       if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
         matrixWebRepository.matrixStream
             .listen((matrixFromBackend) => _matrixStream.sink.add(matrixFromBackend));
-        connection.connectedToTheInternet.then(_onConnectionStateChanged);
         connection.connectionChanges.listen(_onConnectionStateChanged);
       }
     });
@@ -55,7 +56,7 @@ class MatrixRepository {
   /// Create ceil item if it is doesn't exist else update existing item.
   /// Push new matrix state to the [matrixStream]
   Future<void> saveCeilItem(CeilItem item) async {
-    item = item.copyWith(id: _generateId(item.title));
+    item = item.copyWith(id: idGenerator(item));
     final localMatrix = await matrixLocalRepository.saveCeilItem(item);
     await matrixLocalRepository.addUnSyncCeilItem(item.id);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {
@@ -184,5 +185,5 @@ class MatrixRepository {
   }
 }
 
-String _generateId(String name) =>
-    '${name.length > 9 ? name.substring(0, 10) : name}${Random().nextInt(pow(2, 31))}';
+String defaultIdGenerator(CeilItem item) => '${item.hashCode}';
+//    '${name.length > 9 ? name.substring(0, 10) : name}${Random().nextInt(pow(2, 31))}';
