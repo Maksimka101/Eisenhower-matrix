@@ -12,36 +12,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  final defaultUrgImpItem = CeilItem(
+    id: 'id1',
+    ceilType: CeilType.UrgentImportant,
+    title: 'title',
+    index: 0,
+  );
+  final defaultUrgNotImpItem = CeilItem(
+    id: 'id2',
+    ceilType: CeilType.UrgentNotImportant,
+    title: 'title',
+    index: 1,
+  );
+  final defaultNotUrgNotImpItem = CeilItem(
+    id: 'id3',
+    ceilType: CeilType.NotUrgentNotImportant,
+    title: 'title',
+    index: 2,
+  );
+  final defaultNotUrgImpItem = CeilItem(
+    id: 'id4',
+    ceilType: CeilType.NotUrgentImportant,
+    title: 'title',
+    index: 3,
+  );
+
   group('Test save, delete and fetch in offline', () {
     final connectionStream = StreamController<bool>();
     final connection = MockConnectivityConnection(
       connected: false,
       connectionStream: connectionStream,
-    );
-
-    final defaultUrgImpItem = CeilItem(
-      id: 'id1',
-      ceilType: CeilType.UrgentImportant,
-      title: 'title',
-      index: 0,
-    );
-    final defaultUrgNotImpItem = CeilItem(
-      id: 'id2',
-      ceilType: CeilType.UrgentNotImportant,
-      title: 'title',
-      index: 1,
-    );
-    final defaultNotUrgNotImpItem = CeilItem(
-      id: 'id3',
-      ceilType: CeilType.NotUrgentNotImportant,
-      title: 'title',
-      index: 2,
-    );
-    final defaultNotUrgImpItem = CeilItem(
-      id: 'id4',
-      ceilType: CeilType.NotUrgentImportant,
-      title: 'title',
-      index: 3,
     );
 
     test('Test save', () async {

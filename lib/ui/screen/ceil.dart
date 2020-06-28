@@ -69,34 +69,35 @@ class _CeilScreenState extends State<CeilScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     PlatformBackButton(),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          () {
-                            switch (widget.ceilType) {
-                              case CeilType.UrgentImportant:
-                                return 'Urgent And Important';
-                              case CeilType.NotUrgentImportant:
-                                return 'Not Urgent And Important';
-                              case CeilType.UrgentNotImportant:
-                                return 'Urgent And Not Important';
-                              case CeilType.NotUrgentNotImportant:
-                                return 'Not Urgent And Not Important';
-                            }
-                            return 'Lol what?!';
-                          }(),
-                        ),
+                    GestureDetector(
+                      onTap: _addItemTapped,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                () {
+                                  switch (widget.ceilType) {
+                                    case CeilType.UrgentImportant:
+                                      return 'Urgent And Important';
+                                    case CeilType.NotUrgentImportant:
+                                      return 'Not Urgent And Important';
+                                    case CeilType.UrgentNotImportant:
+                                      return 'Urgent And Not Important';
+                                    case CeilType.NotUrgentNotImportant:
+                                      return 'Not Urgent And Not Important';
+                                  }
+                                  return 'Lol what?!';
+                                }(),
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            PlatformIcons(context).add,
+                          ),
+                        ],
                       ),
-                    ),
-                    CustomPlatformIconButton(
-                      icon: Container(
-                        width: 50,
-                        alignment: Alignment.center,
-                        child: Icon(
-                          PlatformIcons(context).add,
-                        ),
-                      ),
-                      onPressed: _addItemTapped,
                     ),
                   ],
                 ),
