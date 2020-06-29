@@ -9,20 +9,21 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
   @override
   Future<void> addUnSyncCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncCeilItemsBoxName);
+    assert(!box.keys.contains(_prepareId(itemId)), 'Item id is $itemId. Keys is ${box.keys}');
     await box.put(_prepareId(itemId), _prepareId(itemId));
   }
 
   @override
   Future<void> addUnSyncDeletedCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncDeletedCeilItemBoxName);
-    assert(box.keys.contains(_prepareId(itemId)));
+    assert(!box.keys.contains(_prepareId(itemId)), 'Item id is $itemId. Keys is ${box.keys}');
     await box.put(_prepareId(itemId), _prepareId(itemId));
   }
 
   @override
   Future<Matrix> deleteCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<HiveCeilItem>(HiveUtils.ceilItemsBoxName);
-    assert(box.keys.contains(_prepareId(itemId)));
+    assert(box.keys.contains(_prepareId(itemId)), 'Item id is $itemId. Keys is ${box.keys}');
     await box.delete(_prepareId(itemId));
     return fetchMatrix();
   }
@@ -30,14 +31,14 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
   @override
   Future<void> deleteUnSyncCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncCeilItemsBoxName);
-    assert(box.keys.contains(_prepareId(itemId)));
+    assert(box.keys.contains(_prepareId(itemId)), 'Item id is $itemId. Keys is ${box.keys}');
     await box.delete(_prepareId(itemId));
   }
 
   @override
   Future<void> deleteUnSyncDeletedCeilItem(String itemId) async {
     var box = await HiveUtils.getBox<String>(HiveUtils.unSyncDeletedCeilItemBoxName);
-    assert(box.keys.contains(_prepareId(itemId)));
+    assert(box.keys.contains(_prepareId(itemId)), 'Item id is $itemId. Keys is ${box.keys}');
     await box.delete(_prepareId(itemId));
   }
 

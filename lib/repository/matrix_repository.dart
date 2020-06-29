@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
@@ -185,5 +186,5 @@ class MatrixRepository {
   }
 }
 
-String defaultIdGenerator(CeilItem item) => '${item.hashCode}';
+String defaultIdGenerator(CeilItem item) => '${item.hashCode}${Random().nextInt(100000)}';
 //    '${name.length > 9 ? name.substring(0, 10) : name}${Random().nextInt(pow(2, 31))}';

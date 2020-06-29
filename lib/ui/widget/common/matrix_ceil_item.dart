@@ -3,39 +3,60 @@ import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MatrixCeilItem extends StatelessWidget {
+class MatrixCeilItem extends StatefulWidget {
   final CeilItem item;
-  final bool inOneLine;
-
-  void _itemDeleted(BuildContext context) => BlocProvider.of<MatrixBloc>(context).add(
-        MatrixCeilItemDeleted(
-          itemId: item.id,
-        ),
-      );
+  final bool minimized;
+  final EdgeInsetsGeometry padding;
 
   const MatrixCeilItem({
-    Key key,
+    @required Key key,
     @required this.item,
-    @required this.inOneLine,
-  })  : assert(item != null && inOneLine != null),
+    @required this.minimized,
+    this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+  })  : assert(item != null && minimized != null),
         super(key: key);
 
   @override
+  _MatrixCeilItemState createState() => _MatrixCeilItemState(minimized);
+}
+
+class _MatrixCeilItemState extends State<MatrixCeilItem> {
+  bool _minimized;
+
+  _MatrixCeilItemState(this._minimized);
+
+  void _itemDeleted(BuildContext context) => BlocProvider.of<MatrixBloc>(context).add(
+        MatrixCeilItemDeleted(
+          itemId: widget.item.id,
+        ),
+      );
+
+  void _changeMinimize() => setState(() => _minimized = !_minimized);
+
+  @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(item.id),
-      direction: DismissDirection.startToEnd,
-      background: Container(
-        alignment: Alignment.centerLeft,
-        color: Colors.red,
-        padding: EdgeInsets.symmetric(vertical: 3),
-      ),
-      onDismissed: (_) => _itemDeleted(context),
-      child: Text(
-        item.title,
-        style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.w400),
-        maxLines: inOneLine ? 1 : null,
-        overflow: inOneLine ? TextOverflow.ellipsis : null,
+    return GestureDetector(
+      onTap: _changeMinimize,
+      child: Dismissible(
+        key: Key(widget.item.id),
+        direction: DismissDirection.startToEnd,
+        background: Container(
+          alignment: Alignment.centerLeft,
+          color: Colors.red,
+          padding: widget.padding,
+        ),
+        onDismissed: (_) => _itemDeleted(context),
+        child: IntrinsicWidth(
+          child: Padding(
+            padding: widget.padding,
+            child: Text(
+              widget.item.title,
+              style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.w400),
+              maxLines: _minimized ? 1 : null,
+              overflow: _minimized ? TextOverflow.ellipsis : null,
+            ),
+          ),
+        ),
       ),
     );
   }

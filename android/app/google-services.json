@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "700200881708",
+    "firebase_url": "https://eisenhower-matrix-2adf3.firebaseio.com",
+    "project_id": "eisenhower-matrix-2adf3",
+    "storage_bucket": "eisenhower-matrix-2adf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700200881708:android:d4b7aa06847b7dc1440b89",
+        "android_client_info": {
+          "package_name": "com.zemlyanikin.max.eisenhower_matrix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700200881708-mtcdpri55tnehk38r6nsvl2mnnsrnio5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zemlyanikin.max.eisenhower_matrix",
+            "certificate_hash": "713e3f9b186c52f0486114f9a373233c6556aa04"
+          }
+        },
+        {
+          "client_id": "700200881708-745pufdl3pqoqvonk11engi795ob4g0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdLAetXNztcJGl1CLOeRQH1cp2r_dHelQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700200881708-745pufdl3pqoqvonk11engi795ob4g0h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "700200881708-jc3a71k5cknlkrdvmkng0136nmak0clt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zemlyanikin.max.eisenhowerMatrix"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

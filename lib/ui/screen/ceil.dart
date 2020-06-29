@@ -35,16 +35,18 @@ class _CeilScreenState extends State<CeilScreen> {
       });
 
   void _itemAdded(String title) {
-    BlocProvider.of<MatrixBloc>(context).add(
-      MatrixCeilItemSaved(
-        item: CeilItem(
-          title: title,
-          index: _itemsCount + 1,
-          ceilType: widget.ceilType,
-          id: null,
+    if (title.trim().isNotEmpty) {
+      BlocProvider.of<MatrixBloc>(context).add(
+        MatrixCeilItemSaved(
+          item: CeilItem(
+            title: title,
+            index: _itemsCount + 1,
+            ceilType: widget.ceilType,
+            id: null,
+          ),
         ),
-      ),
-    );
+      );
+    }
     setState(() {
       _editingEnabled = false;
     });
@@ -69,34 +71,37 @@ class _CeilScreenState extends State<CeilScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     PlatformBackButton(),
-                    GestureDetector(
-                      onTap: _addItemTapped,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                () {
-                                  switch (widget.ceilType) {
-                                    case CeilType.UrgentImportant:
-                                      return 'Urgent And Important';
-                                    case CeilType.NotUrgentImportant:
-                                      return 'Not Urgent And Important';
-                                    case CeilType.UrgentNotImportant:
-                                      return 'Urgent And Not Important';
-                                    case CeilType.NotUrgentNotImportant:
-                                      return 'Not Urgent And Not Important';
-                                  }
-                                  return 'Lol what?!';
-                                }(),
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: _addItemTapped,
+                        onDoubleTap: () {},
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  () {
+                                    switch (widget.ceilType) {
+                                      case CeilType.UrgentImportant:
+                                        return 'Urgent And Important';
+                                      case CeilType.NotUrgentImportant:
+                                        return 'Not Urgent And Important';
+                                      case CeilType.UrgentNotImportant:
+                                        return 'Urgent And Not Important';
+                                      case CeilType.NotUrgentNotImportant:
+                                        return 'Not Urgent And Not Important';
+                                    }
+                                    return 'Lol what?!';
+                                  }(),
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            PlatformIcons(context).add,
-                          ),
-                        ],
+                            Icon(
+                              PlatformIcons(context).add,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -126,19 +131,15 @@ class _CeilScreenState extends State<CeilScreen> {
                         }
                         _itemsCount = items.length;
                         return ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
                           children: [
-                            SizedBox(height: 5),
+                            SizedBox(height: 3),
                             ...items
                                 .map<Widget>(
-                                  (item) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 3,
-                                    ),
-                                    child: MatrixCeilItem(
-                                      item: item,
-                                      inOneLine: false,
-                                    ),
+                                  (item) => MatrixCeilItem(
+                                    key: Key(item.id),
+                                    item: item,
+                                    minimized: false,
                                   ),
                                 )
                                 .toList(),
