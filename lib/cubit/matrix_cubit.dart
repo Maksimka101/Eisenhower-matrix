@@ -14,6 +14,10 @@ class MatrixCubit extends Cubit<MatrixState> {
   }
 
   void _matrixStateListener(Matrix matrix) {
+    matrix.notUrgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
+    matrix.urgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
+    matrix.notUrgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
+    matrix.urgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
     emit(MatrixFetched(matrix: matrix));
   }
 

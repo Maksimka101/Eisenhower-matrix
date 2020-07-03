@@ -130,7 +130,6 @@ class _CeilScreenState extends State<CeilScreen> {
                         _maxItemId = items
                             .map((e) => e.index)
                             .reduce((f, s) => f > s ? f : s);
-                        items.sort((f, s) => f.index.compareTo(s.index));
                         return ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 6),
                           children: [
