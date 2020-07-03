@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/bloc/cubit.dart';
+import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
 import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';

@@ -1,9 +1,9 @@
 import 'package:cubit/cubit.dart';
-import 'package:eisenhower_matrix/bloc/cubit_base.dart';
+import 'package:eisenhower_matrix/cubit/cubit_base.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
-import 'package:eisenhower_matrix/bloc/cubit.dart';
+import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:eisenhower_matrix/repository/matrix_repository.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';

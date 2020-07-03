@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/bloc/cubit.dart';
+import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
