@@ -1,11 +1,11 @@
-import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/bloc/cubit.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
 import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class MatrixScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<MatrixBloc>(context).add(MatrixLatestFetched());
+    context.cubit<MatrixCubit>().matrixFetchLatest();
     super.initState();
   }
 
@@ -120,8 +120,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             children: <Widget>[
                               Expanded(
                                 // UrgentImportant
-                                child: BlocBuilder<MatrixBloc, MatrixState>(
-                                  condition: (previous, state) {
+                                child: CubitBuilder<MatrixCubit, MatrixState>(
+                                  buildWhen: (previous, state) {
                                     if (state is MatrixInitial) {
                                       return true;
                                     }
@@ -157,8 +157,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
                               ),
                               Expanded(
                                 // UrgentNotImportant
-                                child: BlocBuilder<MatrixBloc, MatrixState>(
-                                  condition: (previous, state) {
+                                child: CubitBuilder<MatrixCubit, MatrixState>(
+                                  buildWhen: (previous, state) {
                                     if (state is MatrixInitial) {
                                       return true;
                                     }
@@ -200,8 +200,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             children: <Widget>[
                               Expanded(
                                 // UrgentImportant
-                                child: BlocBuilder<MatrixBloc, MatrixState>(
-                                  condition: (previous, state) {
+                                child: CubitBuilder<MatrixCubit, MatrixState>(
+                                  buildWhen: (previous, state) {
                                     if (state is MatrixInitial) {
                                       return true;
                                     }
@@ -237,8 +237,8 @@ class _MatrixScreenState extends State<MatrixScreen> {
                               ),
                               Expanded(
                                 // NotUrgentNotImportant
-                                child: BlocBuilder<MatrixBloc, MatrixState>(
-                                  condition: (previous, state) {
+                                child: CubitBuilder<MatrixCubit, MatrixState>(
+                                  buildWhen: (previous, state) {
                                     if (state is MatrixInitial) {
                                       return true;
                                     }

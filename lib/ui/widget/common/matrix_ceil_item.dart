@@ -1,7 +1,7 @@
-import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/bloc/cubit.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/flutter_cubit.dart';
 
 class MatrixCeilItem extends StatefulWidget {
   final CeilItem item;
@@ -25,11 +25,8 @@ class _MatrixCeilItemState extends State<MatrixCeilItem> {
 
   _MatrixCeilItemState(this._minimized);
 
-  void _itemDeleted(BuildContext context) => BlocProvider.of<MatrixBloc>(context).add(
-        MatrixCeilItemDeleted(
-          itemId: widget.item.id,
-        ),
-      );
+  void _itemDeleted(BuildContext context) =>
+      context.cubit<MatrixCubit>().matrixCeilItemDeleted(itemId: widget.item.id);
 
   void _changeMinimize() => setState(() => _minimized = !_minimized);
 

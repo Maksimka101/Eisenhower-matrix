@@ -1,15 +1,16 @@
-import 'package:eisenhower_matrix/bloc/bloc_base.dart';
+import 'package:cubit/cubit.dart';
+import 'package:eisenhower_matrix/bloc/cubit_base.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
-import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/bloc/cubit.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:eisenhower_matrix/repository/matrix_repository.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
 import 'package:eisenhower_matrix/ui/screen/main_app.dart';
 import 'package:eisenhower_matrix/ui/screen/sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'ui/widget/common/error.dart';
@@ -19,7 +20,7 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  Cubit.observer = CustomCubitObserver();
 
   // Fill here your credentials
   final userRepository = UserRepository(
@@ -92,28 +93,26 @@ class AppInit extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: MultiBlocProvider(
+        home: MultiCubitProvider(
           providers: [
-            BlocProvider<MatrixBloc>(
-              create: (_) => MatrixBloc(
+            CubitProvider<InitCubit>(
+              create: (_) => InitCubit(userRepository: userRepository),
+            ),
+            CubitProvider<MatrixCubit>(
+              create: (_) => MatrixCubit(
                 matrixRepository: matrixRepository,
               ),
             ),
-            BlocProvider<InitBloc>(
-              create: (_) => InitBloc(
-                userRepository: userRepository,
-              ),
-            ),
-            BlocProvider<SettingsBloc>(
-              create: (_) => SettingsBloc(
+            CubitProvider<SettingsCubit>(
+              create: (_) => SettingsCubit(
                 settingsRepository: settingsRepository,
               ),
             ),
-            BlocProvider<SignInBloc>(
-              create: (_) => SignInBloc(
+            CubitProvider<SignInCubit>(
+              create: (_) => SignInCubit(
                 userRepository: userRepository,
               ),
-            ),
+            )
           ],
           child: UserInit(),
         ),
@@ -150,13 +149,13 @@ class _UserInitState extends State<UserInit> {
 
   @override
   void initState() {
-    BlocProvider.of<InitBloc>(context).add(InitStarted());
+    context.cubit<InitCubit>().initStarted();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InitBloc, InitState>(
+    return CubitBuilder<InitCubit, InitState>(
       builder: (context, initState) {
         switch (initState.runtimeType) {
           case InitInitial:

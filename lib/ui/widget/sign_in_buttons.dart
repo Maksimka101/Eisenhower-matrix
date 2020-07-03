@@ -1,7 +1,7 @@
-import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/bloc/cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
@@ -9,12 +9,10 @@ class SignInWithGoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Google'),
-      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-        SignInWith(
-          context: context,
-          signInProvider: SignInProvider.Google,
-        ),
-      ),
+      onPressed: () => context.cubit<SignInCubit>().signInWith(
+            context: context,
+            signInProvider: SignInProvider.Google,
+          ),
     );
   }
 }
@@ -24,12 +22,10 @@ class SignInWithGitHubButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with GitHub'),
-      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-        SignInWith(
-          context: context,
-          signInProvider: SignInProvider.Github,
-        ),
-      ),
+      onPressed: () => context.cubit<SignInCubit>().signInWith(
+            context: context,
+            signInProvider: SignInProvider.Github,
+          ),
     );
   }
 }
@@ -39,12 +35,10 @@ class SignInWithAppleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Apple'),
-      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-        SignInWith(
-          context: context,
-          signInProvider: SignInProvider.Apple,
-        ),
-      ),
+      onPressed: () => context.cubit<SignInCubit>().signInWith(
+            context: context,
+            signInProvider: SignInProvider.Apple,
+          ),
     );
   }
 }
@@ -54,12 +48,10 @@ class SignInWithTwitterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Twitter'),
-      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-        SignInWith(
-          context: context,
-          signInProvider: SignInProvider.Twitter,
-        ),
-      ),
+      onPressed: () => context.cubit<SignInCubit>().signInWith(
+            context: context,
+            signInProvider: SignInProvider.Twitter,
+          ),
     );
   }
 }
@@ -69,12 +61,10 @@ class SignInAnonymouslyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in Anonymously'),
-      onPressed: () => BlocProvider.of<SignInBloc>(context).add(
-        SignInWith(
-          context: context,
-          signInProvider: SignInProvider.Anonymous,
-        ),
-      ),
+      onPressed: () => context.cubit<SignInCubit>().signInWith(
+            context: context,
+            signInProvider: SignInProvider.Anonymous,
+          ),
     );
   }
 }

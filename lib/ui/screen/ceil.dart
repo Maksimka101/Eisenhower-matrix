@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/bloc/bloc.dart';
+import 'package:eisenhower_matrix/bloc/cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/ui/widget/common/custom_platform_icon_button.dart';
 import 'package:eisenhower_matrix/ui/widget/common/matrix_ceil_item.dart';
@@ -6,7 +6,7 @@ import 'package:eisenhower_matrix/ui/widget/common/platform_size_adapter.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class CeilScreen extends StatefulWidget {
@@ -36,16 +36,14 @@ class _CeilScreenState extends State<CeilScreen> {
 
   void _itemAdded(String title) {
     if (title.trim().isNotEmpty) {
-      BlocProvider.of<MatrixBloc>(context).add(
-        MatrixCeilItemSaved(
-          item: CeilItem(
-            title: title,
-            index: _itemsCount + 1,
-            ceilType: widget.ceilType,
-            id: null,
-          ),
-        ),
-      );
+      context.cubit<MatrixCubit>().matrixCeilItemSaved(
+            item: CeilItem(
+              title: title,
+              index: _itemsCount + 1,
+              ceilType: widget.ceilType,
+              id: null,
+            ),
+          );
     }
     setState(() {
       _editingEnabled = false;
@@ -110,7 +108,7 @@ class _CeilScreenState extends State<CeilScreen> {
             ),
             Flexible(
               child: PlatformSizeAdapter(
-                child: BlocBuilder<MatrixBloc, MatrixState>(
+                child: CubitBuilder<MatrixCubit, MatrixState>(
                   builder: (context, state) {
                     switch (state.runtimeType) {
                       case MatrixFetched:
