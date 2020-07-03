@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
+import 'package:eisenhower_matrix/utils/platform_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +12,11 @@ class PlatformSizeAdapter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isAndroid || isIOS) {
+    if (PlatformSize.isSmallScreen(context)) {
       return child;
     } else {
-      final queryData = MediaQuery.of(context);
       // web or desktop large mode
-      if (queryData.orientation == Orientation.landscape &&
-          queryData.size.height * 1.45 < queryData.size.width) {
+      if (PlatformSize.isMiddleScreen(context)) {
         return Container(
           child: Row(
             children: <Widget>[

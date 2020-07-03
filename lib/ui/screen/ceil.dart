@@ -1,8 +1,8 @@
 import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
-import 'package:eisenhower_matrix/ui/widget/common/custom_platform_icon_button.dart';
+import 'package:eisenhower_matrix/ui/widget/common/platform/custom_platform_icon_button.dart';
 import 'package:eisenhower_matrix/ui/widget/common/matrix_ceil_item.dart';
-import 'package:eisenhower_matrix/ui/widget/common/platform_size_adapter.dart';
+import 'package:eisenhower_matrix/ui/widget/common/platform/platform_size_adapter.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class CeilScreen extends StatefulWidget {
 class _CeilScreenState extends State<CeilScreen> {
   var _editingEnabled = false;
   final _focusNode = FocusNode();
-  var _itemsCount = 0;
+  var _maxItemId = 0;
 
   void _addItemTapped() => setState(() {
         _editingEnabled = !_editingEnabled;
@@ -39,7 +39,7 @@ class _CeilScreenState extends State<CeilScreen> {
       context.cubit<MatrixCubit>().matrixCeilItemSaved(
             item: CeilItem(
               title: title,
-              index: _itemsCount + 1,
+              index: _maxItemId + 1,
               ceilType: widget.ceilType,
               id: null,
             ),
@@ -127,7 +127,10 @@ class _CeilScreenState extends State<CeilScreen> {
                             items = (state as MatrixFetched).matrix.notUrgentAndNotImportant.items;
                             break;
                         }
-                        _itemsCount = items.length;
+                        _maxItemId = items
+                            .map((e) => e.index)
+                            .reduce((f, s) => f > s ? f : s);
+                        items.sort((f, s) => f.index.compareTo(s.index));
                         return ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 6),
                           children: [

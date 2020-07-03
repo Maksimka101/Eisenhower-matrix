@@ -5,8 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-class MainAppScreen extends StatelessWidget {
+class MainAppScreen extends StatefulWidget {
+  @override
+  _MainAppScreenState createState() => _MainAppScreenState();
+}
+
+class _MainAppScreenState extends State<MainAppScreen> {
   final _controller = PlatformTabController();
+  var fullScreenMode = true;
+
+  void _changeScreenMode(bool fullScreen) => setState(() => fullScreenMode = fullScreen);
 
   Widget _errorScreen(String message) => PlatformScaffold(
         appBar: PlatformAppBar(
@@ -21,28 +29,40 @@ class MainAppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformTabScaffold(
-      tabController: _controller,
-      bodyBuilder: (context, index) {
-        switch (index) {
-          case 0:
-            return MatrixScreen();
-          case 1:
-            return SettingsScreen();
-          default:
-            return _errorScreen('Unknown page index: $index');
-        }
-      },
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.border_all),
-          title: Text('Matrix'),
+    if (!fullScreenMode) {
+      return PlatformTabScaffold(
+        tabController: _controller,
+        bodyBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return MatrixScreen(
+                fullScreenMode: fullScreenMode,
+                onChangeScreenMode: _changeScreenMode,
+              );
+            case 1:
+              return SettingsScreen();
+            default:
+              return _errorScreen('Unknown page index: $index');
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.border_all),
+            title: Text('Matrix'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_pin),
+            title: Text('Account'),
+          ),
+        ],
+      );
+    } else {
+      return PlatformScaffold(
+        body: MatrixScreen(
+          fullScreenMode: fullScreenMode,
+          onChangeScreenMode: _changeScreenMode,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_pin),
-          title: Text('Account'),
-        ),
-      ],
-    );
+      );
+    }
   }
 }

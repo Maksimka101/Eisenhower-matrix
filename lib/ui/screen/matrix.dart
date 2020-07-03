@@ -1,14 +1,24 @@
 import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
-import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
+import 'package:eisenhower_matrix/ui/widget/common/platform/platform_icon_button.dart' as ci;
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
+import 'package:eisenhower_matrix/utils/platform_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class MatrixScreen extends StatefulWidget {
+  final Function(bool fullScreen) onChangeScreenMode;
+  final bool fullScreenMode;
+
+  const MatrixScreen({
+    Key key,
+    @required this.onChangeScreenMode,
+    @required this.fullScreenMode,
+  }) : super(key: key);
+
   @override
   _MatrixScreenState createState() => _MatrixScreenState();
 }
@@ -26,91 +36,102 @@ class _MatrixScreenState extends State<MatrixScreen> {
     super.initState();
   }
 
-  Widget _buildMatrix(
-    double dividerSize,
-    double paddingSize,
-    EdgeInsets titlePadding,
-    TextStyle titleTextStyle,
-    bool withBorders,
-  ) {
+  void _onChangeScreenMode() {
+    widget.onChangeScreenMode(!widget.fullScreenMode);
+  }
+
+  Widget _buildMatrix({
+    @required double dividerSize,
+    @required double paddingSize,
+    @required EdgeInsets titlePadding,
+    @required TextStyle titleTextStyle,
+    @required bool withBorders,
+  }) {
     final dividerColor = Colors.transparent;
     return PlatformScaffold(
       backgroundColor: getCeilTitleColor(context),
       body: SafeArea(
         child: Row(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(paddingSize),
-                  child: Text(
-                    '',
-                    style: titleTextStyle.copyWith(color: Colors.transparent),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: RotatedBox(
-                    quarterTurns: -1,
-                    child: Container(
-                      padding: titlePadding,
-                      alignment: Alignment.center,
+            GestureDetector(
+              onTap: _onChangeScreenMode,
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(paddingSize),
                       child: Text(
-                        'Urgent',
-                        style: titleTextStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        '',
+                        style: titleTextStyle.copyWith(color: Colors.transparent),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: RotatedBox(
-                    quarterTurns: -1,
-                    child: Container(
-                      padding: titlePadding,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Not Urgent',
-                        style: titleTextStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: RotatedBox(
+                      quarterTurns: -1,
+                      child: Container(
+                        padding: titlePadding,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Urgent',
+                          style: titleTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: RotatedBox(
+                      quarterTurns: -1,
+                      child: Container(
+                        padding: titlePadding,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Not Urgent',
+                          style: titleTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
             Expanded(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          padding: titlePadding,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Important',
-                            style: titleTextStyle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                  GestureDetector(
+                    onTap: _onChangeScreenMode,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            padding: titlePadding,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Important',
+                              style: titleTextStyle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          padding: titlePadding,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Not Important',
-                            style: titleTextStyle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Container(
+                            padding: titlePadding,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Not Important',
+                              style: titleTextStyle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Row(
@@ -308,35 +329,21 @@ class _MatrixScreenState extends State<MatrixScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (isAndroid || isIOS) {
+    if (PlatformSize.isSmallScreen(context)) {
       final dividerSize = 3.0;
       const paddingSize = 1.5;
       const titlePadding = EdgeInsets.only(top: 0, bottom: paddingSize);
       final titleTextStyle = Theme.of(context).textTheme.subtitle2;
       return _buildMatrix(
-        dividerSize,
-        paddingSize,
-        titlePadding,
-        titleTextStyle,
-        false,
+        dividerSize: dividerSize,
+        paddingSize: paddingSize,
+        titlePadding: titlePadding,
+        titleTextStyle: titleTextStyle,
+        withBorders: false,
       );
     } else {
-      final queryData = MediaQuery.of(context);
       final textStyle = DefaultTextStyle.of(context).style;
-      if (queryData.orientation == Orientation.portrait) {
-        final dividerSize = 3.0;
-        const paddingSize = 1.5;
-        const titlePadding = EdgeInsets.only(top: 0, bottom: paddingSize);
-        final titleTextStyle = Theme.of(context).textTheme.subtitle2;
-        return _buildMatrix(
-          dividerSize,
-          paddingSize,
-          titlePadding,
-          titleTextStyle,
-          false,
-        );
-      }
-      if (queryData.size.height * 1.6 < queryData.size.width) {
+      if (PlatformSize.isMiddleScreen(context)) {
         final dividerSize = 15.0;
         const paddingSize = 40.0;
         const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.25);
@@ -345,13 +352,14 @@ class _MatrixScreenState extends State<MatrixScreen> {
         return DefaultTextStyle(
           style: textStyle.copyWith(fontSize: textStyle.fontSize + 2),
           child: _buildMatrix(
-            dividerSize,
-            paddingSize,
-            titlePadding,
-            titleTextStyle,
-            true,
+            dividerSize: dividerSize,
+            paddingSize: paddingSize,
+            titlePadding: titlePadding,
+            titleTextStyle: titleTextStyle,
+            withBorders: true,
           ),
         );
+        // Large screen size
       } else {
         final dividerSize = 12.0;
         const paddingSize = 20.0;
@@ -361,11 +369,11 @@ class _MatrixScreenState extends State<MatrixScreen> {
         return DefaultTextStyle(
           style: textStyle.copyWith(fontSize: textStyle.fontSize + 2),
           child: _buildMatrix(
-            dividerSize,
-            paddingSize,
-            titlePadding,
-            titleTextStyle,
-            true,
+            dividerSize: dividerSize,
+            paddingSize: paddingSize,
+            titlePadding: titlePadding,
+            titleTextStyle: titleTextStyle,
+            withBorders: true,
           ),
         );
       }

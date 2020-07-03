@@ -25,3 +25,7 @@ bool get isWindows => _isWindows ??= !isWeb && Platform.isWindows;
 bool _isLinux;
 
 bool get isLinux => _isLinux ??= !isWeb && Platform.isLinux;
+
+bool get isMaterial => _isAndroid && _isLinux;
+
+bool get isCupertion => !isMaterial;
