@@ -9,7 +9,7 @@ part 'matrix.freezed.dart';
 abstract class Matrix implements _$Matrix {
   Matrix._();
 
-  factory Matrix.fromCeilItems(List<CeilItem> items, [bool sort = true]) {
+  factory Matrix.fromCeilItems(List<CeilItem> items) {
     final urgentImportant = <CeilItem>[];
     final notUrgentImportant = <CeilItem>[];
     final urgentNotImportant = <CeilItem>[];
@@ -30,45 +30,24 @@ abstract class Matrix implements _$Matrix {
           break;
       }
     }
-    if (sort) {
-      return Matrix.sort(
-        notUrgentAndNotImportant: Ceil(
-          type: CeilType.NotUrgentNotImportant,
-          items: notUrgentNotImportant,
-        ),
-        notUrgentAndImportant: Ceil(
-          type: CeilType.NotUrgentImportant,
-          items: notUrgentImportant,
-        ),
-        urgentAndImportant: Ceil(
-          type: CeilType.UrgentImportant,
-          items: urgentImportant,
-        ),
-        urgentAndNotImportant: Ceil(
-          type: CeilType.UrgentNotImportant,
-          items: urgentNotImportant,
-        ),
-      );
-    } else {
-      return Matrix(
-        notUrgentAndNotImportant: Ceil(
-          type: CeilType.NotUrgentNotImportant,
-          items: notUrgentNotImportant,
-        ),
-        notUrgentAndImportant: Ceil(
-          type: CeilType.NotUrgentImportant,
-          items: notUrgentImportant,
-        ),
-        urgentAndImportant: Ceil(
-          type: CeilType.UrgentImportant,
-          items: urgentImportant,
-        ),
-        urgentAndNotImportant: Ceil(
-          type: CeilType.UrgentNotImportant,
-          items: urgentNotImportant,
-        ),
-      );
-    }
+    return Matrix(
+      notUrgentAndNotImportant: Ceil(
+        type: CeilType.NotUrgentNotImportant,
+        items: notUrgentNotImportant,
+      ),
+      notUrgentAndImportant: Ceil(
+        type: CeilType.NotUrgentImportant,
+        items: notUrgentImportant,
+      ),
+      urgentAndImportant: Ceil(
+        type: CeilType.UrgentImportant,
+        items: urgentImportant,
+      ),
+      urgentAndNotImportant: Ceil(
+        type: CeilType.UrgentNotImportant,
+        items: urgentNotImportant,
+      ),
+    );
   }
 
   factory Matrix({
@@ -77,40 +56,40 @@ abstract class Matrix implements _$Matrix {
     @required Ceil notUrgentAndImportant,
     @required Ceil notUrgentAndNotImportant,
   }) = _Matrix;
-
-  factory Matrix.sort({
-    @required Ceil urgentAndImportant,
-    @required Ceil urgentAndNotImportant,
-    @required Ceil notUrgentAndImportant,
-    @required Ceil notUrgentAndNotImportant,
-  }) {
-    return Matrix(
-      urgentAndNotImportant: urgentAndNotImportant.copyWith.call(
-        items: urgentAndNotImportant.items
-          ..sort(
-            (f, s) => f.index.compareTo(s.index),
-          ),
-      ),
-      urgentAndImportant: urgentAndImportant.copyWith.call(
-        items: urgentAndImportant.items
-          ..sort(
-            (f, s) => f.index.compareTo(s.index),
-          ),
-      ),
-      notUrgentAndImportant: notUrgentAndImportant.copyWith.call(
-        items: notUrgentAndImportant.items
-          ..sort(
-            (f, s) => f.index.compareTo(s.index),
-          ),
-      ),
-      notUrgentAndNotImportant: notUrgentAndNotImportant.copyWith.call(
-        items: notUrgentAndNotImportant.items
-          ..sort(
-            (f, s) => f.index.compareTo(s.index),
-          ),
-      ),
-    );
-  }
+//
+//  factory Matrix.sort({
+//    @required Ceil urgentAndImportant,
+//    @required Ceil urgentAndNotImportant,
+//    @required Ceil notUrgentAndImportant,
+//    @required Ceil notUrgentAndNotImportant,
+//  }) {
+//    return Matrix(
+//      urgentAndNotImportant: urgentAndNotImportant.copyWith.call(
+//        items: urgentAndNotImportant.items
+//          ..sort(
+//            (f, s) => f.index.compareTo(s.index),
+//          ),
+//      ),
+//      urgentAndImportant: urgentAndImportant.copyWith.call(
+//        items: urgentAndImportant.items
+//          ..sort(
+//            (f, s) => f.index.compareTo(s.index),
+//          ),
+//      ),
+//      notUrgentAndImportant: notUrgentAndImportant.copyWith.call(
+//        items: notUrgentAndImportant.items
+//          ..sort(
+//            (f, s) => f.index.compareTo(s.index),
+//          ),
+//      ),
+//      notUrgentAndNotImportant: notUrgentAndNotImportant.copyWith.call(
+//        items: notUrgentAndNotImportant.items
+//          ..sort(
+//            (f, s) => f.index.compareTo(s.index),
+//          ),
+//      ),
+//    );
+//  }
 
   factory Matrix.empty() => Matrix.fromCeilItems([]);
 

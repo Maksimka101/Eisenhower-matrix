@@ -1,7 +1,6 @@
 import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
-import 'package:eisenhower_matrix/ui/widget/common/platform/platform_icon_button.dart' as ci;
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:eisenhower_matrix/utils/platform_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +94,17 @@ class _MatrixScreenState extends State<MatrixScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  if (withBorders)
+                    Container(
+                      padding: titlePadding,
+                      child: Text(
+                        '',
+                        style: titleTextStyle.copyWith(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -320,7 +329,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),
@@ -343,10 +352,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
       );
     } else {
       final textStyle = DefaultTextStyle.of(context).style;
-      if (PlatformSize.isMiddleScreen(context)) {
-        final dividerSize = 15.0;
-        const paddingSize = 40.0;
-        const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.25);
+      if (PlatformSize.isLargeScreen(context)) {
+        final dividerSize = 12.0;
+        const paddingSize = 20.0;
+        const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.4);
         final titleTextStyle =
             Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600);
         return DefaultTextStyle(
@@ -359,11 +368,11 @@ class _MatrixScreenState extends State<MatrixScreen> {
             withBorders: true,
           ),
         );
-        // Large screen size
+        // Middle screen size
       } else {
-        final dividerSize = 12.0;
-        const paddingSize = 20.0;
-        const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.4);
+        final dividerSize = 15.0;
+        const paddingSize = 40.0;
+        const titlePadding = EdgeInsets.only(top: paddingSize, bottom: paddingSize * 0.25);
         final titleTextStyle =
             Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600);
         return DefaultTextStyle(
