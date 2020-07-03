@@ -127,9 +127,9 @@ class _CeilScreenState extends State<CeilScreen> {
                             items = (state as MatrixFetched).matrix.notUrgentAndNotImportant.items;
                             break;
                         }
-                        _maxItemId = items
-                            .map((e) => e.index)
-                            .reduce((f, s) => f > s ? f : s);
+                        if (items.isNotEmpty) {
+                          _maxItemId = items.map((e) => e.index).reduce((f, s) => f > s ? f : s);
+                        }
                         return ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 6),
                           children: [
