@@ -57,7 +57,9 @@ class MatrixRepository {
   /// Create ceil item if it is doesn't exist else update existing item.
   /// Push new matrix state to the [matrixStream]
   Future<void> saveCeilItem(CeilItem item) async {
-    item = item.copyWith(id: idGenerator(item));
+    if (item.id == null) {
+      item = item.copyWith(id: idGenerator(item));
+    }
     final localMatrix = await matrixLocalRepository.saveCeilItem(item);
     await matrixLocalRepository.addUnSyncCeilItem(item.id);
     if (_user != null && _user.signInProvider != SignInProvider.Anonymous) {

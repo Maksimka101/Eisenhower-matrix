@@ -1,7 +1,7 @@
 import 'package:cubit/cubit.dart';
 import 'package:eisenhower_matrix/cubit/cubit_base.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
-import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
+import 'package:eisenhower_matrix/utils/hive_utils.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
 import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
@@ -15,10 +15,14 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'ui/widget/common/error.dart';
 
-void main() {
+Future<void> main() async {
   // Comment import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // todo: remove repository specific code from main
+  // Avoid error on desktop
+  await HiveUtils.init();
 
   Cubit.observer = CustomCubitObserver();
 
@@ -83,8 +87,7 @@ class AppInit extends StatelessWidget {
         ),
       ),
       builder: (_) => MaterialApp(
-        // ThemeMode.system doesn't work in web
-        themeMode: isWeb ? ThemeMode.light : ThemeMode.system,
+        themeMode: ThemeMode.system,
         theme: ThemeData(),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
@@ -130,6 +133,7 @@ class _UserInitState extends State<UserInit> {
   Widget _loadingScreen() => PlatformScaffold(
         appBar: PlatformAppBar(
           title: Text('Loading'),
+          backgroundColor: Theme.of(context).appBarTheme.color,
         ),
         body: Center(
           child: PlatformCircularProgressIndicator(),

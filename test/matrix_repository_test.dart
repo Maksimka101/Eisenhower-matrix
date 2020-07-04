@@ -17,24 +17,28 @@ void main() {
     ceilType: CeilType.UrgentImportant,
     title: 'title',
     index: 0,
+    done: false,
   );
   final defaultUrgNotImpItem = CeilItem(
     id: 'id2',
     ceilType: CeilType.UrgentNotImportant,
     title: 'title',
     index: 1,
+    done: false,
   );
   final defaultNotUrgNotImpItem = CeilItem(
     id: 'id3',
     ceilType: CeilType.NotUrgentNotImportant,
     title: 'title',
     index: 2,
+    done: false,
   );
   final defaultNotUrgImpItem = CeilItem(
     id: 'id4',
     ceilType: CeilType.NotUrgentImportant,
     title: 'title',
     index: 3,
+    done: false,
   );
 
   group('Test save, delete and fetch in offline', () {

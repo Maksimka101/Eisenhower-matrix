@@ -14,11 +14,14 @@ class HiveCeilItem {
   final HiveCeilType ceilType;
   @HiveField(3)
   final int index;
+  @HiveField(4)
+  final bool done;
 
   factory HiveCeilItem.fromCeilItem(CeilItem item) => HiveCeilItem(
         id: item.id,
         title: item.title,
         index: item.index,
+        done: item.done ?? false,
         ceilType: () {
           switch (item.ceilType) {
             case CeilType.NotUrgentImportant:
@@ -39,12 +42,14 @@ class HiveCeilItem {
     @required this.id,
     @required this.ceilType,
     @required this.index,
+    @required this.done,
   }) : assert(title != null && id != null && ceilType != null && index != null);
 
   CeilItem toCeilItem() => CeilItem(
         title: title,
         id: id,
         index: index,
+        done: done ?? false,
         ceilType: () {
           switch (ceilType) {
             case HiveCeilType.NotUrgentImportant:

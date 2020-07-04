@@ -9,5 +9,6 @@ abstract class CeilItem with _$CeilItem {
       {@required String title,
       @nullable @required String id,
       @required int index,
-      @required CeilType ceilType}) = _CeilItem;
+      @required CeilType ceilType,
+      bool done}) = _CeilItem;
 }

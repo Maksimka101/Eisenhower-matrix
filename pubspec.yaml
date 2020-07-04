@@ -1,8 +1,8 @@
 name: eisenhower_matrix
-description: The Eisenhower matrix app for all platforms! (android, ios, linux, windows, mac os)
+description: The Eisenhower matrix app for all platforms! (android, ios, linux, windows, mac os, web)
 
 publish_to: 'none'
-version: 2.0.0+1
+version: 3.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,6 +15,7 @@ dependencies:
   flutter_platform_widgets: any
   freezed_annotation: any
   firebase_storage: any
+  flutter_slidable: any
   cupertino_icons: any
   cloud_firestore: any
   google_sign_in: any

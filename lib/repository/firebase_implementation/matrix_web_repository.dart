@@ -19,6 +19,7 @@ const _urgentAndImportant = 'UI';
 const _notUrgentAndImportant = 'NUI';
 const _urgentAndNotImportant = 'UNI';
 const _notUrgentAndNotImportant = 'NUNI';
+const _isDone = 'DN';
 
 /// Firebase implementation of [MatrixWebRepository]
 /// Every functions must be called after user initialization
@@ -188,6 +189,7 @@ extension CeilItemMap on CeilItem {
         id: entry.key,
         index: entry.value[_indexName],
         title: entry.value[_titleName],
+        done: entry.value[_isDone],
         ceilType: () {
           switch (entry.value[_ceilTypeName]) {
             case _urgentAndImportant:

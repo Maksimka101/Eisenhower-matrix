@@ -42,6 +42,7 @@ class _CeilScreenState extends State<CeilScreen> {
               index: _maxItemId + 1,
               ceilType: widget.ceilType,
               id: null,
+              done: false,
             ),
           );
     }
@@ -53,6 +54,8 @@ class _CeilScreenState extends State<CeilScreen> {
   @override
   Widget build(BuildContext context) {
     final cursorColor = Theme.of(context).dividerColor;
+    const itemsListPadding = EdgeInsets.symmetric(horizontal: 6);
+    const itemPadding = EdgeInsets.symmetric(vertical: 5, horizontal: 7);
     return PlatformScaffold(
       backgroundColor: getCeilColor(context),
       body: GestureDetector(
@@ -131,7 +134,7 @@ class _CeilScreenState extends State<CeilScreen> {
                           _maxItemId = items.map((e) => e.index).reduce((f, s) => f > s ? f : s);
                         }
                         return ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          padding: itemsListPadding,
                           children: [
                             SizedBox(height: 3),
                             ...items
@@ -139,25 +142,29 @@ class _CeilScreenState extends State<CeilScreen> {
                                   (item) => MatrixCeilItem(
                                     key: Key(item.id),
                                     item: item,
+                                    padding: itemPadding,
                                     minimized: false,
                                   ),
                                 )
                                 .toList(),
                             if (_editingEnabled)
-                              TextField(
-                                style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                      fontSize: DefaultTextStyle.of(context).style.fontSize,
-                                    ),
-                                textCapitalization: TextCapitalization.sentences,
-                                focusNode: _focusNode,
-                                maxLines: 1,
-                                onSubmitted: _itemAdded,
-                                decoration: InputDecoration(
-                                  hintText: 'Write your task here...',
-                                  fillColor: Colors.transparent,
-                                  border: InputBorder.none,
+                              Padding(
+                                padding: itemPadding,
+                                child: TextField(
+                                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                                        fontSize: DefaultTextStyle.of(context).style.fontSize,
+                                      ),
+                                  textCapitalization: TextCapitalization.sentences,
+                                  focusNode: _focusNode,
+                                  maxLines: 1,
+                                  onSubmitted: _itemAdded,
+                                  decoration: InputDecoration(
+                                    hintText: 'Write your task here...',
+                                    fillColor: Colors.transparent,
+                                    border: InputBorder.none,
+                                  ),
+                                  cursorColor: cursorColor,
                                 ),
-                                cursorColor: cursorColor,
                               ),
                           ],
                         );

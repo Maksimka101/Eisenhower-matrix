@@ -16,12 +16,14 @@ class _$CeilItemTearOff {
       {@required String title,
       @required @nullable String id,
       @required int index,
-      @required CeilType ceilType}) {
+      @required CeilType ceilType,
+      bool done}) {
     return _CeilItem(
       title: title,
       id: id,
       index: index,
       ceilType: ceilType,
+      done: done,
     );
   }
 }
@@ -35,6 +37,7 @@ mixin _$CeilItem {
   String get id;
   int get index;
   CeilType get ceilType;
+  bool get done;
 
   $CeilItemCopyWith<CeilItem> get copyWith;
 }
@@ -42,7 +45,12 @@ mixin _$CeilItem {
 abstract class $CeilItemCopyWith<$Res> {
   factory $CeilItemCopyWith(CeilItem value, $Res Function(CeilItem) then) =
       _$CeilItemCopyWithImpl<$Res>;
-  $Res call({String title, @nullable String id, int index, CeilType ceilType});
+  $Res call(
+      {String title,
+      @nullable String id,
+      int index,
+      CeilType ceilType,
+      bool done});
 }
 
 class _$CeilItemCopyWithImpl<$Res> implements $CeilItemCopyWith<$Res> {
@@ -58,12 +66,14 @@ class _$CeilItemCopyWithImpl<$Res> implements $CeilItemCopyWith<$Res> {
     Object id = freezed,
     Object index = freezed,
     Object ceilType = freezed,
+    Object done = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
       id: id == freezed ? _value.id : id as String,
       index: index == freezed ? _value.index : index as int,
       ceilType: ceilType == freezed ? _value.ceilType : ceilType as CeilType,
+      done: done == freezed ? _value.done : done as bool,
     ));
   }
 }
@@ -72,7 +82,12 @@ abstract class _$CeilItemCopyWith<$Res> implements $CeilItemCopyWith<$Res> {
   factory _$CeilItemCopyWith(_CeilItem value, $Res Function(_CeilItem) then) =
       __$CeilItemCopyWithImpl<$Res>;
   @override
-  $Res call({String title, @nullable String id, int index, CeilType ceilType});
+  $Res call(
+      {String title,
+      @nullable String id,
+      int index,
+      CeilType ceilType,
+      bool done});
 }
 
 class __$CeilItemCopyWithImpl<$Res> extends _$CeilItemCopyWithImpl<$Res>
@@ -89,12 +104,14 @@ class __$CeilItemCopyWithImpl<$Res> extends _$CeilItemCopyWithImpl<$Res>
     Object id = freezed,
     Object index = freezed,
     Object ceilType = freezed,
+    Object done = freezed,
   }) {
     return _then(_CeilItem(
       title: title == freezed ? _value.title : title as String,
       id: id == freezed ? _value.id : id as String,
       index: index == freezed ? _value.index : index as int,
       ceilType: ceilType == freezed ? _value.ceilType : ceilType as CeilType,
+      done: done == freezed ? _value.done : done as bool,
     ));
   }
 }
@@ -104,7 +121,8 @@ class _$_CeilItem implements _CeilItem {
       {@required this.title,
       @required @nullable this.id,
       @required this.index,
-      @required this.ceilType})
+      @required this.ceilType,
+      this.done})
       : assert(title != null),
         assert(index != null),
         assert(ceilType != null);
@@ -118,10 +136,12 @@ class _$_CeilItem implements _CeilItem {
   final int index;
   @override
   final CeilType ceilType;
+  @override
+  final bool done;
 
   @override
   String toString() {
-    return 'CeilItem(title: $title, id: $id, index: $index, ceilType: $ceilType)';
+    return 'CeilItem(title: $title, id: $id, index: $index, ceilType: $ceilType, done: $done)';
   }
 
   @override
@@ -136,7 +156,9 @@ class _$_CeilItem implements _CeilItem {
                 const DeepCollectionEquality().equals(other.index, index)) &&
             (identical(other.ceilType, ceilType) ||
                 const DeepCollectionEquality()
-                    .equals(other.ceilType, ceilType)));
+                    .equals(other.ceilType, ceilType)) &&
+            (identical(other.done, done) ||
+                const DeepCollectionEquality().equals(other.done, done)));
   }
 
   @override
@@ -145,7 +167,8 @@ class _$_CeilItem implements _CeilItem {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(index) ^
-      const DeepCollectionEquality().hash(ceilType);
+      const DeepCollectionEquality().hash(ceilType) ^
+      const DeepCollectionEquality().hash(done);
 
   @override
   _$CeilItemCopyWith<_CeilItem> get copyWith =>
@@ -157,7 +180,8 @@ abstract class _CeilItem implements CeilItem {
       {@required String title,
       @required @nullable String id,
       @required int index,
-      @required CeilType ceilType}) = _$_CeilItem;
+      @required CeilType ceilType,
+      bool done}) = _$_CeilItem;
 
   @override
   String get title;
@@ -168,6 +192,8 @@ abstract class _CeilItem implements CeilItem {
   int get index;
   @override
   CeilType get ceilType;
+  @override
+  bool get done;
   @override
   _$CeilItemCopyWith<_CeilItem> get copyWith;
 }
