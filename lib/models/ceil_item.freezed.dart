@@ -17,7 +17,7 @@ class _$CeilItemTearOff {
       @required @nullable String id,
       @required int index,
       @required CeilType ceilType,
-      bool done}) {
+      bool done = false}) {
     return _CeilItem(
       title: title,
       id: id,
@@ -122,10 +122,11 @@ class _$_CeilItem implements _CeilItem {
       @required @nullable this.id,
       @required this.index,
       @required this.ceilType,
-      this.done})
+      this.done = false})
       : assert(title != null),
         assert(index != null),
-        assert(ceilType != null);
+        assert(ceilType != null),
+        assert(done != null);
 
   @override
   final String title;
@@ -136,6 +137,7 @@ class _$_CeilItem implements _CeilItem {
   final int index;
   @override
   final CeilType ceilType;
+  @JsonKey(defaultValue: false)
   @override
   final bool done;
 

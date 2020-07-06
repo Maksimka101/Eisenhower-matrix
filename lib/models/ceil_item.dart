@@ -10,5 +10,5 @@ abstract class CeilItem with _$CeilItem {
       @nullable @required String id,
       @required int index,
       @required CeilType ceilType,
-      bool done}) = _CeilItem;
+      @Default(false) bool done}) = _CeilItem;
 }

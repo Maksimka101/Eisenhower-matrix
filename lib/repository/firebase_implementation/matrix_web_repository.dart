@@ -183,13 +183,14 @@ extension CeilItemMap on CeilItem {
           }
         }(),
         _indexName: index,
+        _isDone: done,
       });
 
   static CeilItem fromMapEntry(MapEntry<String, Map<String, dynamic>> entry) => CeilItem(
         id: entry.key,
         index: entry.value[_indexName],
         title: entry.value[_titleName],
-        done: entry.value[_isDone],
+        done: entry.value[_isDone] ?? false,
         ceilType: () {
           switch (entry.value[_ceilTypeName]) {
             case _urgentAndImportant:
