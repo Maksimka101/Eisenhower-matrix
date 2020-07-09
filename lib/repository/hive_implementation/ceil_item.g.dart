@@ -61,13 +61,14 @@ class HiveCeilItemAdapter extends TypeAdapter<HiveCeilItem> {
       ceilType: fields[2] as HiveCeilType,
       index: fields[3] as int,
       done: fields[4] as bool,
+      doneAt: fields[5] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveCeilItem obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -77,6 +78,8 @@ class HiveCeilItemAdapter extends TypeAdapter<HiveCeilItem> {
       ..writeByte(3)
       ..write(obj.index)
       ..writeByte(4)
-      ..write(obj.done);
+      ..write(obj.done)
+      ..writeByte(5)
+      ..write(obj.doneAt);
   }
 }

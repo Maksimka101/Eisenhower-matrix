@@ -22,6 +22,7 @@ class ConnectivityConnection extends Connection {
 
   @override
   Future<bool> get connectedToTheInternet async {
+    // todo
     // [Connectivity] doesn't work in web...
     if (isWeb) {
       return true;

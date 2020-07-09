@@ -1,14 +1,14 @@
+import 'package:eisenhower_matrix/ui/widget/common/platform/platform_app_bar.dart';
 import 'package:eisenhower_matrix/ui/widget/sign_in_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
+    return Scaffold(
       appBar: PlatformAppBar(
-        backgroundColor: Theme.of(context).appBarTheme.color,
+//        backgroundColor: Theme.of(context).appBarTheme.color,
         title: Text('Sign in'),
       ),
       body: Center(

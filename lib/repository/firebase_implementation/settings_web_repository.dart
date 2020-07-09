@@ -7,7 +7,6 @@ class FirebaseSettingsWebRepository extends SettingsWebRepository {
   final _settingsStream = StreamController<Settings>.broadcast();
 
   @override
-  // TODO: implement settingsStream
   Stream<Settings> get settingsStream => _settingsStream.stream;
 
   @override
@@ -17,7 +16,7 @@ class FirebaseSettingsWebRepository extends SettingsWebRepository {
   }
 
   @override
-  Future<Settings> saveSettings(Settings settings) {
+  Future<Settings> saveSettings(Settings settings) async {
     // TODO: implement saveSettings
     return fetchSettings();
   }

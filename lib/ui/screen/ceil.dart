@@ -7,7 +7,6 @@ import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class CeilScreen extends StatefulWidget {
   final CeilType ceilType;
@@ -55,9 +54,9 @@ class _CeilScreenState extends State<CeilScreen> {
     final cursorColor = Theme.of(context).dividerColor;
     const itemsListPadding = EdgeInsets.symmetric(horizontal: 6);
     const itemPadding = EdgeInsets.symmetric(vertical: 5, horizontal: 7);
-    return PlatformScaffold(
+    return CupertinoPageScaffold(
       backgroundColor: getCeilColor(context),
-      body: GestureDetector(
+      child: GestureDetector(
         onDoubleTap: () {
           Navigator.pop(context);
         },
@@ -98,7 +97,7 @@ class _CeilScreenState extends State<CeilScreen> {
                               ),
                             ),
                             Icon(
-                              PlatformIcons(context).add,
+                              CupertinoIcons.add,
                             ),
                           ],
                         ),

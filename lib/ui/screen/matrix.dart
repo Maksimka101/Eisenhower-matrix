@@ -6,7 +6,6 @@ import 'package:eisenhower_matrix/utils/platform_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class MatrixScreen extends StatefulWidget {
   final Function(bool fullScreen) onChangeScreenMode;
@@ -41,7 +40,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
     @required bool withBorders,
   }) {
     final dividerColor = Colors.transparent;
-    return PlatformScaffold(
+    return Scaffold(
       backgroundColor: getCeilTitleColor(context),
       body: SafeArea(
         child: Row(

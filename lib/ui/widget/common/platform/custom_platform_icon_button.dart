@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class CustomPlatformIconButton extends StatelessWidget {
   final Widget icon;
@@ -30,7 +29,7 @@ class PlatformBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Icon(
-        PlatformIcons(context).back,
+        CupertinoIcons.back,
         color: color,
       ),
       onTap: () => Navigator.pop(context),

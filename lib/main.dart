@@ -10,13 +10,14 @@ import 'package:eisenhower_matrix/ui/screen/main_app.dart';
 import 'package:eisenhower_matrix/ui/screen/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'cubit/init_cubit.dart';
 import 'cubit/matrix_cubit.dart';
 import 'cubit/settings_cubit.dart';
 import 'cubit/sign_in_cubit.dart';
 import 'ui/widget/common/error.dart';
+import 'ui/widget/common/platform/platform_app_bar.dart';
+import 'ui/widget/common/platform/platform_circular_progress_indicator.dart';
 
 Future<void> main() async {
   // Comment import (import 'package:eisenhower_matrix/utils/private_credentials.dart';) in first line
@@ -82,47 +83,41 @@ class AppInit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformProvider(
-      settings: PlatformSettingsData(
-        iosUsesMaterialWidgets: true,
-        platformStyle: PlatformStyleData(
-          web: PlatformStyle.Cupertino,
+    // todo
+    debugPrint('App started');
+    return MaterialApp(
+      themeMode: ThemeMode.system,
+      theme: ThemeData(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          color: Color(0xf01d1d1d),
         ),
       ),
-      builder: (_) => MaterialApp(
-        themeMode: ThemeMode.system,
-        theme: ThemeData(),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          appBarTheme: AppBarTheme(
-            color: Color(0xf01d1d1d),
+      debugShowCheckedModeBanner: false,
+      home: MultiCubitProvider(
+        providers: [
+          CubitProvider<InitCubit>(
+            create: (_) => InitCubit(userRepository: userRepository),
           ),
-        ),
-        debugShowCheckedModeBanner: false,
-        home: MultiCubitProvider(
-          providers: [
-            CubitProvider<InitCubit>(
-              create: (_) => InitCubit(userRepository: userRepository),
+          CubitProvider<MatrixCubit>(
+            create: (_) => MatrixCubit(
+              settingsRepository: settingsRepository,
+              matrixRepository: matrixRepository,
             ),
-            CubitProvider<MatrixCubit>(
-              create: (_) => MatrixCubit(
-                settingsRepository: settingsRepository,
-                matrixRepository: matrixRepository,
-              ),
+          ),
+          CubitProvider<SettingsCubit>(
+            create: (_) => SettingsCubit(
+              settingsRepository: settingsRepository,
             ),
-            CubitProvider<SettingsCubit>(
-              create: (_) => SettingsCubit(
-                settingsRepository: settingsRepository,
-              ),
+          ),
+          CubitProvider<SignInCubit>(
+            create: (_) => SignInCubit(
+              userRepository: userRepository,
             ),
-            CubitProvider<SignInCubit>(
-              create: (_) => SignInCubit(
-                userRepository: userRepository,
-              ),
-            )
-          ],
-          child: UserInit(),
-        ),
+          )
+        ],
+        child: UserInit(),
       ),
     );
   }
@@ -134,17 +129,17 @@ class UserInit extends StatefulWidget {
 }
 
 class _UserInitState extends State<UserInit> {
-  Widget _loadingScreen() => PlatformScaffold(
+  Widget _loadingScreen() => Scaffold(
         appBar: PlatformAppBar(
           title: Text('Loading'),
-          backgroundColor: Theme.of(context).appBarTheme.color,
+//          backgroundColor: Theme.of(context).appBarTheme.color,
         ),
         body: Center(
           child: PlatformCircularProgressIndicator(),
         ),
       );
 
-  Widget _errorScreen(String message) => PlatformScaffold(
+  Widget _errorScreen(String message) => Scaffold(
         appBar: PlatformAppBar(
           title: Text('Error screen'),
         ),

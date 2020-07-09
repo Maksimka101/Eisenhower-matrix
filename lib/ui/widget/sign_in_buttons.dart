@@ -2,7 +2,9 @@ import 'package:eisenhower_matrix/cubit/sign_in_cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
+import 'common/platform/platform_button.dart';
+import 'common/platform/platform_circular_progress_indicator.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   @override
