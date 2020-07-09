@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/cubit/cubit.dart';
+import 'package:eisenhower_matrix/cubit/matrix_cubit.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +21,17 @@ class MatrixCeilItem extends StatelessWidget {
       context.cubit<MatrixCubit>().matrixCeilItemDeleted(itemId: item.id);
 
   void _doneTapped(BuildContext context) {
-    final done = item.done ?? false;
-    context.cubit<MatrixCubit>().matrixCeilItemSaved(item: item.copyWith.call(done: !done));
+    final done = !(item.doneInfo.done ?? false);
+    context.cubit<MatrixCubit>().matrixCeilItemSaved(
+          item:
+              item.copyWith.doneInfo.call(done: done, doneAt: done ? DateTime.now().toUtc() : null),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final done = item.done ?? false;
+    final done = item.doneInfo.done ?? false;
     var titleTextStyle = theme.textTheme.bodyText1.copyWith(
       fontWeight: FontWeight.w400,
       decoration: done ? TextDecoration.lineThrough : null,

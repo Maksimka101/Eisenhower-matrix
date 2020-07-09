@@ -17,13 +17,13 @@ class _$CeilItemTearOff {
       @required @nullable String id,
       @required int index,
       @required CeilType ceilType,
-      bool done = false}) {
+      DoneInfo doneInfo = const DoneInfo()}) {
     return _CeilItem(
       title: title,
       id: id,
       index: index,
       ceilType: ceilType,
-      done: done,
+      doneInfo: doneInfo,
     );
   }
 }
@@ -37,7 +37,7 @@ mixin _$CeilItem {
   String get id;
   int get index;
   CeilType get ceilType;
-  bool get done;
+  DoneInfo get doneInfo;
 
   $CeilItemCopyWith<CeilItem> get copyWith;
 }
@@ -50,7 +50,9 @@ abstract class $CeilItemCopyWith<$Res> {
       @nullable String id,
       int index,
       CeilType ceilType,
-      bool done});
+      DoneInfo doneInfo});
+
+  $DoneInfoCopyWith<$Res> get doneInfo;
 }
 
 class _$CeilItemCopyWithImpl<$Res> implements $CeilItemCopyWith<$Res> {
@@ -66,15 +68,25 @@ class _$CeilItemCopyWithImpl<$Res> implements $CeilItemCopyWith<$Res> {
     Object id = freezed,
     Object index = freezed,
     Object ceilType = freezed,
-    Object done = freezed,
+    Object doneInfo = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
       id: id == freezed ? _value.id : id as String,
       index: index == freezed ? _value.index : index as int,
       ceilType: ceilType == freezed ? _value.ceilType : ceilType as CeilType,
-      done: done == freezed ? _value.done : done as bool,
+      doneInfo: doneInfo == freezed ? _value.doneInfo : doneInfo as DoneInfo,
     ));
+  }
+
+  @override
+  $DoneInfoCopyWith<$Res> get doneInfo {
+    if (_value.doneInfo == null) {
+      return null;
+    }
+    return $DoneInfoCopyWith<$Res>(_value.doneInfo, (value) {
+      return _then(_value.copyWith(doneInfo: value));
+    });
   }
 }
 
@@ -87,7 +99,10 @@ abstract class _$CeilItemCopyWith<$Res> implements $CeilItemCopyWith<$Res> {
       @nullable String id,
       int index,
       CeilType ceilType,
-      bool done});
+      DoneInfo doneInfo});
+
+  @override
+  $DoneInfoCopyWith<$Res> get doneInfo;
 }
 
 class __$CeilItemCopyWithImpl<$Res> extends _$CeilItemCopyWithImpl<$Res>
@@ -104,14 +119,14 @@ class __$CeilItemCopyWithImpl<$Res> extends _$CeilItemCopyWithImpl<$Res>
     Object id = freezed,
     Object index = freezed,
     Object ceilType = freezed,
-    Object done = freezed,
+    Object doneInfo = freezed,
   }) {
     return _then(_CeilItem(
       title: title == freezed ? _value.title : title as String,
       id: id == freezed ? _value.id : id as String,
       index: index == freezed ? _value.index : index as int,
       ceilType: ceilType == freezed ? _value.ceilType : ceilType as CeilType,
-      done: done == freezed ? _value.done : done as bool,
+      doneInfo: doneInfo == freezed ? _value.doneInfo : doneInfo as DoneInfo,
     ));
   }
 }
@@ -122,11 +137,11 @@ class _$_CeilItem implements _CeilItem {
       @required @nullable this.id,
       @required this.index,
       @required this.ceilType,
-      this.done = false})
+      this.doneInfo = const DoneInfo()})
       : assert(title != null),
         assert(index != null),
         assert(ceilType != null),
-        assert(done != null);
+        assert(doneInfo != null);
 
   @override
   final String title;
@@ -137,13 +152,13 @@ class _$_CeilItem implements _CeilItem {
   final int index;
   @override
   final CeilType ceilType;
-  @JsonKey(defaultValue: false)
+  @JsonKey(defaultValue: const DoneInfo())
   @override
-  final bool done;
+  final DoneInfo doneInfo;
 
   @override
   String toString() {
-    return 'CeilItem(title: $title, id: $id, index: $index, ceilType: $ceilType, done: $done)';
+    return 'CeilItem(title: $title, id: $id, index: $index, ceilType: $ceilType, doneInfo: $doneInfo)';
   }
 
   @override
@@ -159,8 +174,9 @@ class _$_CeilItem implements _CeilItem {
             (identical(other.ceilType, ceilType) ||
                 const DeepCollectionEquality()
                     .equals(other.ceilType, ceilType)) &&
-            (identical(other.done, done) ||
-                const DeepCollectionEquality().equals(other.done, done)));
+            (identical(other.doneInfo, doneInfo) ||
+                const DeepCollectionEquality()
+                    .equals(other.doneInfo, doneInfo)));
   }
 
   @override
@@ -170,7 +186,7 @@ class _$_CeilItem implements _CeilItem {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(index) ^
       const DeepCollectionEquality().hash(ceilType) ^
-      const DeepCollectionEquality().hash(done);
+      const DeepCollectionEquality().hash(doneInfo);
 
   @override
   _$CeilItemCopyWith<_CeilItem> get copyWith =>
@@ -183,7 +199,7 @@ abstract class _CeilItem implements CeilItem {
       @required @nullable String id,
       @required int index,
       @required CeilType ceilType,
-      bool done}) = _$_CeilItem;
+      DoneInfo doneInfo}) = _$_CeilItem;
 
   @override
   String get title;
@@ -195,7 +211,126 @@ abstract class _CeilItem implements CeilItem {
   @override
   CeilType get ceilType;
   @override
-  bool get done;
+  DoneInfo get doneInfo;
   @override
   _$CeilItemCopyWith<_CeilItem> get copyWith;
+}
+
+class _$DoneInfoTearOff {
+  const _$DoneInfoTearOff();
+
+  _DoneInfo call({bool done = false, DateTime doneAt}) {
+    return _DoneInfo(
+      done: done,
+      doneAt: doneAt,
+    );
+  }
+}
+
+// ignore: unused_element
+const $DoneInfo = _$DoneInfoTearOff();
+
+mixin _$DoneInfo {
+  bool get done;
+  DateTime get doneAt;
+
+  $DoneInfoCopyWith<DoneInfo> get copyWith;
+}
+
+abstract class $DoneInfoCopyWith<$Res> {
+  factory $DoneInfoCopyWith(DoneInfo value, $Res Function(DoneInfo) then) =
+      _$DoneInfoCopyWithImpl<$Res>;
+  $Res call({bool done, DateTime doneAt});
+}
+
+class _$DoneInfoCopyWithImpl<$Res> implements $DoneInfoCopyWith<$Res> {
+  _$DoneInfoCopyWithImpl(this._value, this._then);
+
+  final DoneInfo _value;
+  // ignore: unused_field
+  final $Res Function(DoneInfo) _then;
+
+  @override
+  $Res call({
+    Object done = freezed,
+    Object doneAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      done: done == freezed ? _value.done : done as bool,
+      doneAt: doneAt == freezed ? _value.doneAt : doneAt as DateTime,
+    ));
+  }
+}
+
+abstract class _$DoneInfoCopyWith<$Res> implements $DoneInfoCopyWith<$Res> {
+  factory _$DoneInfoCopyWith(_DoneInfo value, $Res Function(_DoneInfo) then) =
+      __$DoneInfoCopyWithImpl<$Res>;
+  @override
+  $Res call({bool done, DateTime doneAt});
+}
+
+class __$DoneInfoCopyWithImpl<$Res> extends _$DoneInfoCopyWithImpl<$Res>
+    implements _$DoneInfoCopyWith<$Res> {
+  __$DoneInfoCopyWithImpl(_DoneInfo _value, $Res Function(_DoneInfo) _then)
+      : super(_value, (v) => _then(v as _DoneInfo));
+
+  @override
+  _DoneInfo get _value => super._value as _DoneInfo;
+
+  @override
+  $Res call({
+    Object done = freezed,
+    Object doneAt = freezed,
+  }) {
+    return _then(_DoneInfo(
+      done: done == freezed ? _value.done : done as bool,
+      doneAt: doneAt == freezed ? _value.doneAt : doneAt as DateTime,
+    ));
+  }
+}
+
+class _$_DoneInfo implements _DoneInfo {
+  const _$_DoneInfo({this.done = false, this.doneAt}) : assert(done != null);
+
+  @JsonKey(defaultValue: false)
+  @override
+  final bool done;
+  @override
+  final DateTime doneAt;
+
+  @override
+  String toString() {
+    return 'DoneInfo(done: $done, doneAt: $doneAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _DoneInfo &&
+            (identical(other.done, done) ||
+                const DeepCollectionEquality().equals(other.done, done)) &&
+            (identical(other.doneAt, doneAt) ||
+                const DeepCollectionEquality().equals(other.doneAt, doneAt)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(done) ^
+      const DeepCollectionEquality().hash(doneAt);
+
+  @override
+  _$DoneInfoCopyWith<_DoneInfo> get copyWith =>
+      __$DoneInfoCopyWithImpl<_DoneInfo>(this, _$identity);
+}
+
+abstract class _DoneInfo implements DoneInfo {
+  const factory _DoneInfo({bool done, DateTime doneAt}) = _$_DoneInfo;
+
+  @override
+  bool get done;
+  @override
+  DateTime get doneAt;
+  @override
+  _$DoneInfoCopyWith<_DoneInfo> get copyWith;
 }

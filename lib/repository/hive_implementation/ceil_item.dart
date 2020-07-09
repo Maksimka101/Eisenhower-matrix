@@ -16,12 +16,15 @@ class HiveCeilItem {
   final int index;
   @HiveField(4)
   final bool done;
+  @HiveField(5)
+  final DateTime doneAt;
 
   factory HiveCeilItem.fromCeilItem(CeilItem item) => HiveCeilItem(
         id: item.id,
         title: item.title,
         index: item.index,
-        done: item.done ?? false,
+        done: item.doneInfo.done ?? false,
+        doneAt: item.doneInfo.doneAt,
         ceilType: () {
           switch (item.ceilType) {
             case CeilType.NotUrgentImportant:
@@ -43,13 +46,17 @@ class HiveCeilItem {
     @required this.ceilType,
     @required this.index,
     @required this.done,
+    @required this.doneAt,
   }) : assert(title != null && id != null && ceilType != null && index != null);
 
   CeilItem toCeilItem() => CeilItem(
         title: title,
         id: id,
         index: index,
-        done: done ?? false,
+        doneInfo: DoneInfo(
+          doneAt: doneAt,
+          done: done,
+        ),
         ceilType: () {
           switch (ceilType) {
             case HiveCeilType.NotUrgentImportant:

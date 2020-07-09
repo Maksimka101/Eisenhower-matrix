@@ -44,7 +44,7 @@ class MatrixRepository {
   }
 
   void _onConnectionStateChanged(bool connected) {
-    if (connected) {
+    if (!_internetAvailable && connected) {
       fetchMatrix();
     }
     _internetAvailable = connected;

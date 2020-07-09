@@ -3,7 +3,6 @@ import 'package:eisenhower_matrix/cubit/cubit_base.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
 import 'package:eisenhower_matrix/utils/private_credentials.dart';
-import 'package:eisenhower_matrix/cubit/cubit.dart';
 import 'package:eisenhower_matrix/repository/credential_models.dart';
 import 'package:eisenhower_matrix/repository/matrix_repository.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
@@ -13,6 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
+import 'cubit/init_cubit.dart';
+import 'cubit/matrix_cubit.dart';
+import 'cubit/settings_cubit.dart';
+import 'cubit/sign_in_cubit.dart';
 import 'ui/widget/common/error.dart';
 
 Future<void> main() async {
@@ -103,6 +106,7 @@ class AppInit extends StatelessWidget {
             ),
             CubitProvider<MatrixCubit>(
               create: (_) => MatrixCubit(
+                settingsRepository: settingsRepository,
                 matrixRepository: matrixRepository,
               ),
             ),

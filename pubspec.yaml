@@ -30,7 +30,7 @@ dependencies:
   hive: any
 
 dependency_overrides:
-  dartx: ^0.4.1
+  dartx: ^0.4.2
 
 dev_dependencies:
   hive_generator: any
@@ -42,7 +42,6 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true
 
 

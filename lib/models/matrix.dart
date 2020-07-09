@@ -56,42 +56,16 @@ abstract class Matrix implements _$Matrix {
     @required Ceil notUrgentAndImportant,
     @required Ceil notUrgentAndNotImportant,
   }) = _Matrix;
-//
-//  factory Matrix.sort({
-//    @required Ceil urgentAndImportant,
-//    @required Ceil urgentAndNotImportant,
-//    @required Ceil notUrgentAndImportant,
-//    @required Ceil notUrgentAndNotImportant,
-//  }) {
-//    return Matrix(
-//      urgentAndNotImportant: urgentAndNotImportant.copyWith.call(
-//        items: urgentAndNotImportant.items
-//          ..sort(
-//            (f, s) => f.index.compareTo(s.index),
-//          ),
-//      ),
-//      urgentAndImportant: urgentAndImportant.copyWith.call(
-//        items: urgentAndImportant.items
-//          ..sort(
-//            (f, s) => f.index.compareTo(s.index),
-//          ),
-//      ),
-//      notUrgentAndImportant: notUrgentAndImportant.copyWith.call(
-//        items: notUrgentAndImportant.items
-//          ..sort(
-//            (f, s) => f.index.compareTo(s.index),
-//          ),
-//      ),
-//      notUrgentAndNotImportant: notUrgentAndNotImportant.copyWith.call(
-//        items: notUrgentAndNotImportant.items
-//          ..sort(
-//            (f, s) => f.index.compareTo(s.index),
-//          ),
-//      ),
-//    );
-//  }
 
   factory Matrix.empty() => Matrix.fromCeilItems([]);
+
+  Matrix get sorted => () {
+        notUrgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        urgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        notUrgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        urgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        return this;
+      }();
 
   @late
   List<CeilItem> get allCeilItems => [

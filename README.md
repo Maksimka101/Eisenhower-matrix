@@ -20,7 +20,7 @@ You need to disable tracking protection to be able to sign in with google.
 
 
 # Installation
-You can just install apps from these links: [Android](https://yadi.sk/d/c4RXyhb36WlLzQ).
+You can just install apps from these links: [Android](https://yadi.sk/d/XBU0Zm2W12P7aA).
 
 
 # How to build

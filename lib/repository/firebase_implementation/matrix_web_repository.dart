@@ -20,6 +20,7 @@ const _notUrgentAndImportant = 'NUI';
 const _urgentAndNotImportant = 'UNI';
 const _notUrgentAndNotImportant = 'NUNI';
 const _isDone = 'DN';
+const _doneAt = 'DAT';
 
 /// Firebase implementation of [MatrixWebRepository]
 /// Every functions must be called after user initialization
@@ -95,9 +96,6 @@ class FirebaseMatrixWebRepository extends MatrixWebRepository {
     if (!_storageInitialized) {
       var documentSnapshot = await _userDocumentRef.get();
       if (!documentSnapshot.exists) {
-        await _userDocumentRef.setData({
-          _settingsPathName: {},
-        });
         // I can't just create empty collection so i create and delete empty document
         await _userMatrixCollectionRef.document('emptyDocument').setData({});
         await _userMatrixCollectionRef.document('emptyDocument').delete();
@@ -183,14 +181,18 @@ extension CeilItemMap on CeilItem {
           }
         }(),
         _indexName: index,
-        _isDone: done,
+        _isDone: doneInfo.done,
+        _doneAt: Timestamp.fromDate(doneInfo.doneAt),
       });
 
   static CeilItem fromMapEntry(MapEntry<String, Map<String, dynamic>> entry) => CeilItem(
         id: entry.key,
         index: entry.value[_indexName],
         title: entry.value[_titleName],
-        done: entry.value[_isDone] ?? false,
+        doneInfo: DoneInfo(
+          done: entry.value[_isDone] ?? false,
+          doneAt: (entry.value[_doneAt] as Timestamp).toDate().toUtc(),
+        ),
         ceilType: () {
           switch (entry.value[_ceilTypeName]) {
             case _urgentAndImportant:

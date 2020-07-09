@@ -1,19 +1,20 @@
 import 'package:cubit/cubit.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'settings_cubit.freezed.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   final SettingsRepository settingsRepository;
 
   SettingsCubit({@required this.settingsRepository})
       : assert(settingsRepository != null),
-        super(SettingsInitial());
+        super(SettingsState.initial());
 }
 
-abstract class SettingsState extends Equatable {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class SettingsState with _$SettingsState {
+  const factory SettingsState.initial() = Initial;
 }
-
-class SettingsInitial extends SettingsState {}

@@ -1,4 +1,5 @@
 import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart';
+import 'package:eisenhower_matrix/repository/hive_implementation/settings.dart';
 import 'package:eisenhower_matrix/repository/hive_implementation/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -10,6 +11,7 @@ class HiveUtils {
   static const ceilItemsBoxName = 'cibn';
   static const unSyncCeilItemsBoxName = 'uscibn';
   static const unSyncDeletedCeilItemBoxName = 'usdcibn';
+  static const settingsBoxName = 'settbn';
 
   /// Ensure hive initialized and return [Box] with type [T]
   static Future<Box<T>> getBox<T>(String boxName) async {
@@ -30,6 +32,8 @@ class HiveUtils {
       Hive.registerAdapter<HiveSignInProvider>(HiveSignInProviderAdapter());
       Hive.registerAdapter<HiveCeilItem>(HiveCeilItemAdapter());
       Hive.registerAdapter<HiveCeilType>(HiveCeilTypeAdapter());
+      Hive.registerAdapter<HiveSettings>(HiveSettingsAdapter());
+      Hive.registerAdapter<HiveCeilSettings>(HiveCeilSettingsAdapter());
       if (kIsWeb) {
         Hive.init('');
       } else {

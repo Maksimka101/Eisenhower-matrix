@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/cubit/cubit.dart';
+import 'package:eisenhower_matrix/cubit/matrix_cubit.dart';
 import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/ui/widget/matrix_ceil.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
@@ -23,12 +23,6 @@ class MatrixScreen extends StatefulWidget {
 }
 
 class _MatrixScreenState extends State<MatrixScreen> {
-  Widget _unknownState(Object state, BuildContext context) => Center(
-        child: Column(
-          children: <Widget>[Icon(PlatformIcons(context).info), Text('Unknown state: $state')],
-        ),
-      );
-
   @override
   void initState() {
     context.cubit<MatrixCubit>().matrixFetchLatest();
@@ -152,10 +146,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                 // UrgentImportant
                                 child: CubitBuilder<MatrixCubit, MatrixState>(
                                   buildWhen: (previous, state) {
-                                    if (state is MatrixInitial) {
+                                    if (state is Initial) {
                                       return true;
                                     }
-                                    if (state is MatrixFetched && previous is MatrixFetched) {
+                                    if (state is Fetched && previous is Fetched) {
                                       return state.matrix.urgentAndImportant !=
                                           previous.matrix.urgentAndImportant;
                                     } else {
@@ -163,21 +157,15 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                     }
                                   },
                                   builder: (context, urgentImportant) {
-                                    final ceilType = CeilType.UrgentImportant;
-                                    switch (urgentImportant.runtimeType) {
-                                      case MatrixInitial:
-                                        return MatrixCeilLoadingWidget(
-                                          ceilType: ceilType,
-                                        );
-                                      case MatrixFetched:
-                                        return MatrixCeilWidget(
-                                          ceil: (urgentImportant as MatrixFetched)
-                                              .matrix
-                                              .urgentAndImportant,
-                                        );
-                                      default:
-                                        return _unknownState(urgentImportant, context);
-                                    }
+                                    const ceilType = CeilType.UrgentImportant;
+                                    return urgentImportant.when(
+                                      initial: () => MatrixCeilLoadingWidget(
+                                        ceilType: ceilType,
+                                      ),
+                                      fetched: (matrix) => MatrixCeilWidget(
+                                        ceil: matrix.urgentAndImportant,
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
@@ -189,10 +177,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                 // UrgentNotImportant
                                 child: CubitBuilder<MatrixCubit, MatrixState>(
                                   buildWhen: (previous, state) {
-                                    if (state is MatrixInitial) {
+                                    if (state is Initial) {
                                       return true;
                                     }
-                                    if (state is MatrixFetched && previous is MatrixFetched) {
+                                    if (state is Fetched && previous is Fetched) {
                                       return state.matrix.urgentAndNotImportant !=
                                           previous.matrix.urgentAndNotImportant;
                                     } else {
@@ -201,20 +189,14 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                   },
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.UrgentNotImportant;
-                                    switch (urgentImportant.runtimeType) {
-                                      case MatrixInitial:
-                                        return MatrixCeilLoadingWidget(
-                                          ceilType: ceilType,
-                                        );
-                                      case MatrixFetched:
-                                        return MatrixCeilWidget(
-                                          ceil: (urgentImportant as MatrixFetched)
-                                              .matrix
-                                              .urgentAndNotImportant,
-                                        );
-                                      default:
-                                        return _unknownState(urgentImportant, context);
-                                    }
+                                    return urgentImportant.when(
+                                      initial: () => MatrixCeilLoadingWidget(
+                                        ceilType: ceilType,
+                                      ),
+                                      fetched: (matrix) => MatrixCeilWidget(
+                                        ceil: matrix.urgentAndImportant,
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
@@ -232,10 +214,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                 // UrgentImportant
                                 child: CubitBuilder<MatrixCubit, MatrixState>(
                                   buildWhen: (previous, state) {
-                                    if (state is MatrixInitial) {
+                                    if (state is Initial) {
                                       return true;
                                     }
-                                    if (state is MatrixFetched && previous is MatrixFetched) {
+                                    if (state is Fetched && previous is Fetched) {
                                       return state.matrix.notUrgentAndImportant !=
                                           previous.matrix.notUrgentAndImportant;
                                     } else {
@@ -244,20 +226,14 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                   },
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.NotUrgentImportant;
-                                    switch (urgentImportant.runtimeType) {
-                                      case MatrixInitial:
-                                        return MatrixCeilLoadingWidget(
-                                          ceilType: ceilType,
-                                        );
-                                      case MatrixFetched:
-                                        return MatrixCeilWidget(
-                                          ceil: (urgentImportant as MatrixFetched)
-                                              .matrix
-                                              .notUrgentAndImportant,
-                                        );
-                                      default:
-                                        return _unknownState(urgentImportant, context);
-                                    }
+                                    return urgentImportant.when(
+                                      initial: () => MatrixCeilLoadingWidget(
+                                        ceilType: ceilType,
+                                      ),
+                                      fetched: (matrix) => MatrixCeilWidget(
+                                        ceil: matrix.urgentAndImportant,
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
@@ -269,10 +245,10 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                 // NotUrgentNotImportant
                                 child: CubitBuilder<MatrixCubit, MatrixState>(
                                   buildWhen: (previous, state) {
-                                    if (state is MatrixInitial) {
+                                    if (state is Initial) {
                                       return true;
                                     }
-                                    if (state is MatrixFetched && previous is MatrixFetched) {
+                                    if (state is Fetched && previous is Fetched) {
                                       return state.matrix.notUrgentAndNotImportant !=
                                           previous.matrix.notUrgentAndNotImportant;
                                     } else {
@@ -281,20 +257,14 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                   },
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.NotUrgentNotImportant;
-                                    switch (urgentImportant.runtimeType) {
-                                      case MatrixInitial:
-                                        return MatrixCeilLoadingWidget(
-                                          ceilType: ceilType,
-                                        );
-                                      case MatrixFetched:
-                                        return MatrixCeilWidget(
-                                          ceil: (urgentImportant as MatrixFetched)
-                                              .matrix
-                                              .notUrgentAndNotImportant,
-                                        );
-                                      default:
-                                        return _unknownState(urgentImportant, context);
-                                    }
+                                    return urgentImportant.when(
+                                      initial: () => MatrixCeilLoadingWidget(
+                                        ceilType: ceilType,
+                                      ),
+                                      fetched: (matrix) => MatrixCeilWidget(
+                                        ceil: matrix.urgentAndImportant,
+                                      ),
+                                    );
                                   },
                                 ),
                               ),

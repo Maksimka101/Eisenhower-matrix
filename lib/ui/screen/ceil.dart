@@ -1,4 +1,4 @@
-import 'package:eisenhower_matrix/cubit/cubit.dart';
+import 'package:eisenhower_matrix/cubit/matrix_cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/ui/widget/common/platform/custom_platform_icon_button.dart';
 import 'package:eisenhower_matrix/ui/widget/common/matrix_ceil_item.dart';
@@ -42,7 +42,6 @@ class _CeilScreenState extends State<CeilScreen> {
               index: _maxItemId + 1,
               ceilType: widget.ceilType,
               id: null,
-              done: false,
             ),
           );
     }
@@ -114,20 +113,20 @@ class _CeilScreenState extends State<CeilScreen> {
                 child: CubitBuilder<MatrixCubit, MatrixState>(
                   builder: (context, state) {
                     switch (state.runtimeType) {
-                      case MatrixFetched:
+                      case Fetched:
                         List<CeilItem> items;
                         switch (widget.ceilType) {
                           case CeilType.UrgentImportant:
-                            items = (state as MatrixFetched).matrix.urgentAndImportant.items;
+                            items = (state as Fetched).matrix.urgentAndImportant.items;
                             break;
                           case CeilType.UrgentNotImportant:
-                            items = (state as MatrixFetched).matrix.urgentAndNotImportant.items;
+                            items = (state as Fetched).matrix.urgentAndNotImportant.items;
                             break;
                           case CeilType.NotUrgentImportant:
-                            items = (state as MatrixFetched).matrix.notUrgentAndImportant.items;
+                            items = (state as Fetched).matrix.notUrgentAndImportant.items;
                             break;
                           case CeilType.NotUrgentNotImportant:
-                            items = (state as MatrixFetched).matrix.notUrgentAndNotImportant.items;
+                            items = (state as Fetched).matrix.notUrgentAndNotImportant.items;
                             break;
                         }
                         if (items.isNotEmpty) {

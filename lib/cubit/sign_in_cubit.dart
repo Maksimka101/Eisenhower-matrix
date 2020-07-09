@@ -2,27 +2,29 @@ import 'package:cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'sign_in_entity.dart';
+part 'sign_in_cubit.freezed.dart';
 
 class SignInCubit extends Cubit<SignInState> {
   final UserRepository userRepository;
 
   SignInCubit({@required this.userRepository})
       : assert(userRepository != null),
-        super(SignIniInitial()) {
+        super(SignInState.initial()) {
     userRepository.userStream.listen(_userFetched);
   }
 
-  Stream<SignInState> signInStarted(SignInStarted event) async* {
+  Future<void> signInStarted() async {
     await userRepository.fetchUser();
   }
 
   Future<void> _userFetched(User user) async {
     if (user != null) {
-      emit(SignedInUser(user: user));
+      emit(SignInState.signedIn(user: user));
     } else {
-      emit(SignedOutUser());
+      emit(SignInState.signedOut());
     }
   }
 
@@ -50,19 +52,30 @@ class SignInCubit extends Cubit<SignInState> {
       await userRepository.fetchUser();
       switch (cantSignInException.exceptionReason) {
         case SignInExceptionReason.signInRepositoryError:
-          emit(SignInError(message: "Can't sign in due to server exception"));
+          emit(SignInState.error(message: "Can't sign in due to server exception"));
           break;
         case SignInExceptionReason.noInternetConnection:
-          emit(SignInError(message: 'Please connect to the internet or sign in anonymously'));
+          emit(SignInState.error(message: 'Please connect to the internet or sign in anonymously'));
           break;
       }
     } catch (e) {
       debugPrint("Can't sign in due to unknown exception: $e");
-      emit(SignInError(message: "Can't sign in due to unknown exception"));
+      emit(SignInState.error(message: "Can't sign in due to unknown exception"));
     }
   }
 
   Future<void> signOut() async {
     await userRepository.signOut();
   }
+}
+
+@freezed
+abstract class SignInState with _$SignInState {
+  const factory SignInState.initial() = Initial;
+
+  const factory SignInState.signedIn({@required User user}) = SignedIn;
+
+  const factory SignInState.signedOut() = SignedOut;
+
+  const factory SignInState.error({@required String message}) = Error;
 }
