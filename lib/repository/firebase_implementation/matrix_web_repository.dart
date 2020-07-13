@@ -185,27 +185,32 @@ extension CeilItemMap on CeilItem {
         _doneAt: Timestamp.fromDate(doneInfo.doneAt),
       });
 
-  static CeilItem fromMapEntry(MapEntry<String, Map<String, dynamic>> entry) => CeilItem(
-        id: entry.key,
-        index: entry.value[_indexName],
-        title: entry.value[_titleName],
-        doneInfo: DoneInfo(
-          done: entry.value[_isDone] ?? false,
-          doneAt: (entry.value[_doneAt] as Timestamp).toDate().toUtc(),
-        ),
-        ceilType: () {
-          switch (entry.value[_ceilTypeName]) {
-            case _urgentAndImportant:
-              return CeilType.UrgentImportant;
-            case _notUrgentAndImportant:
-              return CeilType.NotUrgentImportant;
-            case _urgentAndNotImportant:
-              return CeilType.UrgentNotImportant;
-            case _notUrgentAndNotImportant:
-              return CeilType.NotUrgentNotImportant;
-            default:
-              return CeilType.UrgentImportant;
-          }
-        }(),
-      );
+  static CeilItem fromMapEntry(MapEntry<String, Map<String, dynamic>> entry) {
+    final done = entry.value[_isDone] ?? false;
+    var doneAt =
+        entry.value[_doneAt] != null ? (entry.value[_doneAt] as Timestamp).toDate().toUtc() : null;
+    return CeilItem(
+      id: entry.key,
+      index: entry.value[_indexName],
+      title: entry.value[_titleName],
+      doneInfo: DoneInfo(
+        done: done,
+        doneAt: doneAt,
+      ),
+      ceilType: () {
+        switch (entry.value[_ceilTypeName]) {
+          case _urgentAndImportant:
+            return CeilType.UrgentImportant;
+          case _notUrgentAndImportant:
+            return CeilType.NotUrgentImportant;
+          case _urgentAndNotImportant:
+            return CeilType.UrgentNotImportant;
+          case _notUrgentAndNotImportant:
+            return CeilType.NotUrgentNotImportant;
+          default:
+            return CeilType.UrgentImportant;
+        }
+      }(),
+    );
+  }
 }

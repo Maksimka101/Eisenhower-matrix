@@ -46,7 +46,7 @@ class HiveUserLocalRepository extends UserLocalRepository {
   Future<void> eraseStorage() async {
     var itemsBox = await HiveUtils.getBox<CeilItem>(HiveUtils.ceilItemsBoxName);
     await itemsBox.clear();
-    var userBox = await HiveUtils.getBox<User>(HiveUtils.ceilItemsBoxName);
+    var userBox = await HiveUtils.getBox<User>(HiveUtils.userBoxName);
     await userBox.clear();
     var unSyncDeletedItemsBox =
         await HiveUtils.getBox<String>(HiveUtils.unSyncDeletedCeilItemBoxName);

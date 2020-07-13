@@ -151,7 +151,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                         ceilType: ceilType,
                                       ),
                                       fetched: (matrix) => MatrixCeilWidget(
-                                        ceil: matrix.urgentAndImportant,
+                                        ceil: matrix.urgentImportant,
                                       ),
                                     );
                                   },
@@ -171,7 +171,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                         ceilType: ceilType,
                                       ),
                                       fetched: (matrix) => MatrixCeilWidget(
-                                        ceil: matrix.urgentAndImportant,
+                                        ceil: matrix.urgentNotImportant,
                                       ),
                                     );
                                   },
@@ -197,7 +197,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                         ceilType: ceilType,
                                       ),
                                       fetched: (matrix) => MatrixCeilWidget(
-                                        ceil: matrix.urgentAndImportant,
+                                        ceil: matrix.notUrgentImportant,
                                       ),
                                     );
                                   },
@@ -217,7 +217,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                                         ceilType: ceilType,
                                       ),
                                       fetched: (matrix) => MatrixCeilWidget(
-                                        ceil: matrix.urgentAndImportant,
+                                        ceil: matrix.notUrgentNotImportant,
                                       ),
                                     );
                                   },

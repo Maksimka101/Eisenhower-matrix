@@ -81,8 +81,6 @@ class AppInit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todo
-    debugPrint('App started');
     return MaterialApp(
       themeMode: ThemeMode.system,
       theme: ThemeData(),
@@ -130,7 +128,6 @@ class _UserInitState extends State<UserInit> {
   Widget _loadingScreen() => Scaffold(
         appBar: PlatformAppBar(
           title: Text('Loading'),
-//          backgroundColor: Theme.of(context).appBarTheme.color,
         ),
         body: Center(
           child: PlatformCircularProgressIndicator(),
@@ -146,7 +143,7 @@ class _UserInitState extends State<UserInit> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<InitCubit, InitState>(
-      builder: (context, initState) => initState.when(
+      builder: (context, initState) => initState.when<Widget>(
         initial: _loadingScreen,
         signedIn: () => MainAppScreen(),
         signedOut: () => SignInScreen(),

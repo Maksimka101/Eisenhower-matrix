@@ -116,16 +116,16 @@ class _CeilScreenState extends State<CeilScreen> {
                         List<CeilItem> items;
                         switch (widget.ceilType) {
                           case CeilType.UrgentImportant:
-                            items = (state as Fetched).matrix.urgentAndImportant.items;
+                            items = (state as Fetched).matrix.urgentImportant.items;
                             break;
                           case CeilType.UrgentNotImportant:
-                            items = (state as Fetched).matrix.urgentAndNotImportant.items;
+                            items = (state as Fetched).matrix.urgentNotImportant.items;
                             break;
                           case CeilType.NotUrgentImportant:
-                            items = (state as Fetched).matrix.notUrgentAndImportant.items;
+                            items = (state as Fetched).matrix.notUrgentImportant.items;
                             break;
                           case CeilType.NotUrgentNotImportant:
-                            items = (state as Fetched).matrix.notUrgentAndNotImportant.items;
+                            items = (state as Fetched).matrix.notUrgentNotImportant.items;
                             break;
                         }
                         if (items.isNotEmpty) {

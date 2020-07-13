@@ -30,10 +30,10 @@ class _$MatrixTearOff {
 const $Matrix = _$MatrixTearOff();
 
 mixin _$Matrix {
-  Ceil get urgentAndImportant;
-  Ceil get urgentAndNotImportant;
-  Ceil get notUrgentAndImportant;
-  Ceil get notUrgentAndNotImportant;
+  Ceil get urgentImportant;
+  Ceil get urgentNotImportant;
+  Ceil get notUrgentImportant;
+  Ceil get notUrgentNotImportant;
 
   $MatrixCopyWith<Matrix> get copyWith;
 }
@@ -69,56 +69,56 @@ class _$MatrixCopyWithImpl<$Res> implements $MatrixCopyWith<$Res> {
   }) {
     return _then(_value.copyWith(
       urgentAndImportant: urgentAndImportant == freezed
-          ? _value.urgentAndImportant
+          ? _value.urgentImportant
           : urgentAndImportant as Ceil,
       urgentAndNotImportant: urgentAndNotImportant == freezed
-          ? _value.urgentAndNotImportant
+          ? _value.urgentNotImportant
           : urgentAndNotImportant as Ceil,
       notUrgentAndImportant: notUrgentAndImportant == freezed
-          ? _value.notUrgentAndImportant
+          ? _value.notUrgentImportant
           : notUrgentAndImportant as Ceil,
       notUrgentAndNotImportant: notUrgentAndNotImportant == freezed
-          ? _value.notUrgentAndNotImportant
+          ? _value.notUrgentNotImportant
           : notUrgentAndNotImportant as Ceil,
     ));
   }
 
   @override
   $CeilCopyWith<$Res> get urgentAndImportant {
-    if (_value.urgentAndImportant == null) {
+    if (_value.urgentImportant == null) {
       return null;
     }
-    return $CeilCopyWith<$Res>(_value.urgentAndImportant, (value) {
+    return $CeilCopyWith<$Res>(_value.urgentImportant, (value) {
       return _then(_value.copyWith(urgentAndImportant: value));
     });
   }
 
   @override
   $CeilCopyWith<$Res> get urgentAndNotImportant {
-    if (_value.urgentAndNotImportant == null) {
+    if (_value.urgentNotImportant == null) {
       return null;
     }
-    return $CeilCopyWith<$Res>(_value.urgentAndNotImportant, (value) {
+    return $CeilCopyWith<$Res>(_value.urgentNotImportant, (value) {
       return _then(_value.copyWith(urgentAndNotImportant: value));
     });
   }
 
   @override
   $CeilCopyWith<$Res> get notUrgentAndImportant {
-    if (_value.notUrgentAndImportant == null) {
+    if (_value.notUrgentImportant == null) {
       return null;
     }
-    return $CeilCopyWith<$Res>(_value.notUrgentAndImportant, (value) {
+    return $CeilCopyWith<$Res>(_value.notUrgentImportant, (value) {
       return _then(_value.copyWith(notUrgentAndImportant: value));
     });
   }
 
   @override
   $CeilCopyWith<$Res> get notUrgentAndNotImportant {
-    if (_value.notUrgentAndNotImportant == null) {
+    if (_value.notUrgentNotImportant == null) {
       return null;
     }
-    return $CeilCopyWith<$Res>(_value.notUrgentAndNotImportant, (value) {
+    return $CeilCopyWith<$Res>(_value.notUrgentNotImportant, (value) {
       return _then(_value.copyWith(notUrgentAndNotImportant: value));
     });
   }
@@ -161,16 +161,16 @@ class __$MatrixCopyWithImpl<$Res> extends _$MatrixCopyWithImpl<$Res>
   }) {
     return _then(_Matrix(
       urgentAndImportant: urgentAndImportant == freezed
-          ? _value.urgentAndImportant
+          ? _value.urgentImportant
           : urgentAndImportant as Ceil,
       urgentAndNotImportant: urgentAndNotImportant == freezed
-          ? _value.urgentAndNotImportant
+          ? _value.urgentNotImportant
           : urgentAndNotImportant as Ceil,
       notUrgentAndImportant: notUrgentAndImportant == freezed
-          ? _value.notUrgentAndImportant
+          ? _value.notUrgentImportant
           : notUrgentAndImportant as Ceil,
       notUrgentAndNotImportant: notUrgentAndNotImportant == freezed
-          ? _value.notUrgentAndNotImportant
+          ? _value.notUrgentNotImportant
           : notUrgentAndNotImportant as Ceil,
     ));
   }
@@ -178,24 +178,24 @@ class __$MatrixCopyWithImpl<$Res> extends _$MatrixCopyWithImpl<$Res>
 
 class _$_Matrix extends _Matrix {
   _$_Matrix(
-      {@required this.urgentAndImportant,
-      @required this.urgentAndNotImportant,
-      @required this.notUrgentAndImportant,
-      @required this.notUrgentAndNotImportant})
-      : assert(urgentAndImportant != null),
-        assert(urgentAndNotImportant != null),
-        assert(notUrgentAndImportant != null),
-        assert(notUrgentAndNotImportant != null),
+      {@required this.urgentImportant,
+      @required this.urgentNotImportant,
+      @required this.notUrgentImportant,
+      @required this.notUrgentNotImportant})
+      : assert(urgentImportant != null),
+        assert(urgentNotImportant != null),
+        assert(notUrgentImportant != null),
+        assert(notUrgentNotImportant != null),
         super._();
 
   @override
-  final Ceil urgentAndImportant;
+  final Ceil urgentImportant;
   @override
-  final Ceil urgentAndNotImportant;
+  final Ceil urgentNotImportant;
   @override
-  final Ceil notUrgentAndImportant;
+  final Ceil notUrgentImportant;
   @override
-  final Ceil notUrgentAndNotImportant;
+  final Ceil notUrgentNotImportant;
 
   bool _didallCeilItems = false;
   List<CeilItem> _allCeilItems;
@@ -205,10 +205,10 @@ class _$_Matrix extends _Matrix {
     if (_didallCeilItems == false) {
       _didallCeilItems = true;
       _allCeilItems = [
-        ...urgentAndImportant.items,
-        ...urgentAndNotImportant.items,
-        ...notUrgentAndImportant.items,
-        ...notUrgentAndNotImportant.items,
+        ...urgentImportant.items,
+        ...urgentNotImportant.items,
+        ...notUrgentImportant.items,
+        ...notUrgentNotImportant.items,
       ];
     }
     return _allCeilItems;
@@ -216,35 +216,35 @@ class _$_Matrix extends _Matrix {
 
   @override
   String toString() {
-    return 'Matrix(urgentAndImportant: $urgentAndImportant, urgentAndNotImportant: $urgentAndNotImportant, notUrgentAndImportant: $notUrgentAndImportant, notUrgentAndNotImportant: $notUrgentAndNotImportant, allCeilItems: $allCeilItems)';
+    return 'Matrix(urgentAndImportant: $urgentImportant, urgentAndNotImportant: $urgentNotImportant, notUrgentAndImportant: $notUrgentImportant, notUrgentAndNotImportant: $notUrgentNotImportant, allCeilItems: $allCeilItems)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Matrix &&
-            (identical(other.urgentAndImportant, urgentAndImportant) ||
+            (identical(other.urgentImportant, urgentImportant) ||
                 const DeepCollectionEquality()
-                    .equals(other.urgentAndImportant, urgentAndImportant)) &&
-            (identical(other.urgentAndNotImportant, urgentAndNotImportant) ||
+                    .equals(other.urgentImportant, urgentImportant)) &&
+            (identical(other.urgentNotImportant, urgentNotImportant) ||
                 const DeepCollectionEquality().equals(
-                    other.urgentAndNotImportant, urgentAndNotImportant)) &&
-            (identical(other.notUrgentAndImportant, notUrgentAndImportant) ||
+                    other.urgentNotImportant, urgentNotImportant)) &&
+            (identical(other.notUrgentImportant, notUrgentImportant) ||
                 const DeepCollectionEquality().equals(
-                    other.notUrgentAndImportant, notUrgentAndImportant)) &&
+                    other.notUrgentImportant, notUrgentImportant)) &&
             (identical(
-                    other.notUrgentAndNotImportant, notUrgentAndNotImportant) ||
+                    other.notUrgentNotImportant, notUrgentNotImportant) ||
                 const DeepCollectionEquality().equals(
-                    other.notUrgentAndNotImportant, notUrgentAndNotImportant)));
+                    other.notUrgentNotImportant, notUrgentNotImportant)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(urgentAndImportant) ^
-      const DeepCollectionEquality().hash(urgentAndNotImportant) ^
-      const DeepCollectionEquality().hash(notUrgentAndImportant) ^
-      const DeepCollectionEquality().hash(notUrgentAndNotImportant);
+      const DeepCollectionEquality().hash(urgentImportant) ^
+      const DeepCollectionEquality().hash(urgentNotImportant) ^
+      const DeepCollectionEquality().hash(notUrgentImportant) ^
+      const DeepCollectionEquality().hash(notUrgentNotImportant);
 
   @override
   _$MatrixCopyWith<_Matrix> get copyWith =>
@@ -260,13 +260,13 @@ abstract class _Matrix extends Matrix {
       @required Ceil notUrgentAndNotImportant}) = _$_Matrix;
 
   @override
-  Ceil get urgentAndImportant;
+  Ceil get urgentImportant;
   @override
-  Ceil get urgentAndNotImportant;
+  Ceil get urgentNotImportant;
   @override
-  Ceil get notUrgentAndImportant;
+  Ceil get notUrgentImportant;
   @override
-  Ceil get notUrgentAndNotImportant;
+  Ceil get notUrgentNotImportant;
   @override
   _$MatrixCopyWith<_Matrix> get copyWith;
 }

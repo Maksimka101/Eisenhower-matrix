@@ -60,18 +60,18 @@ abstract class Matrix implements _$Matrix {
   factory Matrix.empty() => Matrix.fromCeilItems([]);
 
   Matrix get sorted => () {
-        notUrgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
-        urgentAndImportant.items.sort((f, s) => f.index.compareTo(s.index));
-        notUrgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
-        urgentAndNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        notUrgentImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        urgentImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        notUrgentNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
+        urgentNotImportant.items.sort((f, s) => f.index.compareTo(s.index));
         return this;
       }();
 
   @late
   List<CeilItem> get allCeilItems => [
-        ...urgentAndImportant.items,
-        ...urgentAndNotImportant.items,
-        ...notUrgentAndImportant.items,
-        ...notUrgentAndNotImportant.items,
+        ...urgentImportant.items,
+        ...urgentNotImportant.items,
+        ...notUrgentImportant.items,
+        ...notUrgentNotImportant.items,
       ];
 }
