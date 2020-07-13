@@ -5,7 +5,7 @@ import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:eisenhower_matrix/utils/platform_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MatrixScreen extends StatefulWidget {
   final Function(bool fullScreen) onChangeScreenMode;
@@ -24,7 +24,7 @@ class MatrixScreen extends StatefulWidget {
 class _MatrixScreenState extends State<MatrixScreen> {
   @override
   void initState() {
-    context.cubit<MatrixCubit>().matrixFetchLatest();
+    context.bloc<MatrixCubit>().matrixFetchLatest();
     super.initState();
   }
 
@@ -143,18 +143,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             children: <Widget>[
                               Expanded(
                                 // UrgentImportant
-                                child: CubitBuilder<MatrixCubit, MatrixState>(
-                                  buildWhen: (previous, state) {
-                                    if (state is Initial) {
-                                      return true;
-                                    }
-                                    if (state is Fetched && previous is Fetched) {
-                                      return state.matrix.urgentAndImportant !=
-                                          previous.matrix.urgentAndImportant;
-                                    } else {
-                                      return true;
-                                    }
-                                  },
+                                child: BlocBuilder<MatrixCubit, MatrixState>(
                                   builder: (context, urgentImportant) {
                                     const ceilType = CeilType.UrgentImportant;
                                     return urgentImportant.when(
@@ -174,18 +163,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                               ),
                               Expanded(
                                 // UrgentNotImportant
-                                child: CubitBuilder<MatrixCubit, MatrixState>(
-                                  buildWhen: (previous, state) {
-                                    if (state is Initial) {
-                                      return true;
-                                    }
-                                    if (state is Fetched && previous is Fetched) {
-                                      return state.matrix.urgentAndNotImportant !=
-                                          previous.matrix.urgentAndNotImportant;
-                                    } else {
-                                      return true;
-                                    }
-                                  },
+                                child: BlocBuilder<MatrixCubit, MatrixState>(
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.UrgentNotImportant;
                                     return urgentImportant.when(
@@ -211,18 +189,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                             children: <Widget>[
                               Expanded(
                                 // UrgentImportant
-                                child: CubitBuilder<MatrixCubit, MatrixState>(
-                                  buildWhen: (previous, state) {
-                                    if (state is Initial) {
-                                      return true;
-                                    }
-                                    if (state is Fetched && previous is Fetched) {
-                                      return state.matrix.notUrgentAndImportant !=
-                                          previous.matrix.notUrgentAndImportant;
-                                    } else {
-                                      return true;
-                                    }
-                                  },
+                                child: BlocBuilder<MatrixCubit, MatrixState>(
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.NotUrgentImportant;
                                     return urgentImportant.when(
@@ -242,18 +209,7 @@ class _MatrixScreenState extends State<MatrixScreen> {
                               ),
                               Expanded(
                                 // NotUrgentNotImportant
-                                child: CubitBuilder<MatrixCubit, MatrixState>(
-                                  buildWhen: (previous, state) {
-                                    if (state is Initial) {
-                                      return true;
-                                    }
-                                    if (state is Fetched && previous is Fetched) {
-                                      return state.matrix.notUrgentAndNotImportant !=
-                                          previous.matrix.notUrgentAndNotImportant;
-                                    } else {
-                                      return true;
-                                    }
-                                  },
+                                child: BlocBuilder<MatrixCubit, MatrixState>(
                                   builder: (context, urgentImportant) {
                                     final ceilType = CeilType.NotUrgentNotImportant;
                                     return urgentImportant.when(

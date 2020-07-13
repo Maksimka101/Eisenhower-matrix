@@ -1,7 +1,7 @@
 import 'package:eisenhower_matrix/cubit/sign_in_cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/platform/platform_button.dart';
 import 'common/platform/platform_circular_progress_indicator.dart';
@@ -11,7 +11,7 @@ class SignInWithGoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Google'),
-      onPressed: () => context.cubit<SignInCubit>().signInWith(
+      onPressed: () => context.bloc<SignInCubit>().signInWith(
             context: context,
             signInProvider: SignInProvider.Google,
           ),
@@ -24,7 +24,7 @@ class SignInWithGitHubButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with GitHub'),
-      onPressed: () => context.cubit<SignInCubit>().signInWith(
+      onPressed: () => context.bloc<SignInCubit>().signInWith(
             context: context,
             signInProvider: SignInProvider.Github,
           ),
@@ -37,7 +37,7 @@ class SignInWithAppleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Apple'),
-      onPressed: () => context.cubit<SignInCubit>().signInWith(
+      onPressed: () => context.bloc<SignInCubit>().signInWith(
             context: context,
             signInProvider: SignInProvider.Apple,
           ),
@@ -50,7 +50,7 @@ class SignInWithTwitterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in with Twitter'),
-      onPressed: () => context.cubit<SignInCubit>().signInWith(
+      onPressed: () => context.bloc<SignInCubit>().signInWith(
             context: context,
             signInProvider: SignInProvider.Twitter,
           ),
@@ -63,7 +63,7 @@ class SignInAnonymouslyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _LoadingButton(
       text: Text('Sign in Anonymously'),
-      onPressed: () => context.cubit<SignInCubit>().signInWith(
+      onPressed: () => context.bloc<SignInCubit>().signInWith(
             context: context,
             signInProvider: SignInProvider.Anonymous,
           ),

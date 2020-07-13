@@ -5,7 +5,7 @@ import 'package:eisenhower_matrix/ui/widget/common/matrix_ceil_item.dart';
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/platform/platform_circular_progress_indicator.dart';
 
@@ -19,10 +19,10 @@ class MatrixCeilWidget extends StatelessWidget {
   void _ceilOpened(BuildContext context) => Navigator.push(
         context,
         CupertinoPageRoute(
-          builder: (_) => MultiCubitProvider(
+          builder: (_) => MultiBlocProvider(
             providers: [
-              CubitProvider<MatrixCubit>.value(
-                value: context.cubit<MatrixCubit>(),
+              BlocProvider<MatrixCubit>.value(
+                value: context.bloc<MatrixCubit>(),
               ),
             ],
             child: CeilScreen(

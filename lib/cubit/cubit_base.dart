@@ -1,7 +1,7 @@
-import 'package:cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomCubitObserver extends CubitObserver {
+class CustomCubitObserver extends BlocObserver {
   @override
   void onTransition(Cubit cubit, Transition transition) {
     debugPrint('On transition: $transition');

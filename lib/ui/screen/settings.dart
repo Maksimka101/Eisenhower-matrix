@@ -3,7 +3,7 @@ import 'package:eisenhower_matrix/ui/widget/common/platform/platform_app_bar.dar
 import 'package:eisenhower_matrix/ui/widget/common/platform/platform_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
       body: Center(
         child: PlatformButton(
           child: Text('Sign Out'),
-          onPressed: context.cubit<SignInCubit>().signOut,
+          onPressed: context.bloc<SignInCubit>().signOut,
         ),
       ),
     );

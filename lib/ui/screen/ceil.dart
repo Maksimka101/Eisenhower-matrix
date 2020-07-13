@@ -6,7 +6,7 @@ import 'package:eisenhower_matrix/ui/widget/common/platform/platform_size_adapte
 import 'package:eisenhower_matrix/utils/matrix_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CeilScreen extends StatefulWidget {
   final CeilType ceilType;
@@ -35,7 +35,7 @@ class _CeilScreenState extends State<CeilScreen> {
 
   void _itemAdded(String title) {
     if (title.trim().isNotEmpty) {
-      context.cubit<MatrixCubit>().matrixCeilItemSaved(
+      context.bloc<MatrixCubit>().matrixCeilItemSaved(
             item: CeilItem(
               title: title,
               index: _maxItemId + 1,
@@ -109,7 +109,7 @@ class _CeilScreenState extends State<CeilScreen> {
             ),
             Flexible(
               child: PlatformSizeAdapter(
-                child: CubitBuilder<MatrixCubit, MatrixState>(
+                child: BlocBuilder<MatrixCubit, MatrixState>(
                   builder: (context, state) {
                     switch (state.runtimeType) {
                       case Fetched:

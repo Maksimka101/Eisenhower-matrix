@@ -1,4 +1,3 @@
-import 'package:cubit/cubit.dart';
 import 'package:eisenhower_matrix/cubit/cubit_base.dart';
 import 'package:eisenhower_matrix/utils/connection.dart';
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
@@ -9,13 +8,12 @@ import 'package:eisenhower_matrix/repository/repository.dart';
 import 'package:eisenhower_matrix/ui/screen/main_app.dart';
 import 'package:eisenhower_matrix/ui/screen/sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/init_cubit.dart';
 import 'cubit/matrix_cubit.dart';
 import 'cubit/settings_cubit.dart';
 import 'cubit/sign_in_cubit.dart';
-import 'ui/widget/common/error.dart';
 import 'ui/widget/common/platform/platform_app_bar.dart';
 import 'ui/widget/common/platform/platform_circular_progress_indicator.dart';
 
@@ -28,7 +26,7 @@ Future<void> main() async {
   // Avoid error on desktop
   await HiveUtils.init();
 
-  Cubit.observer = CustomCubitObserver();
+  Bloc.observer = CustomCubitObserver();
 
   // Fill here your credentials
   final userRepository = UserRepository(
@@ -95,23 +93,23 @@ class AppInit extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: MultiCubitProvider(
+      home: MultiBlocProvider(
         providers: [
-          CubitProvider<InitCubit>(
+          BlocProvider<InitCubit>(
             create: (_) => InitCubit(userRepository: userRepository),
           ),
-          CubitProvider<MatrixCubit>(
+          BlocProvider<MatrixCubit>(
             create: (_) => MatrixCubit(
               settingsRepository: settingsRepository,
               matrixRepository: matrixRepository,
             ),
           ),
-          CubitProvider<SettingsCubit>(
+          BlocProvider<SettingsCubit>(
             create: (_) => SettingsCubit(
               settingsRepository: settingsRepository,
             ),
           ),
-          CubitProvider<SignInCubit>(
+          BlocProvider<SignInCubit>(
             create: (_) => SignInCubit(
               userRepository: userRepository,
             ),
@@ -139,26 +137,15 @@ class _UserInitState extends State<UserInit> {
         ),
       );
 
-  Widget _errorScreen(String message) => Scaffold(
-        appBar: PlatformAppBar(
-          title: Text('Error screen'),
-        ),
-        body: Center(
-          child: WidgetError(
-            message: message,
-          ),
-        ),
-      );
-
   @override
   void initState() {
-    context.cubit<InitCubit>().initStarted();
+    context.bloc<InitCubit>().initStarted();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CubitBuilder<InitCubit, InitState>(
+    return BlocBuilder<InitCubit, InitState>(
       builder: (context, initState) => initState.when(
         initial: _loadingScreen,
         signedIn: () => MainAppScreen(),

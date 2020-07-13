@@ -19,13 +19,11 @@ dependencies:
   cloud_firestore: any
   google_sign_in: any
   github_sign_in: any
-  flutter_cubit: any
+  flutter_bloc: ^6.0.0-dev.1
   firebase_auth: any
   firebase_core: any
   path_provider: any
   connectivity: any
-  equatable: any
-  cubit: any
   hive: any
 
 dependency_overrides:

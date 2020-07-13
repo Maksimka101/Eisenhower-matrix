@@ -2,7 +2,7 @@ import 'package:eisenhower_matrix/cubit/matrix_cubit.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MatrixCeilItem extends StatelessWidget {
   final CeilItem item;
@@ -18,11 +18,11 @@ class MatrixCeilItem extends StatelessWidget {
         super(key: key);
 
   void _itemDeleted(BuildContext context) =>
-      context.cubit<MatrixCubit>().matrixCeilItemDeleted(itemId: item.id);
+      context.bloc<MatrixCubit>().matrixCeilItemDeleted(itemId: item.id);
 
   void _doneTapped(BuildContext context) {
     final done = !(item.doneInfo.done ?? false);
-    context.cubit<MatrixCubit>().matrixCeilItemSaved(
+    context.bloc<MatrixCubit>().matrixCeilItemSaved(
           item:
               item.copyWith.doneInfo.call(done: done, doneAt: done ? DateTime.now().toUtc() : null),
         );
