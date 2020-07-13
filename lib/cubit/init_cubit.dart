@@ -1,25 +1,28 @@
 import 'package:cubit/cubit.dart';
 import 'package:eisenhower_matrix/models/models.dart';
 import 'package:eisenhower_matrix/repository/repository.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'init_cubit.freezed.dart';
 
 class InitCubit extends Cubit<InitState> {
   final UserRepository userRepository;
 
   InitCubit({@required this.userRepository})
       : assert(userRepository != null),
-        super(InitInitial()) {
+        super(InitState.initial()) {
     userRepository.userStream.listen(_userFetched);
   }
 
   Future<void> _userFetched(User user) async {
-    emit(InitInitial());
+    emit(InitState.initial());
     await Future.delayed(Duration.zero);
     if (user != null) {
-      emit(InitSignedIn());
+      emit(InitState.signedIn());
     } else {
-      emit(InitSignedOut());
+      emit(InitState.signedOut());
     }
   }
 
@@ -27,19 +30,17 @@ class InitCubit extends Cubit<InitState> {
     try {
       await userRepository.fetchUser();
     } catch (e) {
-      emit(InitSignedOut());
+      emit(InitState.signedOut());
       debugPrint('User fetched with error: $e');
     }
   }
 }
 
-abstract class InitState extends Equatable {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class InitState with _$InitState {
+  const factory InitState.initial() = Initial;
+
+  const factory InitState.signedIn() = SignedIn;
+
+  const factory InitState.signedOut() = SignedOut;
 }
-
-class InitInitial extends InitState {}
-
-class InitSignedIn extends InitState {}
-
-class InitSignedOut extends InitState {}

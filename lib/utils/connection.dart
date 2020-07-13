@@ -13,12 +13,19 @@ abstract class Connection {
 class ConnectivityConnection extends Connection {
   final _connectivity = Connectivity();
   static final _instance = ConnectivityConnection._();
+  final _connectionStream = StreamController<bool>.broadcast();
 
   factory ConnectivityConnection() {
     return _instance;
   }
 
-  ConnectivityConnection._();
+  ConnectivityConnection._() {
+    _connectivity.onConnectivityChanged.listen((event) {
+      _connectionStream.sink.add(event != ConnectivityResult.none);
+    }).onError((err) {
+      debugPrint('Error in ConnectivityConnection._ Error: $err');
+    });
+  }
 
   @override
   Future<bool> get connectedToTheInternet async {
@@ -32,8 +39,7 @@ class ConnectivityConnection extends Connection {
   }
 
   @override
-  Stream<bool> get connectionChanges =>
-      _connectivity.onConnectivityChanged.map((event) => event != ConnectivityResult.none);
+  Stream<bool> get connectionChanges => _connectionStream.stream;
 }
 
 class MockConnectivityConnection extends Connection {

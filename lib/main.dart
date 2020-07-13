@@ -159,18 +159,11 @@ class _UserInitState extends State<UserInit> {
   @override
   Widget build(BuildContext context) {
     return CubitBuilder<InitCubit, InitState>(
-      builder: (context, initState) {
-        switch (initState.runtimeType) {
-          case InitInitial:
-            return _loadingScreen();
-          case InitSignedIn:
-            return MainAppScreen();
-          case InitSignedOut:
-            return SignInScreen();
-          default:
-            return _errorScreen('Unknown initState: $initState');
-        }
-      },
+      builder: (context, initState) => initState.when(
+        initial: _loadingScreen,
+        signedIn: () => MainAppScreen(),
+        signedOut: () => SignInScreen(),
+      ),
     );
   }
 }

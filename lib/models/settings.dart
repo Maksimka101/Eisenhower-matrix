@@ -4,7 +4,9 @@ part 'settings.freezed.dart';
 
 @freezed
 abstract class Settings with _$Settings {
-  const factory Settings({@Default(CeilSettings()) CeilSettings ceilSettings, @required DateTime lastChangeDate}) = _Settings;
+  const factory Settings(
+      {@Default(CeilSettings()) CeilSettings ceilSettings,
+      @required DateTime lastChangeDate}) = _Settings;
 }
 
 @freezed

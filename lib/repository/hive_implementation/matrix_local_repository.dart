@@ -2,7 +2,6 @@ import 'package:eisenhower_matrix/models/ceil.dart';
 import 'package:eisenhower_matrix/models/ceil_item.dart';
 import 'package:eisenhower_matrix/models/matrix.dart';
 import 'package:eisenhower_matrix/repository/abstract/matrix_local_repository.dart';
-import 'package:eisenhower_matrix/repository/hive_implementation/ceil_item.dart';
 import 'package:eisenhower_matrix/utils/hive_utils.dart';
 
 class HiveMatrixLocalRepository extends MatrixLocalRepository {
@@ -20,7 +19,7 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
 
   @override
   Future<Matrix> deleteCeilItem(String itemId) async {
-    var box = await HiveUtils.getBox<HiveCeilItem>(HiveUtils.ceilItemsBoxName);
+    var box = await HiveUtils.getBox<CeilItem>(HiveUtils.ceilItemsBoxName);
     await box.delete(_prepareId(itemId));
     return fetchMatrix();
   }
@@ -39,10 +38,9 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
 
   @override
   Future<Matrix> fetchMatrix() async {
-    var box = await HiveUtils.getBox<HiveCeilItem>(HiveUtils.ceilItemsBoxName);
+    var box = await HiveUtils.getBox<CeilItem>(HiveUtils.ceilItemsBoxName);
     if (box.isNotEmpty) {
-      return Matrix.fromCeilItems(
-          box.values.map<CeilItem>((hiveItem) => hiveItem.toCeilItem()).toList());
+      return Matrix.fromCeilItems(box.values.toList());
     } else {
       return Matrix(
         urgentAndNotImportant: Ceil(items: [], type: CeilType.UrgentNotImportant),
@@ -55,8 +53,8 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
 
   @override
   Future<Matrix> saveCeilItem(CeilItem item) async {
-    var box = await HiveUtils.getBox<HiveCeilItem>(HiveUtils.ceilItemsBoxName);
-    await box.put(_prepareId(item.id), HiveCeilItem.fromCeilItem(item));
+    var box = await HiveUtils.getBox<CeilItem>(HiveUtils.ceilItemsBoxName);
+    await box.put(_prepareId(item.id), item);
     return fetchMatrix();
   }
 
