@@ -143,19 +143,19 @@ extension MatrixMap on Matrix {
       }
     }
     return Matrix(
-      notUrgentAndNotImportant: Ceil(
+      notUrgentNotImportant: Ceil(
         type: CeilType.NotUrgentNotImportant,
         items: notUrgentNotImportant,
       ),
-      notUrgentAndImportant: Ceil(
+      notUrgentImportant: Ceil(
         type: CeilType.NotUrgentImportant,
         items: notUrgentImportant,
       ),
-      urgentAndImportant: Ceil(
+      urgentImportant: Ceil(
         type: CeilType.UrgentImportant,
         items: urgentImportant,
       ),
-      urgentAndNotImportant: Ceil(
+      urgentNotImportant: Ceil(
         type: CeilType.UrgentNotImportant,
         items: urgentNotImportant,
       ),

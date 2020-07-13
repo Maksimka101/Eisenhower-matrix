@@ -43,10 +43,10 @@ class HiveMatrixLocalRepository extends MatrixLocalRepository {
       return Matrix.fromCeilItems(box.values.toList());
     } else {
       return Matrix(
-        urgentAndNotImportant: Ceil(items: [], type: CeilType.UrgentNotImportant),
-        urgentAndImportant: Ceil(items: [], type: CeilType.UrgentImportant),
-        notUrgentAndImportant: Ceil(items: [], type: CeilType.NotUrgentImportant),
-        notUrgentAndNotImportant: Ceil(items: [], type: CeilType.NotUrgentNotImportant),
+        urgentNotImportant: Ceil(items: [], type: CeilType.UrgentNotImportant),
+        urgentImportant: Ceil(items: [], type: CeilType.UrgentImportant),
+        notUrgentImportant: Ceil(items: [], type: CeilType.NotUrgentImportant),
+        notUrgentNotImportant: Ceil(items: [], type: CeilType.NotUrgentNotImportant),
       );
     }
   }
