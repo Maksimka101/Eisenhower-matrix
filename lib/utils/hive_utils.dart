@@ -61,7 +61,7 @@ abstract class NNTypeAdapter<V> extends TypeAdapter<V> {
   @override
   V read(BinaryReader reader) {
     final isNull = reader.readBool();
-    if (isNull == null && isNull) {
+    if (isNull == null || isNull) {
       return null;
     }
     return readNotNull(reader);

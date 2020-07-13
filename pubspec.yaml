@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
 
-#  flutter_platform_widgets: any
   freezed_annotation: any
   firebase_storage: any
   flutter_slidable: any
@@ -33,7 +32,6 @@ dependency_overrides:
   dartx: ^0.4.2
 
 dev_dependencies:
-  hive_generator: any
   flutter_launcher_icons: any
   build_runner: any
   pedantic: any
