@@ -76,7 +76,9 @@ class AppInit extends StatelessWidget {
     @required this.matrixRepository,
     @required this.userRepository,
     @required this.settingsRepository,
-  })  : assert(matrixRepository != null && userRepository != null && settingsRepository != null),
+  })  : assert(matrixRepository != null &&
+            userRepository != null &&
+            settingsRepository != null),
         super(key: key);
 
   @override
