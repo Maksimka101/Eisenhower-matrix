@@ -54,9 +54,9 @@ class _CeilScreenState extends State<CeilScreen> {
     final cursorColor = Theme.of(context).dividerColor;
     const itemsListPadding = EdgeInsets.symmetric(horizontal: 6);
     const itemPadding = EdgeInsets.symmetric(vertical: 5, horizontal: 7);
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: getCeilColor(context),
-      child: GestureDetector(
+      body: GestureDetector(
         onDoubleTap: () {
           Navigator.pop(context);
         },
@@ -111,25 +111,43 @@ class _CeilScreenState extends State<CeilScreen> {
               child: PlatformSizeAdapter(
                 child: BlocBuilder<MatrixCubit, MatrixState>(
                   builder: (context, state) {
-                    switch (state.runtimeType) {
-                      case Fetched:
+                    return state.when<Widget>(
+                      initial: () {
+                        var error =
+                            'Unexpected state. State in ceil screen must be only fetched';
+                        debugPrint(error);
+                        return ErrorWidget(error);
+                      },
+                      fetched: (matrix) {
                         List<CeilItem> items;
                         switch (widget.ceilType) {
                           case CeilType.UrgentImportant:
-                            items = (state as Fetched).matrix.urgentImportant.items;
+                            items =
+                                (state as Fetched).matrix.urgentImportant.items;
                             break;
                           case CeilType.UrgentNotImportant:
-                            items = (state as Fetched).matrix.urgentNotImportant.items;
+                            items = (state as Fetched)
+                                .matrix
+                                .urgentNotImportant
+                                .items;
                             break;
                           case CeilType.NotUrgentImportant:
-                            items = (state as Fetched).matrix.notUrgentImportant.items;
+                            items = (state as Fetched)
+                                .matrix
+                                .notUrgentImportant
+                                .items;
                             break;
                           case CeilType.NotUrgentNotImportant:
-                            items = (state as Fetched).matrix.notUrgentNotImportant.items;
+                            items = (state as Fetched)
+                                .matrix
+                                .notUrgentNotImportant
+                                .items;
                             break;
                         }
                         if (items.isNotEmpty) {
-                          _maxItemId = items.map((e) => e.index).reduce((f, s) => f > s ? f : s);
+                          _maxItemId = items
+                              .map((e) => e.index)
+                              .reduce((f, s) => f > s ? f : s);
                         }
                         return ListView(
                           padding: itemsListPadding,
@@ -149,10 +167,16 @@ class _CeilScreenState extends State<CeilScreen> {
                               Padding(
                                 padding: itemPadding,
                                 child: TextField(
-                                  style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                        fontSize: DefaultTextStyle.of(context).style.fontSize,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      .copyWith(
+                                        fontSize: DefaultTextStyle.of(context)
+                                            .style
+                                            .fontSize,
                                       ),
-                                  textCapitalization: TextCapitalization.sentences,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   focusNode: _focusNode,
                                   maxLines: 1,
                                   onSubmitted: _itemAdded,
@@ -166,10 +190,8 @@ class _CeilScreenState extends State<CeilScreen> {
                               ),
                           ],
                         );
-                      default:
-                        debugPrint('Unknown state in CeilScreen: $state');
-                        return Container();
-                    }
+                      },
+                    );
                   },
                 ),
               ),

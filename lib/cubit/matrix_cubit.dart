@@ -21,11 +21,12 @@ class MatrixCubit extends Cubit<MatrixState> {
   }
 
   void _onSettingsChanged(Settings settings) {
-    _doneCeilDeleteDuration = settings.ceilSettings.doneCeilDeleteDuration;
+    _doneCeilDeleteDuration = settings?.ceilSettings?.doneCeilDeleteDuration;
   }
 
   void _matrixStateListener(Matrix matrix) {
-    if (_matrixContainsOutdatedDoneItem(matrix)) {
+    if (_doneCeilDeleteDuration != null) {
+      if (_matrixContainsOutdatedDoneItem(matrix)) {
       var now = DateTime.now();
       for (final item in matrix.allCeilItems) {
         if (item.doneInfo.done && item.doneInfo.doneAt.difference(now) > _doneCeilDeleteDuration) {
@@ -33,6 +34,7 @@ class MatrixCubit extends Cubit<MatrixState> {
         }
       }
       return;
+    }
     }
     emit(MatrixState.fetched(matrix: matrix.sorted));
   }
