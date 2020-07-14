@@ -57,6 +57,7 @@ Future<void> main() async {
         userRepository: userRepository,
       ),
       settingsRepository: SettingsRepository(
+        userRepository: userRepository,
         connection: ConnectivityConnection(),
         settingsLocalRepository: HiveSettingsLocalRepository(),
         settingsWebRepository: FirebaseSettingsWebRepository(),
