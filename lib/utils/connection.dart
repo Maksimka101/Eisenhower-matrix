@@ -10,6 +10,7 @@ abstract class Connection {
   Future<bool> get connectedToTheInternet;
 }
 
+
 class ConnectivityConnection extends Connection {
   final _connectivity = Connectivity();
   static final _instance = ConnectivityConnection._();
@@ -29,12 +30,6 @@ class ConnectivityConnection extends Connection {
 
   @override
   Future<bool> get connectedToTheInternet async {
-    // todo
-    // [Connectivity] doesn't work in web...
-    if (isWeb) {
-      return true;
-    }
-
     return await _connectivity.checkConnectivity() != ConnectivityResult.none;
   }
 

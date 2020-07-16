@@ -14,7 +14,6 @@ dependencies:
 
   freezed_annotation: any
   firebase_storage: any
-  flutter_slidable: any
   cupertino_icons: any
   cloud_firestore: any
   google_sign_in: any
@@ -22,7 +21,7 @@ dependencies:
   firebase_auth: any
   firebase_core: any
   path_provider: any
-  flutter_bloc: any
+  flutter_bloc: ^6.0.0-dev.1
   connectivity: any
   hive: any
 

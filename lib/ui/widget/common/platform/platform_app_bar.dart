@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class PlatformAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget title;
 
-  const PlatformAppBar({Key key, @required this.title}) : super(key: key);
+  PlatformAppBar({Key key, @required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
