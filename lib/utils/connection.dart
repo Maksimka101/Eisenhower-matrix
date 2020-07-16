@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:eisenhower_matrix/utils/io_platform_adapter.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class Connection {

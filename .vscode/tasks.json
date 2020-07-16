@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "web release [skia]",
+            "type": "shell",
+            "command": "flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "android release [arm64]",
+            "type": "shell",
+            "command": "flutter build apk --release --target-platform android-arm64",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
